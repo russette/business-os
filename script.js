@@ -2138,38 +2138,27 @@ document.addEventListener("DOMContentLoaded", () => {
                                     )}
                                 </strong>
 
-                                <span class="invoice-status">
-                                    ${
-                                        paid
-                                        ? "Paid"
-                                        : "Unpaid"
-                                    }
-                                </span>
+                               <span class="invoice-status">
+    ${safe(invoice.status)}
+</span>
 
-                                <br>
+<br>
 
-                                ${
-                                    !paid
-                                    ? `
-                                        <button
-                                            onclick="markInvoicePaid('${invoice.id}')">
-                                            Mark as Paid
-                                        </button>
-                                    `
-                                    : `
-                                        <button
-                                            class="secondary-btn"
-                                            onclick="markInvoiceUnpaid('${invoice.id}')">
-                                            Mark Unpaid
-                                        </button>
-                                    `
-                                }
+<button
+    class="edit-btn"
+    onclick="toggleInvoicePaid('${invoice.id}')">
 
-                                <button
-                                    class="delete-btn"
-                                    onclick="deleteInvoice('${invoice.id}')">
-                                    Delete
-                                </button>
+    ${invoice.status === "Paid"
+        ? "Mark as Unpaid"
+        : "Mark as Paid"}
+
+</button>
+
+<button
+    class="delete-btn"
+    onclick="deleteInvoice('${invoice.id}')">
+    Delete
+</button>
 
                             </div>
 
@@ -2247,7 +2236,22 @@ document.addEventListener("DOMContentLoaded", () => {
             renderAll();
 
         };
+window.toggleInvoicePaid = function(invoiceId) {
 
+    const invoice = invoices.find(
+        invoice => invoice.id === invoiceId
+    );
+
+    if (!invoice) return;
+
+    invoice.status =
+        invoice.status === "Paid"
+            ? "Unpaid"
+            : "Paid";
+
+    saveData();
+    renderAll();
+};
 
     window.deleteInvoice =
         function(invoiceId) {
