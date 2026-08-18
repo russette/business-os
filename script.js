@@ -1,111 +1,206 @@
 // =========================
-// BUSINESSOS V2
+// BUSINESSOS V3
+// INVENTORY + SALES SYSTEM
 // =========================
 
-// -------------------------
+
+// =========================
 // DATA
-// -------------------------
+// =========================
 
 let products =
     JSON.parse(
-        localStorage.getItem("businessOSProducts")
+        localStorage.getItem(
+            "businessOSProducts"
+        )
     ) || [];
+
 
 let customers =
     JSON.parse(
-        localStorage.getItem("businessOSCustomers")
+        localStorage.getItem(
+            "businessOSCustomers"
+        )
     ) || [];
+
 
 let sales =
     JSON.parse(
-        localStorage.getItem("businessOSSales")
+        localStorage.getItem(
+            "businessOSSales"
+        )
     ) || [];
 
 
-// -------------------------
+// =========================
 // ELEMENTS
-// -------------------------
+// =========================
 
 const menuButton =
-    document.getElementById("menuButton");
+    document.getElementById(
+        "menuButton"
+    );
+
 
 const navigation =
-    document.getElementById("navigation");
+    document.getElementById(
+        "navigation"
+    );
+
 
 const productList =
-    document.getElementById("productList");
+    document.getElementById(
+        "productList"
+    );
+
 
 const customerList =
-    document.getElementById("customerList");
+    document.getElementById(
+        "customerList"
+    );
+
 
 const salesList =
-    document.getElementById("salesList");
+    document.getElementById(
+        "salesList"
+    );
+
 
 const revenueElement =
-    document.getElementById("revenue");
+    document.getElementById(
+        "revenue"
+    );
+
 
 const productCountElement =
-    document.getElementById("productCount");
+    document.getElementById(
+        "productCount"
+    );
+
 
 const customerCountElement =
-    document.getElementById("customerCount");
+    document.getElementById(
+        "customerCount"
+    );
+
 
 const saleCountElement =
-    document.getElementById("saleCount");
+    document.getElementById(
+        "saleCount"
+    );
 
 
-// -------------------------
+// =========================
 // FORMS
-// -------------------------
+// =========================
 
 const productForm =
-    document.getElementById("productForm");
+    document.getElementById(
+        "productForm"
+    );
+
 
 const customerForm =
-    document.getElementById("customerForm");
+    document.getElementById(
+        "customerForm"
+    );
+
 
 const saleForm =
-    document.getElementById("saleForm");
+    document.getElementById(
+        "saleForm"
+    );
+
 
 const productFormElement =
-    document.getElementById("productFormElement");
+    document.getElementById(
+        "productFormElement"
+    );
+
 
 const customerFormElement =
-    document.getElementById("customerFormElement");
+    document.getElementById(
+        "customerFormElement"
+    );
+
 
 const saleFormElement =
-    document.getElementById("saleFormElement");
+    document.getElementById(
+        "saleFormElement"
+    );
 
 
-// -------------------------
+// =========================
 // BUTTONS
-// -------------------------
+// =========================
 
 const addProductButton =
-    document.getElementById("addProductButton");
+    document.getElementById(
+        "addProductButton"
+    );
+
 
 const addCustomerButton =
-    document.getElementById("addCustomerButton");
+    document.getElementById(
+        "addCustomerButton"
+    );
+
 
 const addSaleButton =
-    document.getElementById("addSaleButton");
+    document.getElementById(
+        "addSaleButton"
+    );
+
 
 const cancelProductButton =
-    document.getElementById("cancelProductButton");
+    document.getElementById(
+        "cancelProductButton"
+    );
+
 
 const cancelCustomerButton =
-    document.getElementById("cancelCustomerButton");
+    document.getElementById(
+        "cancelCustomerButton"
+    );
+
 
 const cancelSaleButton =
-    document.getElementById("cancelSaleButton");
+    document.getElementById(
+        "cancelSaleButton"
+    );
+
 
 const resetDataButton =
-    document.getElementById("resetDataButton");
+    document.getElementById(
+        "resetDataButton"
+    );
 
 
-// -------------------------
+// =========================
+// SALES INPUTS
+// =========================
+
+const saleProduct =
+    document.getElementById(
+        "saleProduct"
+    );
+
+
+const saleQuantity =
+    document.getElementById(
+        "saleQuantity"
+    );
+
+
+const saleTotal =
+    document.getElementById(
+        "saleTotal"
+    );
+
+
+// =========================
 // MOBILE MENU
-// -------------------------
+// =========================
 
 if (menuButton) {
 
@@ -123,35 +218,33 @@ if (menuButton) {
 }
 
 
-// -------------------------
-// CLOSE MOBILE MENU
-// -------------------------
-
 if (navigation) {
 
     navigation
         .querySelectorAll("a")
-        .forEach(function (link) {
+        .forEach(
+            function (link) {
 
-            link.addEventListener(
-                "click",
-                function () {
+                link.addEventListener(
+                    "click",
+                    function () {
 
-                    navigation.classList.remove(
-                        "show"
-                    );
+                        navigation.classList.remove(
+                            "show"
+                        );
 
-                }
-            );
+                    }
+                );
 
-        });
+            }
+        );
 
 }
 
 
-// -------------------------
-// SAVE DATA
-// -------------------------
+// =========================
+// SAVE
+// =========================
 
 function saveData() {
 
@@ -160,10 +253,12 @@ function saveData() {
         JSON.stringify(products)
     );
 
+
     localStorage.setItem(
         "businessOSCustomers",
         JSON.stringify(customers)
     );
+
 
     localStorage.setItem(
         "businessOSSales",
@@ -173,28 +268,35 @@ function saveData() {
 }
 
 
-// -------------------------
+// =========================
 // DASHBOARD
-// -------------------------
+// =========================
 
 function updateDashboard() {
 
     productCountElement.textContent =
         products.length;
 
+
     customerCountElement.textContent =
         customers.length;
+
 
     saleCountElement.textContent =
         sales.length;
 
 
-    const totalRevenue =
+    const revenue =
         sales.reduce(
-            function (total, sale) {
+            function (
+                total,
+                sale
+            ) {
 
                 return total +
-                    Number(sale.amount);
+                    Number(
+                        sale.amount
+                    );
 
             },
             0
@@ -202,20 +304,22 @@ function updateDashboard() {
 
 
     revenueElement.textContent =
-        "$" + totalRevenue.toFixed(2);
+        "$" +
+        revenue.toFixed(2);
 
 }
 
 
-// -------------------------
-// SHOW FORM
-// -------------------------
+// =========================
+// FORM HELPERS
+// =========================
 
 function showForm(form) {
 
     form.classList.remove(
         "hidden"
     );
+
 
     form.scrollIntoView({
         behavior: "smooth",
@@ -224,10 +328,6 @@ function showForm(form) {
 
 }
 
-
-// -------------------------
-// HIDE FORM
-// -------------------------
 
 function hideForm(form) {
 
@@ -242,20 +342,21 @@ function hideForm(form) {
 // PRODUCTS
 // =========================
 
-// -------------------------
-// RENDER PRODUCTS
-// -------------------------
-
 function renderProducts() {
 
-    if (products.length === 0) {
+    if (
+        products.length === 0
+    ) {
 
         productList.className =
             "empty-state";
 
+
         productList.innerHTML = `
 
-            <div>📦</div>
+            <div>
+                📦
+            </div>
 
             <h3>
                 No products yet
@@ -268,7 +369,9 @@ function renderProducts() {
 
         `;
 
+
         return;
+
     }
 
 
@@ -278,51 +381,92 @@ function renderProducts() {
 
     productList.innerHTML =
         products.map(
-            function (product, index) {
+            function (
+                product,
+                index
+            ) {
+
+                const stockStatus =
+                    product.stock === 0
+                        ? "OUT OF STOCK"
+                        : product.stock <= 3
+                        ? "LOW STOCK"
+                        : "IN STOCK";
+
 
                 return `
 
-                    <article class="data-card">
+                    <article
+                        class="data-card">
 
-                        <div class="data-icon">
+                        <div
+                            class="data-icon">
+
                             📦
+
                         </div>
 
+
                         <h3>
+
                             ${escapeHTML(
                                 product.name
                             )}
+
                         </h3>
 
+
                         <p>
+
                             Price:
                             $${Number(
                                 product.price
                             ).toFixed(2)}
+
                         </p>
+
 
                         <p>
+
                             Stock:
                             ${product.stock}
+
                         </p>
 
-                        <div class="card-actions">
+
+                        <p>
+
+                            Status:
+                            ${stockStatus}
+
+                        </p>
+
+
+                        <div
+                            class="card-actions">
+
 
                             <button
                                 class="edit-button"
-                                onclick="editProduct(${index})">
+                                onclick="editProduct(
+                                    ${index}
+                                )">
 
                                 Edit
 
                             </button>
 
+
                             <button
                                 class="delete-button"
-                                onclick="deleteProduct(${index})">
+                                onclick="deleteProduct(
+                                    ${index}
+                                )">
 
                                 Delete
 
                             </button>
+
 
                         </div>
 
@@ -336,158 +480,147 @@ function renderProducts() {
 }
 
 
-// -------------------------
+// =========================
 // ADD PRODUCT
-// -------------------------
+// =========================
 
-if (addProductButton) {
+addProductButton.addEventListener(
+    "click",
+    function () {
 
-    addProductButton.addEventListener(
-        "click",
-        function () {
+        showForm(
+            productForm
+        );
 
-            showForm(
-                productForm
-            );
-
-        }
-    );
-
-}
+    }
+);
 
 
-// -------------------------
-// CANCEL PRODUCT
-// -------------------------
+cancelProductButton.addEventListener(
+    "click",
+    function () {
 
-if (cancelProductButton) {
+        productFormElement.reset();
 
-    cancelProductButton.addEventListener(
-        "click",
-        function () {
+        hideForm(
+            productForm
+        );
 
-            productFormElement.reset();
-
-            hideForm(
-                productForm
-            );
-
-        }
-    );
-
-}
+    }
+);
 
 
-// -------------------------
-// SUBMIT PRODUCT
-// -------------------------
+productFormElement.addEventListener(
+    "submit",
+    function (event) {
 
-if (productFormElement) {
-
-    productFormElement.addEventListener(
-        "submit",
-        function (event) {
-
-            event.preventDefault();
+        event.preventDefault();
 
 
-            const name =
+        const name =
+            document
+                .getElementById(
+                    "productName"
+                )
+                .value
+                .trim();
+
+
+        const price =
+            Number(
                 document
                     .getElementById(
-                        "productName"
+                        "productPrice"
                     )
                     .value
-                    .trim();
-
-
-            const price =
-                Number(
-                    document
-                        .getElementById(
-                            "productPrice"
-                        )
-                        .value
-                );
-
-
-            const stock =
-                Number(
-                    document
-                        .getElementById(
-                            "productStock"
-                        )
-                        .value
-                );
-
-
-            if (!name) {
-
-                alert(
-                    "Please enter a product name."
-                );
-
-                return;
-            }
-
-
-            if (
-                isNaN(price) ||
-                price < 0
-            ) {
-
-                alert(
-                    "Please enter a valid USD price."
-                );
-
-                return;
-            }
-
-
-            if (
-                isNaN(stock) ||
-                stock < 0
-            ) {
-
-                alert(
-                    "Please enter a valid stock quantity."
-                );
-
-                return;
-            }
-
-
-            products.push({
-
-                name: name,
-
-                price: price,
-
-                stock: stock
-
-            });
-
-
-            saveData();
-
-            renderProducts();
-
-            updateDashboard();
-
-            productFormElement.reset();
-
-            hideForm(
-                productForm
             );
 
+
+        const stock =
+            Number(
+                document
+                    .getElementById(
+                        "productStock"
+                    )
+                    .value
+            );
+
+
+        if (!name) {
+
+            alert(
+                "Enter a product name."
+            );
+
+            return;
+
         }
-    );
-
-}
 
 
-// -------------------------
+        if (
+            isNaN(price) ||
+            price <= 0
+        ) {
+
+            alert(
+                "Enter a valid selling price."
+            );
+
+            return;
+
+        }
+
+
+        if (
+            isNaN(stock) ||
+            stock < 0
+        ) {
+
+            alert(
+                "Enter a valid stock quantity."
+            );
+
+            return;
+
+        }
+
+
+        products.push({
+
+            name:
+                name,
+
+            price:
+                price,
+
+            stock:
+                stock
+
+        });
+
+
+        saveData();
+
+        renderProducts();
+
+        updateSaleProductOptions();
+
+        updateDashboard();
+
+
+        productFormElement.reset();
+
+        hideForm(
+            productForm
+        );
+
+    }
+);
+
+
+// =========================
 // EDIT PRODUCT
-// -------------------------
+// =========================
 
 function editProduct(index) {
 
@@ -515,7 +648,7 @@ function editProduct(index) {
     const price =
         Number(
             prompt(
-                "Price in USD:",
+                "Selling price in USD:",
                 product.price
             )
         );
@@ -523,14 +656,15 @@ function editProduct(index) {
 
     if (
         isNaN(price) ||
-        price < 0
+        price <= 0
     ) {
 
         alert(
-            "Enter a valid USD price."
+            "Enter a valid price."
         );
 
         return;
+
     }
 
 
@@ -553,6 +687,7 @@ function editProduct(index) {
         );
 
         return;
+
     }
 
 
@@ -574,14 +709,16 @@ function editProduct(index) {
 
     renderProducts();
 
+    updateSaleProductOptions();
+
     updateDashboard();
 
 }
 
 
-// -------------------------
+// =========================
 // DELETE PRODUCT
-// -------------------------
+// =========================
 
 function deleteProduct(index) {
 
@@ -606,6 +743,8 @@ function deleteProduct(index) {
 
     renderProducts();
 
+    updateSaleProductOptions();
+
     updateDashboard();
 
 }
@@ -615,20 +754,21 @@ function deleteProduct(index) {
 // CUSTOMERS
 // =========================
 
-// -------------------------
-// RENDER CUSTOMERS
-// -------------------------
-
 function renderCustomers() {
 
-    if (customers.length === 0) {
+    if (
+        customers.length === 0
+    ) {
 
         customerList.className =
             "empty-state";
 
+
         customerList.innerHTML = `
 
-            <div>👥</div>
+            <div>
+                👥
+            </div>
 
             <h3>
                 No customers yet
@@ -641,7 +781,9 @@ function renderCustomers() {
 
         `;
 
+
         return;
+
     }
 
 
@@ -651,45 +793,70 @@ function renderCustomers() {
 
     customerList.innerHTML =
         customers.map(
-            function (customer, index) {
+            function (
+                customer,
+                index
+            ) {
 
                 return `
 
-                    <article class="data-card">
+                    <article
+                        class="data-card">
 
-                        <div class="data-icon">
+
+                        <div
+                            class="data-icon">
+
                             👤
+
                         </div>
 
+
                         <h3>
+
                             ${escapeHTML(
                                 customer.name
                             )}
+
                         </h3>
 
+
                         <p>
+
                             ${escapeHTML(
                                 customer.email
                             )}
+
                         </p>
+
 
                         <p>
+
                             ${escapeHTML(
-                                customer.phone || "No phone"
+                                customer.phone ||
+                                "No phone"
                             )}
+
                         </p>
 
-                        <div class="card-actions">
+
+                        <div
+                            class="card-actions">
+
 
                             <button
                                 class="delete-button"
-                                onclick="deleteCustomer(${index})">
+                                onclick="deleteCustomer(
+                                    ${index}
+                                )">
 
                                 Delete
 
                             </button>
 
+
                         </div>
+
 
                     </article>
 
@@ -701,140 +868,126 @@ function renderCustomers() {
 }
 
 
-// -------------------------
-// SHOW CUSTOMER FORM
-// -------------------------
+// =========================
+// ADD CUSTOMER
+// =========================
 
-if (addCustomerButton) {
+addCustomerButton.addEventListener(
+    "click",
+    function () {
 
-    addCustomerButton.addEventListener(
-        "click",
-        function () {
+        showForm(
+            customerForm
+        );
 
-            showForm(
-                customerForm
+    }
+);
+
+
+cancelCustomerButton.addEventListener(
+    "click",
+    function () {
+
+        customerFormElement.reset();
+
+        hideForm(
+            customerForm
+        );
+
+    }
+);
+
+
+customerFormElement.addEventListener(
+    "submit",
+    function (event) {
+
+        event.preventDefault();
+
+
+        const name =
+            document
+                .getElementById(
+                    "customerName"
+                )
+                .value
+                .trim();
+
+
+        const email =
+            document
+                .getElementById(
+                    "customerEmail"
+                )
+                .value
+                .trim();
+
+
+        const phone =
+            document
+                .getElementById(
+                    "customerPhone"
+                )
+                .value
+                .trim();
+
+
+        if (!name) {
+
+            alert(
+                "Enter the customer's name."
             );
 
+            return;
+
         }
-    );
-
-}
 
 
-// -------------------------
-// CANCEL CUSTOMER
-// -------------------------
+        if (!email) {
 
-if (cancelCustomerButton) {
-
-    cancelCustomerButton.addEventListener(
-        "click",
-        function () {
-
-            customerFormElement.reset();
-
-            hideForm(
-                customerForm
+            alert(
+                "Enter the customer's email."
             );
 
-        }
-    );
-
-}
-
-
-// -------------------------
-// SUBMIT CUSTOMER
-// -------------------------
-
-if (customerFormElement) {
-
-    customerFormElement.addEventListener(
-        "submit",
-        function (event) {
-
-            event.preventDefault();
-
-
-            const name =
-                document
-                    .getElementById(
-                        "customerName"
-                    )
-                    .value
-                    .trim();
-
-
-            const email =
-                document
-                    .getElementById(
-                        "customerEmail"
-                    )
-                    .value
-                    .trim();
-
-
-            const phone =
-                document
-                    .getElementById(
-                        "customerPhone"
-                    )
-                    .value
-                    .trim();
-
-
-            if (!name) {
-
-                alert(
-                    "Please enter the customer's name."
-                );
-
-                return;
-            }
-
-
-            if (!email) {
-
-                alert(
-                    "Please enter the customer's email."
-                );
-
-                return;
-            }
-
-
-            customers.push({
-
-                name: name,
-
-                email: email,
-
-                phone: phone
-
-            });
-
-
-            saveData();
-
-            renderCustomers();
-
-            updateDashboard();
-
-            customerFormElement.reset();
-
-            hideForm(
-                customerForm
-            );
+            return;
 
         }
-    );
-
-}
 
 
-// -------------------------
+        customers.push({
+
+            name:
+                name,
+
+            email:
+                email,
+
+            phone:
+                phone
+
+        });
+
+
+        saveData();
+
+        renderCustomers();
+
+        updateDashboard();
+
+
+        customerFormElement.reset();
+
+        hideForm(
+            customerForm
+        );
+
+    }
+);
+
+
+// =========================
 // DELETE CUSTOMER
-// -------------------------
+// =========================
 
 function deleteCustomer(index) {
 
@@ -869,19 +1022,341 @@ function deleteCustomer(index) {
 // =========================
 
 // -------------------------
+// UPDATE PRODUCT OPTIONS
+// -------------------------
+
+function updateSaleProductOptions() {
+
+    saleProduct.innerHTML = `
+
+        <option value="">
+            Select a product
+        </option>
+
+    `;
+
+
+    products.forEach(
+        function (
+            product,
+            index
+        ) {
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                index;
+
+
+            option.textContent =
+                `${product.name} — $${Number(
+                    product.price
+                ).toFixed(2)} — Stock: ${
+                    product.stock
+                }`;
+
+
+            if (
+                product.stock <= 0
+            ) {
+
+                option.disabled =
+                    true;
+
+            }
+
+
+            saleProduct.appendChild(
+                option
+            );
+
+        }
+    );
+
+
+    updateSaleTotal();
+
+}
+
+
+// -------------------------
+// UPDATE SALE TOTAL
+// -------------------------
+
+function updateSaleTotal() {
+
+    const index =
+        Number(
+            saleProduct.value
+        );
+
+
+    const quantity =
+        Number(
+            saleQuantity.value
+        );
+
+
+    if (
+        saleProduct.value === "" ||
+        !products[index] ||
+        quantity <= 0
+    ) {
+
+        saleTotal.value =
+            "$0.00";
+
+        return;
+
+    }
+
+
+    const product =
+        products[index];
+
+
+    const total =
+        product.price *
+        quantity;
+
+
+    saleTotal.value =
+        "$" +
+        total.toFixed(2);
+
+}
+
+
+// -------------------------
+// SALE EVENTS
+// -------------------------
+
+saleProduct.addEventListener(
+    "change",
+    updateSaleTotal
+);
+
+
+saleQuantity.addEventListener(
+    "input",
+    updateSaleTotal
+);
+
+
+// -------------------------
+// SHOW SALE FORM
+// -------------------------
+
+addSaleButton.addEventListener(
+    "click",
+    function () {
+
+        if (
+            products.length === 0
+        ) {
+
+            alert(
+                "Add a product first before recording a sale."
+            );
+
+            return;
+
+        }
+
+
+        updateSaleProductOptions();
+
+        saleQuantity.value =
+            1;
+
+
+        updateSaleTotal();
+
+
+        showForm(
+            saleForm
+        );
+
+    }
+);
+
+
+// -------------------------
+// CANCEL SALE
+// -------------------------
+
+cancelSaleButton.addEventListener(
+    "click",
+    function () {
+
+        saleFormElement.reset();
+
+        saleTotal.value =
+            "$0.00";
+
+
+        hideForm(
+            saleForm
+        );
+
+    }
+);
+
+
+// -------------------------
+// RECORD SALE
+// -------------------------
+
+saleFormElement.addEventListener(
+    "submit",
+    function (event) {
+
+        event.preventDefault();
+
+
+        const productIndex =
+            Number(
+                saleProduct.value
+            );
+
+
+        const quantity =
+            Number(
+                saleQuantity.value
+            );
+
+
+        if (
+            saleProduct.value === "" ||
+            !products[productIndex]
+        ) {
+
+            alert(
+                "Select a product."
+            );
+
+            return;
+
+        }
+
+
+        if (
+            isNaN(quantity) ||
+            quantity < 1 ||
+            !Number.isInteger(
+                quantity
+            )
+        ) {
+
+            alert(
+                "Enter a valid whole-number quantity."
+            );
+
+            return;
+
+        }
+
+
+        const product =
+            products[productIndex];
+
+
+        if (
+            product.stock <
+            quantity
+        ) {
+
+            alert(
+                `Not enough stock. Only ${product.stock} available.`
+            );
+
+            return;
+
+        }
+
+
+        const total =
+            product.price *
+            quantity;
+
+
+        // Reduce inventory
+
+        product.stock -=
+            quantity;
+
+
+        // Create sale
+
+        sales.push({
+
+            product:
+                product.name,
+
+            quantity:
+                quantity,
+
+            amount:
+                total,
+
+            date:
+                new Date()
+                    .toISOString()
+
+        });
+
+
+        saveData();
+
+        renderProducts();
+
+        renderSales();
+
+        updateDashboard();
+
+
+        saleFormElement.reset();
+
+        saleTotal.value =
+            "$0.00";
+
+
+        hideForm(
+            saleForm
+        );
+
+
+        alert(
+            `Sale recorded: ${quantity} × ${product.name} for $${total.toFixed(2)}`
+        );
+
+    }
+);
+
+
+// -------------------------
 // RENDER SALES
 // -------------------------
 
 function renderSales() {
 
-    if (sales.length === 0) {
+    if (
+        sales.length === 0
+    ) {
 
         salesList.className =
             "empty-state";
 
+
         salesList.innerHTML = `
 
-            <div>🧾</div>
+            <div>
+                🧾
+            </div>
 
             <h3>
                 No sales yet
@@ -894,7 +1369,9 @@ function renderSales() {
 
         `;
 
+
         return;
+
     }
 
 
@@ -903,181 +1380,103 @@ function renderSales() {
 
 
     salesList.innerHTML =
-        sales.map(
-            function (sale, index) {
+        sales
+            .slice()
+            .reverse()
+            .map(
+                function (
+                    sale,
+                    reverseIndex
+                ) {
 
-                return `
-
-                    <article class="data-card">
-
-                        <div class="data-icon">
-                            🧾
-                        </div>
-
-                        <h3>
-                            ${escapeHTML(
-                                sale.description
-                            )}
-                        </h3>
-
-                        <p>
-                            Amount:
-                            $${Number(
-                                sale.amount
-                            ).toFixed(2)}
-                        </p>
-
-                        <div class="card-actions">
-
-                            <button
-                                class="delete-button"
-                                onclick="deleteSale(${index})">
-
-                                Delete
-
-                            </button>
-
-                        </div>
-
-                    </article>
-
-                `;
-
-            }
-        ).join("");
-
-}
+                    const actualIndex =
+                        sales.length -
+                        1 -
+                        reverseIndex;
 
 
-// -------------------------
-// SHOW SALE FORM
-// -------------------------
+                    return `
 
-if (addSaleButton) {
-
-    addSaleButton.addEventListener(
-        "click",
-        function () {
-
-            showForm(
-                saleForm
-            );
-
-        }
-    );
-
-}
+                        <article
+                            class="data-card">
 
 
-// -------------------------
-// CANCEL SALE
-// -------------------------
+                            <div
+                                class="data-icon">
 
-if (cancelSaleButton) {
+                                🧾
 
-    cancelSaleButton.addEventListener(
-        "click",
-        function () {
-
-            saleFormElement.reset();
-
-            hideForm(
-                saleForm
-            );
-
-        }
-    );
-
-}
+                            </div>
 
 
-// -------------------------
-// SUBMIT SALE
-// -------------------------
+                            <h3>
 
-if (saleFormElement) {
+                                ${escapeHTML(
+                                    sale.product
+                                )}
 
-    saleFormElement.addEventListener(
-        "submit",
-        function (event) {
-
-            event.preventDefault();
+                            </h3>
 
 
-            const description =
-                document
-                    .getElementById(
-                        "saleDescription"
-                    )
-                    .value
-                    .trim();
+                            <p>
+
+                                Quantity:
+                                ${sale.quantity}
+
+                            </p>
 
 
-            const amount =
-                Number(
-                    document
-                        .getElementById(
-                            "saleAmount"
-                        )
-                        .value
-                );
+                            <p>
+
+                                Total:
+                                $${Number(
+                                    sale.amount
+                                ).toFixed(2)}
+
+                            </p>
 
 
-            if (!description) {
+                            <p>
 
-                alert(
-                    "Please enter a sale description."
-                );
+                                ${formatDate(
+                                    sale.date
+                                )}
 
-                return;
-            }
-
-
-            if (
-                isNaN(amount) ||
-                amount <= 0
-            ) {
-
-                alert(
-                    "Please enter a valid USD amount."
-                );
-
-                return;
-            }
+                            </p>
 
 
-            sales.push({
-
-                description:
-                    description,
-
-                amount:
-                    amount
-
-            });
+                            <div
+                                class="card-actions">
 
 
-            saveData();
+                                <button
+                                    class="delete-button"
+                                    onclick="deleteSale(
+                                        ${actualIndex}
+                                    )">
 
-            renderSales();
+                                    Delete
 
-            updateDashboard();
+                                </button>
 
-            saleFormElement.reset();
 
-            hideForm(
-                saleForm
-            );
+                            </div>
 
-        }
-    );
+
+                        </article>
+
+                    `;
+
+                }
+            )
+            .join("");
 
 }
 
 
-// -------------------------
+// =========================
 // DELETE SALE
-// -------------------------
+// =========================
 
 function deleteSale(index) {
 
@@ -1092,6 +1491,33 @@ function deleteSale(index) {
     }
 
 
+    const sale =
+        sales[index];
+
+
+    // Return sold stock
+
+    const product =
+        products.find(
+            function (item) {
+
+                return item.name ===
+                    sale.product;
+
+            }
+        );
+
+
+    if (product) {
+
+        product.stock +=
+            Number(
+                sale.quantity
+            );
+
+    }
+
+
     sales.splice(
         index,
         1
@@ -1100,7 +1526,11 @@ function deleteSale(index) {
 
     saveData();
 
+    renderProducts();
+
     renderSales();
+
+    updateSaleProductOptions();
 
     updateDashboard();
 
@@ -1108,68 +1538,128 @@ function deleteSale(index) {
 
 
 // =========================
-// RESET EVERYTHING
+// RESET
 // =========================
 
-if (resetDataButton) {
+resetDataButton.addEventListener(
+    "click",
+    function () {
 
-    resetDataButton.addEventListener(
-        "click",
-        function () {
+        if (
+            !confirm(
+                "Delete ALL BusinessOS data? This cannot be undone."
+            )
+        ) {
 
-            const confirmed =
-                confirm(
-                    "Delete ALL BusinessOS data? This cannot be undone."
-                );
+            return;
 
-
-            if (!confirmed) {
-                return;
-            }
+        }
 
 
-            products = [];
+        products = [];
 
-            customers = [];
+        customers = [];
 
-            sales = [];
-
-
-            saveData();
-
-            renderProducts();
-
-            renderCustomers();
-
-            renderSales();
-
-            updateDashboard();
+        sales = [];
 
 
-            productFormElement.reset();
-
-            customerFormElement.reset();
-
-            saleFormElement.reset();
+        saveData();
 
 
-            hideForm(
-                productForm
-            );
+        renderProducts();
 
-            hideForm(
-                customerForm
-            );
+        renderCustomers();
 
-            hideForm(
-                saleForm
-            );
+        renderSales();
+
+        updateSaleProductOptions();
+
+        updateDashboard();
 
 
-            alert(
-                "BusinessOS has been reset successfully."
-            );
+        productFormElement.reset();
 
+        customerFormElement.reset();
+
+        saleFormElement.reset();
+
+
+        saleTotal.value =
+            "$0.00";
+
+
+        hideForm(
+            productForm
+        );
+
+        hideForm(
+            customerForm
+        );
+
+        hideForm(
+            saleForm
+        );
+
+
+        alert(
+            "BusinessOS has been reset successfully."
+        );
+
+    }
+);
+
+
+// =========================
+// HELPERS
+// =========================
+
+function escapeHTML(value) {
+
+    return String(value)
+
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
+
+}
+
+
+function formatDate(date) {
+
+    if (!date) {
+        return "";
+    }
+
+
+    return new Date(
+        date
+    ).toLocaleDateString(
+        "en-US",
+        {
+            month: "short",
+            day: "numeric",
+            year: "numeric"
         }
     );
 
@@ -1177,23 +1667,7 @@ if (resetDataButton) {
 
 
 // =========================
-// SECURITY
-// =========================
-
-function escapeHTML(value) {
-
-    return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-
-}
-
-
-// =========================
-// START BUSINESSOS
+// START
 // =========================
 
 renderProducts();
@@ -1201,5 +1675,7 @@ renderProducts();
 renderCustomers();
 
 renderSales();
+
+updateSaleProductOptions();
 
 updateDashboard();
