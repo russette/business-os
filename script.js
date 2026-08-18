@@ -2153,7 +2153,13 @@ document.addEventListener("DOMContentLoaded", () => {
         : "Mark as Paid"}
 
 </button>
+<button
+    class="secondary-btn"
+    onclick="viewInvoice('${invoice.id}')">
 
+    👁️ View Invoice
+
+</button>
 <button
     class="delete-btn"
     onclick="deleteInvoice('${invoice.id}')">
