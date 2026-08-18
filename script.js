@@ -1,12 +1,10 @@
 // =========================
-// BUSINESSOS
-// COMPLETE USD VERSION
+// BUSINESSOS V2
 // =========================
 
-
-// =========================
+// -------------------------
 // DATA
-// =========================
+// -------------------------
 
 let products =
     JSON.parse(
@@ -24,9 +22,9 @@ let sales =
     ) || [];
 
 
-// =========================
+// -------------------------
 // ELEMENTS
-// =========================
+// -------------------------
 
 const menuButton =
     document.getElementById("menuButton");
@@ -55,19 +53,65 @@ const customerCountElement =
 const saleCountElement =
     document.getElementById("saleCount");
 
+
+// -------------------------
+// FORMS
+// -------------------------
+
+const productForm =
+    document.getElementById("productForm");
+
+const customerForm =
+    document.getElementById("customerForm");
+
+const saleForm =
+    document.getElementById("saleForm");
+
+const productFormElement =
+    document.getElementById("productFormElement");
+
+const customerFormElement =
+    document.getElementById("customerFormElement");
+
+const saleFormElement =
+    document.getElementById("saleFormElement");
+
+
+// -------------------------
+// BUTTONS
+// -------------------------
+
+const addProductButton =
+    document.getElementById("addProductButton");
+
+const addCustomerButton =
+    document.getElementById("addCustomerButton");
+
+const addSaleButton =
+    document.getElementById("addSaleButton");
+
+const cancelProductButton =
+    document.getElementById("cancelProductButton");
+
+const cancelCustomerButton =
+    document.getElementById("cancelCustomerButton");
+
+const cancelSaleButton =
+    document.getElementById("cancelSaleButton");
+
 const resetDataButton =
     document.getElementById("resetDataButton");
 
 
-// =========================
+// -------------------------
 // MOBILE MENU
-// =========================
+// -------------------------
 
 if (menuButton) {
 
     menuButton.addEventListener(
         "click",
-        () => {
+        function () {
 
             navigation.classList.toggle(
                 "show"
@@ -79,9 +123,35 @@ if (menuButton) {
 }
 
 
-// =========================
+// -------------------------
+// CLOSE MOBILE MENU
+// -------------------------
+
+if (navigation) {
+
+    navigation
+        .querySelectorAll("a")
+        .forEach(function (link) {
+
+            link.addEventListener(
+                "click",
+                function () {
+
+                    navigation.classList.remove(
+                        "show"
+                    );
+
+                }
+            );
+
+        });
+
+}
+
+
+// -------------------------
 // SAVE DATA
-// =========================
+// -------------------------
 
 function saveData() {
 
@@ -103,9 +173,9 @@ function saveData() {
 }
 
 
-// =========================
-// UPDATE DASHBOARD
-// =========================
+// -------------------------
+// DASHBOARD
+// -------------------------
 
 function updateDashboard() {
 
@@ -121,7 +191,7 @@ function updateDashboard() {
 
     const totalRevenue =
         sales.reduce(
-            (total, sale) => {
+            function (total, sale) {
 
                 return total +
                     Number(sale.amount);
@@ -132,7 +202,38 @@ function updateDashboard() {
 
 
     revenueElement.textContent =
-        `$${totalRevenue.toFixed(2)}`;
+        "$" + totalRevenue.toFixed(2);
+
+}
+
+
+// -------------------------
+// SHOW FORM
+// -------------------------
+
+function showForm(form) {
+
+    form.classList.remove(
+        "hidden"
+    );
+
+    form.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+
+}
+
+
+// -------------------------
+// HIDE FORM
+// -------------------------
+
+function hideForm(form) {
+
+    form.classList.add(
+        "hidden"
+    );
 
 }
 
@@ -140,6 +241,10 @@ function updateDashboard() {
 // =========================
 // PRODUCTS
 // =========================
+
+// -------------------------
+// RENDER PRODUCTS
+// -------------------------
 
 function renderProducts() {
 
@@ -150,9 +255,7 @@ function renderProducts() {
 
         productList.innerHTML = `
 
-            <div>
-                📦
-            </div>
+            <div>📦</div>
 
             <h3>
                 No products yet
@@ -175,20 +278,20 @@ function renderProducts() {
 
     productList.innerHTML =
         products.map(
-            (product, index) => {
+            function (product, index) {
 
                 return `
 
-                    <article
-                        class="data-card">
+                    <article class="data-card">
 
-                        <div
-                            class="data-icon">
+                        <div class="data-icon">
                             📦
                         </div>
 
                         <h3>
-                            ${product.name}
+                            ${escapeHTML(
+                                product.name
+                            )}
                         </h3>
 
                         <p>
@@ -203,8 +306,7 @@ function renderProducts() {
                             ${product.stock}
                         </p>
 
-                        <div
-                            class="card-actions">
+                        <div class="card-actions">
 
                             <button
                                 class="edit-button"
@@ -234,91 +336,158 @@ function renderProducts() {
 }
 
 
-// =========================
+// -------------------------
 // ADD PRODUCT
-// =========================
+// -------------------------
 
-function addProduct() {
+if (addProductButton) {
 
-    const name =
-        prompt(
-            "Enter product name:"
-        );
+    addProductButton.addEventListener(
+        "click",
+        function () {
 
+            showForm(
+                productForm
+            );
 
-    if (!name) {
-        return;
-    }
-
-
-    const price =
-        Number(
-            prompt(
-                "Enter product price in USD:"
-            )
-        );
-
-
-    if (
-        isNaN(price) ||
-        price < 0
-    ) {
-
-        alert(
-            "Please enter a valid USD price."
-        );
-
-        return;
-    }
-
-
-    const stock =
-        Number(
-            prompt(
-                "Enter stock quantity:"
-            )
-        );
-
-
-    if (
-        isNaN(stock) ||
-        stock < 0
-    ) {
-
-        alert(
-            "Please enter a valid stock quantity."
-        );
-
-        return;
-    }
-
-
-    products.push({
-
-        name:
-            name.trim(),
-
-        price:
-            price,
-
-        stock:
-            stock
-
-    });
-
-
-    saveData();
-
-    renderProducts();
-
-    updateDashboard();
+        }
+    );
 
 }
 
 
-// =========================
+// -------------------------
+// CANCEL PRODUCT
+// -------------------------
+
+if (cancelProductButton) {
+
+    cancelProductButton.addEventListener(
+        "click",
+        function () {
+
+            productFormElement.reset();
+
+            hideForm(
+                productForm
+            );
+
+        }
+    );
+
+}
+
+
+// -------------------------
+// SUBMIT PRODUCT
+// -------------------------
+
+if (productFormElement) {
+
+    productFormElement.addEventListener(
+        "submit",
+        function (event) {
+
+            event.preventDefault();
+
+
+            const name =
+                document
+                    .getElementById(
+                        "productName"
+                    )
+                    .value
+                    .trim();
+
+
+            const price =
+                Number(
+                    document
+                        .getElementById(
+                            "productPrice"
+                        )
+                        .value
+                );
+
+
+            const stock =
+                Number(
+                    document
+                        .getElementById(
+                            "productStock"
+                        )
+                        .value
+                );
+
+
+            if (!name) {
+
+                alert(
+                    "Please enter a product name."
+                );
+
+                return;
+            }
+
+
+            if (
+                isNaN(price) ||
+                price < 0
+            ) {
+
+                alert(
+                    "Please enter a valid USD price."
+                );
+
+                return;
+            }
+
+
+            if (
+                isNaN(stock) ||
+                stock < 0
+            ) {
+
+                alert(
+                    "Please enter a valid stock quantity."
+                );
+
+                return;
+            }
+
+
+            products.push({
+
+                name: name,
+
+                price: price,
+
+                stock: stock
+
+            });
+
+
+            saveData();
+
+            renderProducts();
+
+            updateDashboard();
+
+            productFormElement.reset();
+
+            hideForm(
+                productForm
+            );
+
+        }
+    );
+
+}
+
+
+// -------------------------
 // EDIT PRODUCT
-// =========================
+// -------------------------
 
 function editProduct(index) {
 
@@ -346,7 +515,7 @@ function editProduct(index) {
     const price =
         Number(
             prompt(
-                "Product price in USD:",
+                "Price in USD:",
                 product.price
             )
         );
@@ -358,7 +527,7 @@ function editProduct(index) {
     ) {
 
         alert(
-            "Please enter a valid USD price."
+            "Enter a valid USD price."
         );
 
         return;
@@ -380,7 +549,7 @@ function editProduct(index) {
     ) {
 
         alert(
-            "Please enter a valid stock quantity."
+            "Enter a valid stock quantity."
         );
 
         return;
@@ -410,20 +579,20 @@ function editProduct(index) {
 }
 
 
-// =========================
+// -------------------------
 // DELETE PRODUCT
-// =========================
+// -------------------------
 
 function deleteProduct(index) {
 
-    const confirmed =
-        confirm(
-            "Are you sure you want to delete this product?"
-        );
+    if (
+        !confirm(
+            "Delete this product?"
+        )
+    ) {
 
-
-    if (!confirmed) {
         return;
+
     }
 
 
@@ -446,6 +615,10 @@ function deleteProduct(index) {
 // CUSTOMERS
 // =========================
 
+// -------------------------
+// RENDER CUSTOMERS
+// -------------------------
+
 function renderCustomers() {
 
     if (customers.length === 0) {
@@ -455,9 +628,7 @@ function renderCustomers() {
 
         customerList.innerHTML = `
 
-            <div>
-                👥
-            </div>
+            <div>👥</div>
 
             <h3>
                 No customers yet
@@ -480,33 +651,45 @@ function renderCustomers() {
 
     customerList.innerHTML =
         customers.map(
-            (customer, index) => {
+            function (customer, index) {
 
                 return `
 
-                    <article
-                        class="data-card">
+                    <article class="data-card">
 
-                        <div
-                            class="data-icon">
+                        <div class="data-icon">
                             👤
                         </div>
 
                         <h3>
-                            ${customer.name}
+                            ${escapeHTML(
+                                customer.name
+                            )}
                         </h3>
 
                         <p>
-                            ${customer.phone}
+                            ${escapeHTML(
+                                customer.email
+                            )}
                         </p>
 
-                        <button
-                            class="delete-button"
-                            onclick="deleteCustomer(${index})">
+                        <p>
+                            ${escapeHTML(
+                                customer.phone || "No phone"
+                            )}
+                        </p>
 
-                            Delete
+                        <div class="card-actions">
 
-                        </button>
+                            <button
+                                class="delete-button"
+                                onclick="deleteCustomer(${index})">
+
+                                Delete
+
+                            </button>
+
+                        </div>
 
                     </article>
 
@@ -518,68 +701,151 @@ function renderCustomers() {
 }
 
 
-// =========================
-// ADD CUSTOMER
-// =========================
+// -------------------------
+// SHOW CUSTOMER FORM
+// -------------------------
 
-function addCustomer() {
+if (addCustomerButton) {
 
-    const name =
-        prompt(
-            "Customer name:"
-        );
+    addCustomerButton.addEventListener(
+        "click",
+        function () {
 
+            showForm(
+                customerForm
+            );
 
-    if (!name) {
-        return;
-    }
-
-
-    const phone =
-        prompt(
-            "Customer phone number:"
-        );
-
-
-    if (!phone) {
-        return;
-    }
-
-
-    customers.push({
-
-        name:
-            name.trim(),
-
-        phone:
-            phone.trim()
-
-    });
-
-
-    saveData();
-
-    renderCustomers();
-
-    updateDashboard();
+        }
+    );
 
 }
 
 
-// =========================
+// -------------------------
+// CANCEL CUSTOMER
+// -------------------------
+
+if (cancelCustomerButton) {
+
+    cancelCustomerButton.addEventListener(
+        "click",
+        function () {
+
+            customerFormElement.reset();
+
+            hideForm(
+                customerForm
+            );
+
+        }
+    );
+
+}
+
+
+// -------------------------
+// SUBMIT CUSTOMER
+// -------------------------
+
+if (customerFormElement) {
+
+    customerFormElement.addEventListener(
+        "submit",
+        function (event) {
+
+            event.preventDefault();
+
+
+            const name =
+                document
+                    .getElementById(
+                        "customerName"
+                    )
+                    .value
+                    .trim();
+
+
+            const email =
+                document
+                    .getElementById(
+                        "customerEmail"
+                    )
+                    .value
+                    .trim();
+
+
+            const phone =
+                document
+                    .getElementById(
+                        "customerPhone"
+                    )
+                    .value
+                    .trim();
+
+
+            if (!name) {
+
+                alert(
+                    "Please enter the customer's name."
+                );
+
+                return;
+            }
+
+
+            if (!email) {
+
+                alert(
+                    "Please enter the customer's email."
+                );
+
+                return;
+            }
+
+
+            customers.push({
+
+                name: name,
+
+                email: email,
+
+                phone: phone
+
+            });
+
+
+            saveData();
+
+            renderCustomers();
+
+            updateDashboard();
+
+            customerFormElement.reset();
+
+            hideForm(
+                customerForm
+            );
+
+        }
+    );
+
+}
+
+
+// -------------------------
 // DELETE CUSTOMER
-// =========================
+// -------------------------
 
 function deleteCustomer(index) {
 
-    const confirmed =
-        confirm(
+    if (
+        !confirm(
             "Delete this customer?"
-        );
+        )
+    ) {
 
-
-    if (!confirmed) {
         return;
+
     }
 
 
@@ -602,6 +868,10 @@ function deleteCustomer(index) {
 // SALES
 // =========================
 
+// -------------------------
+// RENDER SALES
+// -------------------------
+
 function renderSales() {
 
     if (sales.length === 0) {
@@ -611,9 +881,7 @@ function renderSales() {
 
         salesList.innerHTML = `
 
-            <div>
-                🧾
-            </div>
+            <div>🧾</div>
 
             <h3>
                 No sales yet
@@ -636,20 +904,20 @@ function renderSales() {
 
     salesList.innerHTML =
         sales.map(
-            (sale, index) => {
+            function (sale, index) {
 
                 return `
 
-                    <article
-                        class="data-card">
+                    <article class="data-card">
 
-                        <div
-                            class="data-icon">
+                        <div class="data-icon">
                             🧾
                         </div>
 
                         <h3>
-                            ${sale.description}
+                            ${escapeHTML(
+                                sale.description
+                            )}
                         </h3>
 
                         <p>
@@ -659,13 +927,17 @@ function renderSales() {
                             ).toFixed(2)}
                         </p>
 
-                        <button
-                            class="delete-button"
-                            onclick="deleteSale(${index})">
+                        <div class="card-actions">
 
-                            Delete
+                            <button
+                                class="delete-button"
+                                onclick="deleteSale(${index})">
 
-                        </button>
+                                Delete
+
+                            </button>
+
+                        </div>
 
                     </article>
 
@@ -677,78 +949,146 @@ function renderSales() {
 }
 
 
-// =========================
-// RECORD SALE
-// =========================
+// -------------------------
+// SHOW SALE FORM
+// -------------------------
 
-function addSale() {
+if (addSaleButton) {
 
-    const description =
-        prompt(
-            "What was sold?"
-        );
+    addSaleButton.addEventListener(
+        "click",
+        function () {
 
+            showForm(
+                saleForm
+            );
 
-    if (!description) {
-        return;
-    }
-
-
-    const amount =
-        Number(
-            prompt(
-                "Enter sale amount in USD:"
-            )
-        );
-
-
-    if (
-        isNaN(amount) ||
-        amount <= 0
-    ) {
-
-        alert(
-            "Please enter a valid USD sale amount."
-        );
-
-        return;
-    }
-
-
-    sales.push({
-
-        description:
-            description.trim(),
-
-        amount:
-            amount
-
-    });
-
-
-    saveData();
-
-    renderSales();
-
-    updateDashboard();
+        }
+    );
 
 }
 
 
-// =========================
+// -------------------------
+// CANCEL SALE
+// -------------------------
+
+if (cancelSaleButton) {
+
+    cancelSaleButton.addEventListener(
+        "click",
+        function () {
+
+            saleFormElement.reset();
+
+            hideForm(
+                saleForm
+            );
+
+        }
+    );
+
+}
+
+
+// -------------------------
+// SUBMIT SALE
+// -------------------------
+
+if (saleFormElement) {
+
+    saleFormElement.addEventListener(
+        "submit",
+        function (event) {
+
+            event.preventDefault();
+
+
+            const description =
+                document
+                    .getElementById(
+                        "saleDescription"
+                    )
+                    .value
+                    .trim();
+
+
+            const amount =
+                Number(
+                    document
+                        .getElementById(
+                            "saleAmount"
+                        )
+                        .value
+                );
+
+
+            if (!description) {
+
+                alert(
+                    "Please enter a sale description."
+                );
+
+                return;
+            }
+
+
+            if (
+                isNaN(amount) ||
+                amount <= 0
+            ) {
+
+                alert(
+                    "Please enter a valid USD amount."
+                );
+
+                return;
+            }
+
+
+            sales.push({
+
+                description:
+                    description,
+
+                amount:
+                    amount
+
+            });
+
+
+            saveData();
+
+            renderSales();
+
+            updateDashboard();
+
+            saleFormElement.reset();
+
+            hideForm(
+                saleForm
+            );
+
+        }
+    );
+
+}
+
+
+// -------------------------
 // DELETE SALE
-// =========================
+// -------------------------
 
 function deleteSale(index) {
 
-    const confirmed =
-        confirm(
+    if (
+        !confirm(
             "Delete this sale?"
-        );
+        )
+    ) {
 
-
-    if (!confirmed) {
         return;
+
     }
 
 
@@ -768,109 +1108,92 @@ function deleteSale(index) {
 
 
 // =========================
-// RESET BUSINESS DATA
+// RESET EVERYTHING
 // =========================
-
-function resetBusinessData() {
-
-    const confirmed =
-        confirm(
-            "This will permanently remove all BusinessOS products, customers and sales from this browser. Continue?"
-        );
-
-
-    if (!confirmed) {
-        return;
-    }
-
-
-    products = [];
-
-    customers = [];
-
-    sales = [];
-
-
-    saveData();
-
-    renderProducts();
-
-    renderCustomers();
-
-    renderSales();
-
-    updateDashboard();
-
-
-    alert(
-        "BusinessOS data has been reset."
-    );
-
-}
-
-
-// =========================
-// BUTTON EVENTS
-// =========================
-
-const addProductButton =
-    document.getElementById(
-        "addProductButton"
-    );
-
-const addCustomerButton =
-    document.getElementById(
-        "addCustomerButton"
-    );
-
-const addSaleButton =
-    document.getElementById(
-        "addSaleButton"
-    );
-
-
-if (addProductButton) {
-
-    addProductButton.addEventListener(
-        "click",
-        addProduct
-    );
-
-}
-
-
-if (addCustomerButton) {
-
-    addCustomerButton.addEventListener(
-        "click",
-        addCustomer
-    );
-
-}
-
-
-if (addSaleButton) {
-
-    addSaleButton.addEventListener(
-        "click",
-        addSale
-    );
-
-}
-
 
 if (resetDataButton) {
 
     resetDataButton.addEventListener(
         "click",
-        resetBusinessData
+        function () {
+
+            const confirmed =
+                confirm(
+                    "Delete ALL BusinessOS data? This cannot be undone."
+                );
+
+
+            if (!confirmed) {
+                return;
+            }
+
+
+            products = [];
+
+            customers = [];
+
+            sales = [];
+
+
+            saveData();
+
+            renderProducts();
+
+            renderCustomers();
+
+            renderSales();
+
+            updateDashboard();
+
+
+            productFormElement.reset();
+
+            customerFormElement.reset();
+
+            saleFormElement.reset();
+
+
+            hideForm(
+                productForm
+            );
+
+            hideForm(
+                customerForm
+            );
+
+            hideForm(
+                saleForm
+            );
+
+
+            alert(
+                "BusinessOS has been reset successfully."
+            );
+
+        }
     );
 
 }
 
 
 // =========================
-// START APP
+// SECURITY
+// =========================
+
+function escapeHTML(value) {
+
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+}
+
+
+// =========================
+// START BUSINESSOS
 // =========================
 
 renderProducts();
