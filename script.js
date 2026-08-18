@@ -1,54 +1,72 @@
-// =========================
-// BUSINESSOS V5
-// INVOICES
-// =========================
+// ==========================================
+// BUSINESSOS V6
+// COMPLETE APPLICATION
+// ==========================================
 
 
-// =========================
+// ==========================================
 // DATA
-// =========================
+// ==========================================
 
 let products =
     JSON.parse(
-        localStorage.getItem(
-            "businessOSProducts"
-        )
+        localStorage.getItem("businessOSProducts")
     ) || [];
 
 
 let customers =
     JSON.parse(
-        localStorage.getItem(
-            "businessOSCustomers"
-        )
+        localStorage.getItem("businessOSCustomers")
     ) || [];
 
 
 let sales =
     JSON.parse(
-        localStorage.getItem(
-            "businessOSSales"
-        )
+        localStorage.getItem("businessOSSales")
     ) || [];
 
 
 let invoices =
     JSON.parse(
-        localStorage.getItem(
-            "businessOSInvoices"
-        )
+        localStorage.getItem("businessOSInvoices")
     ) || [];
 
 
-// =========================
+// ==========================================
 // ELEMENTS
-// =========================
+// ==========================================
 
 const menuButton =
     document.getElementById("menuButton");
 
 const navigation =
     document.getElementById("navigation");
+
+
+const revenueElement =
+    document.getElementById("revenue");
+
+const productCountElement =
+    document.getElementById("productCount");
+
+const customerCountElement =
+    document.getElementById("customerCount");
+
+const saleCountElement =
+    document.getElementById("saleCount");
+
+
+const averageSaleElement =
+    document.getElementById("averageSale");
+
+const unitsInStockElement =
+    document.getElementById("unitsInStock");
+
+const inventoryValueElement =
+    document.getElementById("inventoryValue");
+
+const bestSellerElement =
+    document.getElementById("bestSeller");
 
 
 const productList =
@@ -64,35 +82,6 @@ const invoiceList =
     document.getElementById("invoiceList");
 
 
-// Dashboard
-
-const revenueElement =
-    document.getElementById("revenue");
-
-const productCountElement =
-    document.getElementById("productCount");
-
-const customerCountElement =
-    document.getElementById("customerCount");
-
-const saleCountElement =
-    document.getElementById("saleCount");
-
-
-// Analytics
-
-const averageSaleElement =
-    document.getElementById("averageSale");
-
-const unitsInStockElement =
-    document.getElementById("unitsInStock");
-
-const inventoryValueElement =
-    document.getElementById("inventoryValue");
-
-const bestSellerElement =
-    document.getElementById("bestSeller");
-
 const topProductsElement =
     document.getElementById("topProducts");
 
@@ -101,6 +90,10 @@ const inventoryAlertsElement =
 
 const salesOverviewElement =
     document.getElementById("salesOverview");
+
+
+const revenueChart =
+    document.getElementById("revenueChart");
 
 
 // Forms
@@ -119,163 +112,80 @@ const invoiceForm =
 
 
 const productFormElement =
-    document.getElementById(
-        "productFormElement"
-    );
+    document.getElementById("productFormElement");
 
 const customerFormElement =
-    document.getElementById(
-        "customerFormElement"
-    );
+    document.getElementById("customerFormElement");
 
 const saleFormElement =
-    document.getElementById(
-        "saleFormElement"
-    );
+    document.getElementById("saleFormElement");
 
 const invoiceFormElement =
-    document.getElementById(
-        "invoiceFormElement"
-    );
+    document.getElementById("invoiceFormElement");
 
 
 // Buttons
 
 const addProductButton =
-    document.getElementById(
-        "addProductButton"
-    );
+    document.getElementById("addProductButton");
 
 const addCustomerButton =
-    document.getElementById(
-        "addCustomerButton"
-    );
+    document.getElementById("addCustomerButton");
 
 const addSaleButton =
-    document.getElementById(
-        "addSaleButton"
-    );
+    document.getElementById("addSaleButton");
 
 const createInvoiceButton =
-    document.getElementById(
-        "createInvoiceButton"
-    );
+    document.getElementById("createInvoiceButton");
 
 
 const cancelProductButton =
-    document.getElementById(
-        "cancelProductButton"
-    );
+    document.getElementById("cancelProductButton");
 
 const cancelCustomerButton =
-    document.getElementById(
-        "cancelCustomerButton"
-    );
+    document.getElementById("cancelCustomerButton");
 
 const cancelSaleButton =
-    document.getElementById(
-        "cancelSaleButton"
-    );
+    document.getElementById("cancelSaleButton");
 
 const cancelInvoiceButton =
-    document.getElementById(
-        "cancelInvoiceButton"
-    );
+    document.getElementById("cancelInvoiceButton");
 
 
 const resetDataButton =
-    document.getElementById(
-        "resetDataButton"
-    );
+    document.getElementById("resetDataButton");
 
 
-// Sales
+// Sale fields
 
 const saleProduct =
-    document.getElementById(
-        "saleProduct"
-    );
+    document.getElementById("saleProduct");
 
 const saleQuantity =
-    document.getElementById(
-        "saleQuantity"
-    );
+    document.getElementById("saleQuantity");
 
 const saleTotal =
-    document.getElementById(
-        "saleTotal"
-    );
+    document.getElementById("saleTotal");
 
 
-// Invoice
+// Invoice fields
 
 const invoiceCustomer =
-    document.getElementById(
-        "invoiceCustomer"
-    );
+    document.getElementById("invoiceCustomer");
 
 const invoiceProduct =
-    document.getElementById(
-        "invoiceProduct"
-    );
+    document.getElementById("invoiceProduct");
 
 const invoiceQuantity =
-    document.getElementById(
-        "invoiceQuantity"
-    );
+    document.getElementById("invoiceQuantity");
 
 const invoiceTotal =
-    document.getElementById(
-        "invoiceTotal"
-    );
+    document.getElementById("invoiceTotal");
 
 
-// =========================
-// MOBILE MENU
-// =========================
-
-if (
-    menuButton &&
-    navigation
-) {
-
-    menuButton.addEventListener(
-        "click",
-        function () {
-
-            navigation.classList.toggle(
-                "show"
-            );
-
-        }
-    );
-
-
-    navigation
-        .querySelectorAll("a")
-        .forEach(
-            function (link) {
-
-                link.addEventListener(
-                    "click",
-                    function () {
-
-                        navigation.classList.remove(
-                            "show"
-                        );
-
-                    }
-                );
-
-            }
-        );
-
-}
-
-
-// =========================
-// SAVE
-// =========================
+// ==========================================
+// SAVE DATA
+// ==========================================
 
 function saveData() {
 
@@ -284,32 +194,98 @@ function saveData() {
         JSON.stringify(products)
     );
 
-
     localStorage.setItem(
         "businessOSCustomers",
         JSON.stringify(customers)
     );
-
 
     localStorage.setItem(
         "businessOSSales",
         JSON.stringify(sales)
     );
 
-
     localStorage.setItem(
         "businessOSInvoices",
         JSON.stringify(invoices)
     );
+}
+
+
+// ==========================================
+// MOBILE MENU
+// ==========================================
+
+menuButton.addEventListener(
+    "click",
+    function () {
+
+        navigation.classList.toggle("show");
+
+    }
+);
+
+
+navigation
+    .querySelectorAll("a")
+    .forEach(
+        function (link) {
+
+            link.addEventListener(
+                "click",
+                function () {
+
+                    navigation.classList.remove("show");
+
+                }
+            );
+
+        }
+    );
+
+
+// ==========================================
+// FORM HELPERS
+// ==========================================
+
+function showForm(form) {
+
+    form.classList.remove("hidden");
+
+    form.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+}
+
+
+function hideForm(form) {
+
+    form.classList.add("hidden");
 
 }
 
 
-// =========================
+// ==========================================
 // DASHBOARD
-// =========================
+// ==========================================
 
 function updateDashboard() {
+
+    const revenue =
+        sales.reduce(
+            function (total, sale) {
+
+                return total +
+                    Number(sale.amount || 0);
+
+            },
+            0
+        );
+
+
+    revenueElement.textContent =
+        "$" + revenue.toFixed(2);
+
 
     productCountElement.textContent =
         products.length;
@@ -323,78 +299,46 @@ function updateDashboard() {
         sales.length;
 
 
-    const revenue =
-        sales.reduce(
-            function (
-                total,
-                sale
-            ) {
-
-                return total +
-                    Number(
-                        sale.amount || 0
-                    );
-
-            },
-            0
-        );
-
-
-    revenueElement.textContent =
-        "$" +
-        revenue.toFixed(2);
-
-
     updateAnalytics();
 
+    renderRevenueChart();
 }
 
 
-// =========================
+// ==========================================
 // ANALYTICS
-// =========================
+// ==========================================
 
 function updateAnalytics() {
 
     const revenue =
         sales.reduce(
-            function (
-                total,
-                sale
-            ) {
+            function (total, sale) {
 
                 return total +
-                    Number(
-                        sale.amount || 0
-                    );
+                    Number(sale.amount || 0);
 
             },
             0
         );
 
 
-    const averageSale =
+    const average =
         sales.length
             ? revenue / sales.length
             : 0;
 
 
     averageSaleElement.textContent =
-        "$" +
-        averageSale.toFixed(2);
+        "$" + average.toFixed(2);
 
 
-    const units =
+    const stock =
         products.reduce(
-            function (
-                total,
-                product
-            ) {
+            function (total, product) {
 
                 return total +
-                    Number(
-                        product.stock || 0
-                    );
+                    Number(product.stock || 0);
 
             },
             0
@@ -402,25 +346,16 @@ function updateAnalytics() {
 
 
     unitsInStockElement.textContent =
-        units;
+        stock;
 
 
     const inventoryValue =
         products.reduce(
-            function (
-                total,
-                product
-            ) {
+            function (total, product) {
 
                 return total +
-                    (
-                        Number(
-                            product.price || 0
-                        ) *
-                        Number(
-                            product.stock || 0
-                        )
-                    );
+                    Number(product.price || 0) *
+                    Number(product.stock || 0);
 
             },
             0
@@ -428,8 +363,7 @@ function updateAnalytics() {
 
 
     inventoryValueElement.textContent =
-        "$" +
-        inventoryValue.toFixed(2);
+        "$" + inventoryValue.toFixed(2);
 
 
     const productSales = {};
@@ -439,41 +373,30 @@ function updateAnalytics() {
         function (sale) {
 
             if (
-                !productSales[
-                    sale.product
-                ]
+                !productSales[sale.product]
             ) {
 
-                productSales[
-                    sale.product
-                ] = 0;
+                productSales[sale.product] = 0;
 
             }
 
 
-            productSales[
-                sale.product
-            ] += Number(
-                sale.quantity || 0
-            );
+            productSales[sale.product] +=
+                Number(sale.quantity || 0);
 
         }
     );
 
 
     const sorted =
-        Object.entries(
-            productSales
-        ).sort(
-            function (
-                a,
-                b
-            ) {
+        Object.entries(productSales)
+            .sort(
+                function (a, b) {
 
-                return b[1] - a[1];
+                    return b[1] - a[1];
 
-            }
-        );
+                }
+            );
 
 
     bestSellerElement.textContent =
@@ -482,24 +405,20 @@ function updateAnalytics() {
             : "None yet";
 
 
-    renderTopProducts(
-        sorted
-    );
-
+    renderTopProducts(sorted);
 
     renderInventoryAlerts();
 
-
-    renderSalesOverview(
-        revenue
-    );
+    renderSalesOverview(revenue);
 
 }
 
 
-function renderTopProducts(
-    sorted
-) {
+// ==========================================
+// TOP PRODUCTS
+// ==========================================
+
+function renderTopProducts(sorted) {
 
     if (!sorted.length) {
 
@@ -517,12 +436,10 @@ function renderTopProducts(
         sorted
             .slice(0, 5)
             .map(
-                function (
-                    item,
-                    index
-                ) {
+                function (item, index) {
 
                     return `
+
                         <div class="analytics-row">
 
                             <span>
@@ -530,9 +447,7 @@ function renderTopProducts(
                                     #${index + 1}
                                 </strong>
 
-                                ${escapeHTML(
-                                    item[0]
-                                )}
+                                ${escapeHTML(item[0])}
                             </span>
 
                             <strong>
@@ -540,26 +455,26 @@ function renderTopProducts(
                             </strong>
 
                         </div>
+
                     `;
 
                 }
             )
             .join("");
-
 }
 
+
+// ==========================================
+// INVENTORY ALERTS
+// ==========================================
 
 function renderInventoryAlerts() {
 
     const lowStock =
         products.filter(
-            function (
-                product
-            ) {
+            function (product) {
 
-                return Number(
-                    product.stock
-                ) <= 3;
+                return Number(product.stock) <= 3;
 
             }
         );
@@ -580,43 +495,42 @@ function renderInventoryAlerts() {
     inventoryAlertsElement.innerHTML =
         lowStock
             .map(
-                function (
-                    product
-                ) {
+                function (product) {
+
+                    const message =
+                        Number(product.stock) === 0
+                            ? "OUT OF STOCK"
+                            : `${product.stock} left`;
+
 
                     return `
+
                         <div class="analytics-row">
 
                             <span>
                                 📦
-                                ${escapeHTML(
-                                    product.name
-                                )}
+                                ${escapeHTML(product.name)}
                             </span>
 
                             <strong>
-                                ${
-                                    Number(
-                                        product.stock
-                                    ) === 0
-                                        ? "OUT OF STOCK"
-                                        : `${product.stock} left`
-                                }
+                                ${message}
                             </strong>
 
                         </div>
+
                     `;
 
                 }
             )
             .join("");
-
 }
 
 
-function renderSalesOverview(
-    revenue
-) {
+// ==========================================
+// SALES OVERVIEW
+// ==========================================
+
+function renderSalesOverview(revenue) {
 
     if (!sales.length) {
 
@@ -632,27 +546,20 @@ function renderSalesOverview(
 
     const unitsSold =
         sales.reduce(
-            function (
-                total,
-                sale
-            ) {
+            function (total, sale) {
 
                 return total +
-                    Number(
-                        sale.quantity || 0
-                    );
+                    Number(sale.quantity || 0);
 
             },
             0
         );
 
 
-    const largest =
+    const largestSale =
         Math.max(
             ...sales.map(
-                function (
-                    sale
-                ) {
+                function (sale) {
 
                     return Number(
                         sale.amount || 0
@@ -699,8 +606,7 @@ function renderSalesOverview(
 
             <strong>
                 $${(
-                    revenue /
-                    sales.length
+                    revenue / sales.length
                 ).toFixed(2)}
             </strong>
 
@@ -714,51 +620,333 @@ function renderSalesOverview(
             </span>
 
             <strong>
-                $${largest.toFixed(2)}
+                $${largestSale.toFixed(2)}
             </strong>
 
         </div>
 
     `;
-
 }
 
 
-// =========================
-// FORM HELPERS
-// =========================
+// ==========================================
+// REVENUE CHART
+// ==========================================
 
-function showForm(
-    form
-) {
+function renderRevenueChart() {
 
-    form.classList.remove(
-        "hidden"
+    if (!revenueChart) return;
+
+
+    const ctx =
+        revenueChart.getContext("2d");
+
+
+    const width =
+        revenueChart.clientWidth || 600;
+
+    const height =
+        300;
+
+
+    const pixelRatio =
+        window.devicePixelRatio || 1;
+
+
+    revenueChart.width =
+        width * pixelRatio;
+
+    revenueChart.height =
+        height * pixelRatio;
+
+
+    ctx.setTransform(
+        pixelRatio,
+        0,
+        0,
+        pixelRatio,
+        0,
+        0
     );
 
 
-    form.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-    });
+    ctx.clearRect(
+        0,
+        0,
+        width,
+        height
+    );
 
-}
+
+    const dailyRevenue = {};
 
 
-function hideForm(
-    form
-) {
+    sales.forEach(
+        function (sale) {
 
-    form.classList.add(
-        "hidden"
+            const date =
+                new Date(sale.date)
+                    .toLocaleDateString(
+                        "en-US",
+                        {
+                            month: "short",
+                            day: "numeric"
+                        }
+                    );
+
+
+            if (
+                !dailyRevenue[date]
+            ) {
+
+                dailyRevenue[date] = 0;
+
+            }
+
+
+            dailyRevenue[date] +=
+                Number(sale.amount || 0);
+
+        }
+    );
+
+
+    const labels =
+        Object.keys(dailyRevenue);
+
+
+    const values =
+        Object.values(dailyRevenue);
+
+
+    if (!labels.length) {
+
+        ctx.fillStyle =
+            "#9ca3af";
+
+        ctx.font =
+            "14px Arial";
+
+        ctx.textAlign =
+            "center";
+
+        ctx.fillText(
+            "Your revenue chart will appear here after your first sale.",
+            width / 2,
+            height / 2
+        );
+
+        return;
+    }
+
+
+    const padding = 45;
+
+
+    const chartWidth =
+        width - padding * 2;
+
+    const chartHeight =
+        height - padding * 2;
+
+
+    const maxValue =
+        Math.max(
+            ...values,
+            1
+        );
+
+
+    // Grid lines
+
+    ctx.strokeStyle =
+        "#e5e7eb";
+
+    ctx.lineWidth =
+        1;
+
+
+    for (
+        let i = 0;
+        i <= 4;
+        i++
+    ) {
+
+        const y =
+            padding +
+            (
+                chartHeight *
+                i /
+                4
+            );
+
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            padding,
+            y
+        );
+
+        ctx.lineTo(
+            width - padding,
+            y
+        );
+
+        ctx.stroke();
+
+
+        const value =
+            maxValue *
+            (
+                1 - i / 4
+            );
+
+
+        ctx.fillStyle =
+            "#9ca3af";
+
+        ctx.font =
+            "11px Arial";
+
+        ctx.textAlign =
+            "left";
+
+        ctx.fillText(
+            "$" + Math.round(value),
+            5,
+            y + 4
+        );
+
+    }
+
+
+    // Revenue line
+
+    ctx.beginPath();
+
+
+    values.forEach(
+        function (value, index) {
+
+            const x =
+                labels.length === 1
+                    ? width / 2
+                    : padding +
+                      (
+                        chartWidth *
+                        index /
+                        (labels.length - 1)
+                      );
+
+
+            const y =
+                padding +
+                chartHeight -
+                (
+                    value /
+                    maxValue
+                ) *
+                chartHeight;
+
+
+            if (index === 0) {
+
+                ctx.moveTo(
+                    x,
+                    y
+                );
+
+            } else {
+
+                ctx.lineTo(
+                    x,
+                    y
+                );
+
+            }
+
+        }
+    );
+
+
+    ctx.strokeStyle =
+        "#6366f1";
+
+    ctx.lineWidth =
+        3;
+
+    ctx.stroke();
+
+
+    // Points
+
+    values.forEach(
+        function (value, index) {
+
+            const x =
+                labels.length === 1
+                    ? width / 2
+                    : padding +
+                      (
+                        chartWidth *
+                        index /
+                        (labels.length - 1)
+                      );
+
+
+            const y =
+                padding +
+                chartHeight -
+                (
+                    value /
+                    maxValue
+                ) *
+                chartHeight;
+
+
+            ctx.beginPath();
+
+            ctx.arc(
+                x,
+                y,
+                5,
+                0,
+                Math.PI * 2
+            );
+
+
+            ctx.fillStyle =
+                "#6366f1";
+
+            ctx.fill();
+
+
+            ctx.fillStyle =
+                "#6b7280";
+
+            ctx.font =
+                "11px Arial";
+
+            ctx.textAlign =
+                "center";
+
+
+            ctx.fillText(
+                labels[index],
+                x,
+                height - 12
+            );
+
+        }
     );
 
 }
 
 
-// =========================
+// ==========================================
 // PRODUCTS
-// =========================
+// ==========================================
 
 function renderProducts() {
 
@@ -769,16 +957,19 @@ function renderProducts() {
 
 
         productList.innerHTML = `
-            <div>📦</div>
+
+            <div class="empty-icon">
+                📦
+            </div>
 
             <h3>
                 No products yet
             </h3>
 
             <p>
-                Add your first product to start
-                managing your inventory.
+                Add your first product to start managing inventory.
             </p>
+
         `;
 
         return;
@@ -792,28 +983,21 @@ function renderProducts() {
     productList.innerHTML =
         products
             .map(
-                function (
-                    product,
-                    index
-                ) {
+                function (product, index) {
 
                     let status =
                         "IN STOCK";
 
 
                     if (
-                        Number(
-                            product.stock
-                        ) === 0
+                        Number(product.stock) === 0
                     ) {
 
                         status =
                             "OUT OF STOCK";
 
                     } else if (
-                        Number(
-                            product.stock
-                        ) <= 3
+                        Number(product.stock) <= 3
                     ) {
 
                         status =
@@ -823,6 +1007,7 @@ function renderProducts() {
 
 
                     return `
+
                         <article class="data-card">
 
                             <div class="data-icon">
@@ -830,16 +1015,12 @@ function renderProducts() {
                             </div>
 
                             <h3>
-                                ${escapeHTML(
-                                    product.name
-                                )}
+                                ${escapeHTML(product.name)}
                             </h3>
 
                             <p>
                                 Price:
-                                $${Number(
-                                    product.price
-                                ).toFixed(2)}
+                                $${Number(product.price).toFixed(2)}
                             </p>
 
                             <p>
@@ -856,39 +1037,37 @@ function renderProducts() {
 
                                 <button
                                     class="edit-button"
-                                    onclick="editProduct(${index})">
-
+                                    onclick="editProduct(${index})"
+                                >
                                     Edit
-
                                 </button>
 
                                 <button
                                     class="delete-button"
-                                    onclick="deleteProduct(${index})">
-
+                                    onclick="deleteProduct(${index})"
+                                >
                                     Delete
-
                                 </button>
 
                             </div>
 
                         </article>
+
                     `;
 
                 }
             )
             .join("");
-
 }
 
+
+// Add product
 
 addProductButton.addEventListener(
     "click",
     function () {
 
-        showForm(
-            productForm
-        );
+        showForm(productForm);
 
     }
 );
@@ -900,9 +1079,7 @@ cancelProductButton.addEventListener(
 
         productFormElement.reset();
 
-        hideForm(
-            productForm
-        );
+        hideForm(productForm);
 
     }
 );
@@ -917,9 +1094,7 @@ productFormElement.addEventListener(
 
         const name =
             document
-                .getElementById(
-                    "productName"
-                )
+                .getElementById("productName")
                 .value
                 .trim();
 
@@ -927,9 +1102,7 @@ productFormElement.addEventListener(
         const price =
             Number(
                 document
-                    .getElementById(
-                        "productPrice"
-                    )
+                    .getElementById("productPrice")
                     .value
             );
 
@@ -937,9 +1110,7 @@ productFormElement.addEventListener(
         const stock =
             Number(
                 document
-                    .getElementById(
-                        "productStock"
-                    )
+                    .getElementById("productStock")
                     .value
             );
 
@@ -960,7 +1131,7 @@ productFormElement.addEventListener(
         ) {
 
             alert(
-                "Enter a valid selling price."
+                "Enter a valid price."
             );
 
             return;
@@ -982,14 +1153,11 @@ productFormElement.addEventListener(
 
         products.push({
 
-            name:
-                name,
+            name: name,
 
-            price:
-                price,
+            price: price,
 
-            stock:
-                stock
+            stock: stock
 
         });
 
@@ -1007,17 +1175,15 @@ productFormElement.addEventListener(
 
         productFormElement.reset();
 
-        hideForm(
-            productForm
-        );
+        hideForm(productForm);
 
     }
 );
 
 
-function editProduct(
-    index
-) {
+// Edit product
+
+function editProduct(index) {
 
     const product =
         products[index];
@@ -1082,14 +1248,11 @@ function editProduct(
 
     products[index] = {
 
-        name:
-            name.trim(),
+        name: name.trim(),
 
-        price:
-            price,
+        price: price,
 
-        stock:
-            stock
+        stock: stock
 
     };
 
@@ -1107,18 +1270,15 @@ function editProduct(
 }
 
 
-function deleteProduct(
-    index
-) {
+// Delete product
+
+function deleteProduct(index) {
 
     if (
         !confirm(
             "Delete this product?"
         )
-    ) {
-
-        return;
-    }
+    ) return;
 
 
     products.splice(
@@ -1140,9 +1300,9 @@ function deleteProduct(
 }
 
 
-// =========================
+// ==========================================
 // CUSTOMERS
-// =========================
+// ==========================================
 
 function renderCustomers() {
 
@@ -1153,16 +1313,19 @@ function renderCustomers() {
 
 
         customerList.innerHTML = `
-            <div>👥</div>
+
+            <div class="empty-icon">
+                👥
+            </div>
 
             <h3>
                 No customers yet
             </h3>
 
             <p>
-                Add your first customer to start
-                building your customer list.
+                Add your first customer to start building your customer list.
             </p>
+
         `;
 
         return;
@@ -1176,12 +1339,10 @@ function renderCustomers() {
     customerList.innerHTML =
         customers
             .map(
-                function (
-                    customer,
-                    index
-                ) {
+                function (customer, index) {
 
                     return `
+
                         <article class="data-card">
 
                             <div class="data-icon">
@@ -1189,15 +1350,11 @@ function renderCustomers() {
                             </div>
 
                             <h3>
-                                ${escapeHTML(
-                                    customer.name
-                                )}
+                                ${escapeHTML(customer.name)}
                             </h3>
 
                             <p>
-                                ${escapeHTML(
-                                    customer.email
-                                )}
+                                ${escapeHTML(customer.email)}
                             </p>
 
                             <p>
@@ -1211,21 +1368,20 @@ function renderCustomers() {
 
                                 <button
                                     class="delete-button"
-                                    onclick="deleteCustomer(${index})">
-
+                                    onclick="deleteCustomer(${index})"
+                                >
                                     Delete
-
                                 </button>
 
                             </div>
 
                         </article>
+
                     `;
 
                 }
             )
             .join("");
-
 }
 
 
@@ -1233,9 +1389,7 @@ addCustomerButton.addEventListener(
     "click",
     function () {
 
-        showForm(
-            customerForm
-        );
+        showForm(customerForm);
 
     }
 );
@@ -1247,9 +1401,7 @@ cancelCustomerButton.addEventListener(
 
         customerFormElement.reset();
 
-        hideForm(
-            customerForm
-        );
+        hideForm(customerForm);
 
     }
 );
@@ -1264,45 +1416,29 @@ customerFormElement.addEventListener(
 
         const name =
             document
-                .getElementById(
-                    "customerName"
-                )
+                .getElementById("customerName")
                 .value
                 .trim();
 
 
         const email =
             document
-                .getElementById(
-                    "customerEmail"
-                )
+                .getElementById("customerEmail")
                 .value
                 .trim();
 
 
         const phone =
             document
-                .getElementById(
-                    "customerPhone"
-                )
+                .getElementById("customerPhone")
                 .value
                 .trim();
 
 
-        if (!name) {
+        if (!name || !email) {
 
             alert(
-                "Enter the customer's name."
-            );
-
-            return;
-        }
-
-
-        if (!email) {
-
-            alert(
-                "Enter the customer's email."
+                "Enter the customer's name and email."
             );
 
             return;
@@ -1311,14 +1447,11 @@ customerFormElement.addEventListener(
 
         customers.push({
 
-            name:
-                name,
+            name: name,
 
-            email:
-                email,
+            email: email,
 
-            phone:
-                phone
+            phone: phone
 
         });
 
@@ -1334,26 +1467,19 @@ customerFormElement.addEventListener(
 
         customerFormElement.reset();
 
-        hideForm(
-            customerForm
-        );
+        hideForm(customerForm);
 
     }
 );
 
 
-function deleteCustomer(
-    index
-) {
+function deleteCustomer(index) {
 
     if (
         !confirm(
             "Delete this customer?"
         )
-    ) {
-
-        return;
-    }
+    ) return;
 
 
     customers.splice(
@@ -1373,56 +1499,40 @@ function deleteCustomer(
 }
 
 
-// =========================
+// ==========================================
 // SALES
-// =========================
+// ==========================================
 
 function updateSaleProductOptions() {
 
-    if (!saleProduct) return;
-
-
     saleProduct.innerHTML = `
+
         <option value="">
             Select a product
         </option>
+
     `;
 
 
     products.forEach(
-        function (
-            product,
-            index
-        ) {
+        function (product, index) {
 
             const option =
-                document.createElement(
-                    "option"
-                );
+                document.createElement("option");
 
 
             option.value =
-                String(index);
+                index;
 
 
             option.textContent =
                 `${product.name} — $${Number(
                     product.price
-                ).toFixed(2)} — Stock: ${
-                    product.stock
-                }`;
+                ).toFixed(2)} — Stock: ${product.stock}`;
 
 
-            if (
-                Number(
-                    product.stock
-                ) <= 0
-            ) {
-
-                option.disabled =
-                    true;
-
-            }
+            option.disabled =
+                Number(product.stock) <= 0;
 
 
             saleProduct.appendChild(
@@ -1434,21 +1544,10 @@ function updateSaleProductOptions() {
 
 
     updateSaleTotal();
-
 }
 
 
 function updateSaleTotal() {
-
-    if (
-        !saleProduct ||
-        !saleQuantity ||
-        !saleTotal
-    ) {
-
-        return;
-    }
-
 
     if (
         saleProduct.value === ""
@@ -1463,16 +1562,12 @@ function updateSaleTotal() {
 
     const product =
         products[
-            Number(
-                saleProduct.value
-            )
+            Number(saleProduct.value)
         ];
 
 
     const quantity =
-        Number(
-            saleQuantity.value
-        );
+        Number(saleQuantity.value);
 
 
     if (
@@ -1490,9 +1585,7 @@ function updateSaleTotal() {
     saleTotal.value =
         "$" +
         (
-            Number(
-                product.price
-            ) *
+            Number(product.price) *
             quantity
         ).toFixed(2);
 
@@ -1530,11 +1623,9 @@ addSaleButton.addEventListener(
         saleQuantity.value =
             1;
 
-        updateSaleTotal();
+        showForm(saleForm);
 
-        showForm(
-            saleForm
-        );
+        updateSaleTotal();
 
     }
 );
@@ -1549,9 +1640,7 @@ cancelSaleButton.addEventListener(
         saleTotal.value =
             "$0.00";
 
-        hideForm(
-            saleForm
-        );
+        hideForm(saleForm);
 
     }
 );
@@ -1565,20 +1654,18 @@ saleFormElement.addEventListener(
 
 
         const productIndex =
-            Number(
-                saleProduct.value
-            );
+            Number(saleProduct.value);
 
 
         const quantity =
-            Number(
-                saleQuantity.value
-            );
+            Number(saleQuantity.value);
 
 
-        if (
-            saleProduct.value === ""
-        ) {
+        const product =
+            products[productIndex];
+
+
+        if (!product) {
 
             alert(
                 "Select a product."
@@ -1588,26 +1675,8 @@ saleFormElement.addEventListener(
         }
 
 
-        const product =
-            products[
-                productIndex
-            ];
-
-
-        if (!product) {
-
-            alert(
-                "Product not found."
-            );
-
-            return;
-        }
-
-
         if (
-            !Number.isInteger(
-                quantity
-            ) ||
+            !Number.isInteger(quantity) ||
             quantity < 1
         ) {
 
@@ -1620,13 +1689,12 @@ saleFormElement.addEventListener(
 
 
         if (
-            Number(
-                product.stock
-            ) < quantity
+            Number(product.stock) <
+            quantity
         ) {
 
             alert(
-                `Not enough stock. Only ${product.stock} available.`
+                `Only ${product.stock} units are available.`
             );
 
             return;
@@ -1634,16 +1702,12 @@ saleFormElement.addEventListener(
 
 
         const total =
-            Number(
-                product.price
-            ) *
+            Number(product.price) *
             quantity;
 
 
         product.stock =
-            Number(
-                product.stock
-            ) -
+            Number(product.stock) -
             quantity;
 
 
@@ -1659,8 +1723,7 @@ saleFormElement.addEventListener(
                 total,
 
             date:
-                new Date()
-                    .toISOString()
+                new Date().toISOString()
 
         });
 
@@ -1683,22 +1746,20 @@ saleFormElement.addEventListener(
         saleTotal.value =
             "$0.00";
 
-        hideForm(
-            saleForm
-        );
+        hideForm(saleForm);
 
 
         alert(
-            `Sale recorded successfully!\n\n${quantity} × ${product.name}\nTotal: $${total.toFixed(2)}`
+            `Sale recorded!\n\n${quantity} × ${product.name}\nTotal: $${total.toFixed(2)}`
         );
 
     }
 );
 
 
-// =========================
+// ==========================================
 // SALES DISPLAY
-// =========================
+// ==========================================
 
 function renderSales() {
 
@@ -1709,16 +1770,19 @@ function renderSales() {
 
 
         salesList.innerHTML = `
-            <div>🧾</div>
+
+            <div class="empty-icon">
+                🧾
+            </div>
 
             <h3>
                 No sales yet
             </h3>
 
             <p>
-                Your recorded sales will
-                appear here.
+                Your recorded sales will appear here.
             </p>
+
         `;
 
         return;
@@ -1734,10 +1798,7 @@ function renderSales() {
             .slice()
             .reverse()
             .map(
-                function (
-                    sale,
-                    reverseIndex
-                ) {
+                function (sale, reverseIndex) {
 
                     const index =
                         sales.length -
@@ -1746,6 +1807,7 @@ function renderSales() {
 
 
                     return `
+
                         <article class="data-card">
 
                             <div class="data-icon">
@@ -1753,9 +1815,7 @@ function renderSales() {
                             </div>
 
                             <h3>
-                                ${escapeHTML(
-                                    sale.product
-                                )}
+                                ${escapeHTML(sale.product)}
                             </h3>
 
                             <p>
@@ -1771,45 +1831,37 @@ function renderSales() {
                             </p>
 
                             <p>
-                                ${formatDate(
-                                    sale.date
-                                )}
+                                ${formatDate(sale.date)}
                             </p>
 
                             <div class="card-actions">
 
                                 <button
                                     class="delete-button"
-                                    onclick="deleteSale(${index})">
-
+                                    onclick="deleteSale(${index})"
+                                >
                                     Delete
-
                                 </button>
 
                             </div>
 
                         </article>
+
                     `;
 
                 }
             )
             .join("");
-
 }
 
 
-function deleteSale(
-    index
-) {
+function deleteSale(index) {
 
     if (
         !confirm(
             "Delete this sale?"
         )
-    ) {
-
-        return;
-    }
+    ) return;
 
 
     const sale =
@@ -1820,9 +1872,7 @@ function deleteSale(
 
         const product =
             products.find(
-                function (
-                    item
-                ) {
+                function (item) {
 
                     return item.name ===
                         sale.product;
@@ -1834,9 +1884,7 @@ function deleteSale(
         if (product) {
 
             product.stock +=
-                Number(
-                    sale.quantity
-                );
+                Number(sale.quantity);
 
         }
 
@@ -1855,42 +1903,35 @@ function deleteSale(
 
     renderSales();
 
-    updateSaleProductOptions();
-
-    updateInvoiceProductOptions();
-
     updateDashboard();
 
 }
 
 
-// =========================
-// INVOICE OPTIONS
-// =========================
+// ==========================================
+// INVOICE DROPDOWNS
+// ==========================================
 
 function updateInvoiceCustomerOptions() {
 
     invoiceCustomer.innerHTML = `
+
         <option value="">
             Select a customer
         </option>
+
     `;
 
 
     customers.forEach(
-        function (
-            customer,
-            index
-        ) {
+        function (customer, index) {
 
             const option =
-                document.createElement(
-                    "option"
-                );
+                document.createElement("option");
 
 
             option.value =
-                String(index);
+                index;
 
 
             option.textContent =
@@ -1910,34 +1951,33 @@ function updateInvoiceCustomerOptions() {
 function updateInvoiceProductOptions() {
 
     invoiceProduct.innerHTML = `
+
         <option value="">
             Select a product
         </option>
+
     `;
 
 
     products.forEach(
-        function (
-            product,
-            index
-        ) {
+        function (product, index) {
 
             const option =
-                document.createElement(
-                    "option"
-                );
+                document.createElement("option");
 
 
             option.value =
-                String(index);
+                index;
 
 
             option.textContent =
                 `${product.name} — $${Number(
                     product.price
-                ).toFixed(2)} — Stock: ${
-                    product.stock
-                }`;
+                ).toFixed(2)} — Stock: ${product.stock}`;
+
+
+            option.disabled =
+                Number(product.stock) <= 0;
 
 
             invoiceProduct.appendChild(
@@ -1968,16 +2008,12 @@ function updateInvoiceTotal() {
 
     const product =
         products[
-            Number(
-                invoiceProduct.value
-            )
+            Number(invoiceProduct.value)
         ];
 
 
     const quantity =
-        Number(
-            invoiceQuantity.value
-        );
+        Number(invoiceQuantity.value);
 
 
     if (
@@ -1992,16 +2028,12 @@ function updateInvoiceTotal() {
     }
 
 
-    const total =
-        Number(
-            product.price
-        ) *
-        quantity;
-
-
     invoiceTotal.value =
         "$" +
-        total.toFixed(2);
+        (
+            Number(product.price) *
+            quantity
+        ).toFixed(2);
 
 }
 
@@ -2018,9 +2050,9 @@ invoiceQuantity.addEventListener(
 );
 
 
-// =========================
-// CREATE INVOICE
-// =========================
+// ==========================================
+// INVOICES
+// ==========================================
 
 createInvoiceButton.addEventListener(
     "click",
@@ -2029,13 +2061,11 @@ createInvoiceButton.addEventListener(
         if (!customers.length) {
 
             alert(
-                "Add a customer first before creating an invoice."
+                "Add a customer first."
             );
 
             document
-                .getElementById(
-                    "customers"
-                )
+                .getElementById("customers")
                 .scrollIntoView({
                     behavior: "smooth"
                 });
@@ -2047,7 +2077,7 @@ createInvoiceButton.addEventListener(
         if (!products.length) {
 
             alert(
-                "Add a product first before creating an invoice."
+                "Add a product first."
             );
 
             return;
@@ -2058,17 +2088,12 @@ createInvoiceButton.addEventListener(
 
         updateInvoiceProductOptions();
 
-
         invoiceQuantity.value =
             1;
 
-
         updateInvoiceTotal();
 
-
-        showForm(
-            invoiceForm
-        );
+        showForm(invoiceForm);
 
     }
 );
@@ -2083,17 +2108,11 @@ cancelInvoiceButton.addEventListener(
         invoiceTotal.value =
             "$0.00";
 
-        hideForm(
-            invoiceForm
-        );
+        hideForm(invoiceForm);
 
     }
 );
 
-
-// =========================
-// INVOICE NUMBER
-// =========================
 
 function getNextInvoiceNumber() {
 
@@ -2110,30 +2129,19 @@ function getNextInvoiceNumber() {
 
     const number =
         Number(
-            last.number
-                .replace(
-                    "INV-",
-                    ""
-                )
+            String(last.number)
+                .replace("INV-", "")
         );
 
 
     return (
         "INV-" +
-        String(
-            number + 1
-        ).padStart(
-            4,
-            "0"
-        )
+        String(number + 1)
+            .padStart(4, "0")
     );
 
 }
 
-
-// =========================
-// CREATE
-// =========================
 
 invoiceFormElement.addEventListener(
     "submit",
@@ -2142,34 +2150,20 @@ invoiceFormElement.addEventListener(
         event.preventDefault();
 
 
-        const customerIndex =
-            Number(
-                invoiceCustomer.value
-            );
-
-
-        const productIndex =
-            Number(
-                invoiceProduct.value
-            );
-
-
-        const quantity =
-            Number(
-                invoiceQuantity.value
-            );
-
-
         const customer =
             customers[
-                customerIndex
+                Number(invoiceCustomer.value)
             ];
 
 
         const product =
             products[
-                productIndex
+                Number(invoiceProduct.value)
             ];
+
+
+        const quantity =
+            Number(invoiceQuantity.value);
 
 
         if (
@@ -2186,9 +2180,7 @@ invoiceFormElement.addEventListener(
 
 
         if (
-            !Number.isInteger(
-                quantity
-            ) ||
+            !Number.isInteger(quantity) ||
             quantity < 1
         ) {
 
@@ -2201,13 +2193,12 @@ invoiceFormElement.addEventListener(
 
 
         if (
-            Number(
-                product.stock
-            ) < quantity
+            Number(product.stock) <
+            quantity
         ) {
 
             alert(
-                `Not enough stock. Only ${product.stock} available.`
+                `Only ${product.stock} units are available.`
             );
 
             return;
@@ -2215,9 +2206,7 @@ invoiceFormElement.addEventListener(
 
 
         const total =
-            Number(
-                product.price
-            ) *
+            Number(product.price) *
             quantity;
 
 
@@ -2227,8 +2216,7 @@ invoiceFormElement.addEventListener(
                 getNextInvoiceNumber(),
 
             date:
-                new Date()
-                    .toISOString(),
+                new Date().toISOString(),
 
             customer: {
 
@@ -2249,9 +2237,7 @@ invoiceFormElement.addEventListener(
                     product.name,
 
                 price:
-                    Number(
-                        product.price
-                    )
+                    Number(product.price)
 
             },
 
@@ -2264,17 +2250,11 @@ invoiceFormElement.addEventListener(
         };
 
 
-        invoices.push(
-            invoice
-        );
+        invoices.push(invoice);
 
-
-        // Invoice represents a completed sale.
 
         product.stock =
-            Number(
-                product.stock
-            ) -
+            Number(product.stock) -
             quantity;
 
 
@@ -2290,14 +2270,12 @@ invoiceFormElement.addEventListener(
                 total,
 
             date:
-                new Date()
-                    .toISOString()
+                new Date().toISOString()
 
         });
 
 
         saveData();
-
 
         renderProducts();
 
@@ -2317,10 +2295,7 @@ invoiceFormElement.addEventListener(
         invoiceTotal.value =
             "$0.00";
 
-
-        hideForm(
-            invoiceForm
-        );
+        hideForm(invoiceForm);
 
 
         alert(
@@ -2336,9 +2311,9 @@ invoiceFormElement.addEventListener(
 );
 
 
-// =========================
+// ==========================================
 // INVOICE DISPLAY
-// =========================
+// ==========================================
 
 function renderInvoices() {
 
@@ -2349,7 +2324,8 @@ function renderInvoices() {
 
 
         invoiceList.innerHTML = `
-            <div>
+
+            <div class="empty-icon">
                 🧾
             </div>
 
@@ -2358,9 +2334,9 @@ function renderInvoices() {
             </h3>
 
             <p>
-                Create your first invoice
-                for a customer.
+                Create your first invoice for a customer.
             </p>
+
         `;
 
         return;
@@ -2376,10 +2352,7 @@ function renderInvoices() {
             .slice()
             .reverse()
             .map(
-                function (
-                    invoice,
-                    reverseIndex
-                ) {
+                function (invoice, reverseIndex) {
 
                     const index =
                         invoices.length -
@@ -2388,104 +2361,75 @@ function renderInvoices() {
 
 
                     return `
-                        <article
-                            class="data-card">
 
-                            <div
-                                class="data-icon">
+                        <article class="data-card">
 
+                            <div class="data-icon">
                                 🧾
-
                             </div>
 
-
                             <h3>
-
                                 ${invoice.number}
-
                             </h3>
 
-
                             <p>
-
                                 Customer:
                                 ${escapeHTML(
                                     invoice.customer.name
                                 )}
-
                             </p>
 
-
                             <p>
-
                                 Product:
                                 ${escapeHTML(
                                     invoice.product.name
                                 )}
-
                             </p>
 
-
                             <p>
-
                                 Total:
                                 $${Number(
                                     invoice.total
                                 ).toFixed(2)}
-
                             </p>
-
 
                             <p>
-
-                                ${formatDate(
-                                    invoice.date
-                                )}
-
+                                ${formatDate(invoice.date)}
                             </p>
 
-
-                            <div
-                                class="card-actions">
-
+                            <div class="card-actions">
 
                                 <button
                                     class="edit-button"
-                                    onclick="printInvoice(${index})">
-
+                                    onclick="printInvoice(${index})"
+                                >
                                     Print
-
                                 </button>
-
 
                                 <button
                                     class="delete-button"
-                                    onclick="deleteInvoice(${index})">
-
+                                    onclick="deleteInvoice(${index})"
+                                >
                                     Delete
-
                                 </button>
-
 
                             </div>
 
                         </article>
+
                     `;
 
                 }
             )
             .join("");
-
 }
 
 
-// =========================
+// ==========================================
 // PRINT INVOICE
-// =========================
+// ==========================================
 
-function printInvoice(
-    index
-) {
+function printInvoice(index) {
 
     const invoice =
         invoices[index];
@@ -2505,7 +2449,7 @@ function printInvoice(
     if (!printWindow) {
 
         alert(
-            "Please allow pop-ups to print the invoice."
+            "Please allow pop-ups to print invoices."
         );
 
         return;
@@ -2524,7 +2468,6 @@ function printInvoice(
                 ${invoice.number}
             </title>
 
-
             <style>
 
                 body {
@@ -2533,17 +2476,11 @@ function printInvoice(
                         Arial,
                         sans-serif;
 
-                    margin:
-                        0;
-
                     padding:
                         50px;
 
                     color:
                         #111;
-
-                    background:
-                        white;
 
                 }
 
@@ -2585,12 +2522,12 @@ function printInvoice(
                         0;
 
                     font-size:
-                        32px;
+                        34px;
 
                 }
 
 
-                .number {
+                .invoice-number {
 
                     text-align:
                         right;
@@ -2601,7 +2538,7 @@ function printInvoice(
                 .customer {
 
                     margin-bottom:
-                        35px;
+                        30px;
 
                 }
 
@@ -2613,9 +2550,6 @@ function printInvoice(
 
                     border-collapse:
                         collapse;
-
-                    margin-top:
-                        30px;
 
                 }
 
@@ -2650,7 +2584,7 @@ function printInvoice(
                         right;
 
                     font-size:
-                        24px;
+                        26px;
 
                     font-weight:
                         bold;
@@ -2663,26 +2597,14 @@ function printInvoice(
 
                 .footer {
 
-                    margin-top:
-                        80px;
-
                     text-align:
                         center;
 
                     color:
                         #777;
 
-                }
-
-
-                @media print {
-
-                    body {
-
-                        padding:
-                            20px;
-
-                    }
+                    margin-top:
+                        80px;
 
                 }
 
@@ -2694,7 +2616,6 @@ function printInvoice(
         <body>
 
             <div class="invoice">
-
 
                 <div class="header">
 
@@ -2711,7 +2632,7 @@ function printInvoice(
                     </div>
 
 
-                    <div class="number">
+                    <div class="invoice-number">
 
                         <strong>
                             ${invoice.number}
@@ -2719,14 +2640,11 @@ function printInvoice(
 
                         <br>
 
-                        ${formatDate(
-                            invoice.date
-                        )}
+                        ${formatDate(invoice.date)}
 
                     </div>
 
                 </div>
-
 
 
                 <div class="customer">
@@ -2749,13 +2667,11 @@ function printInvoice(
 
                     <p>
                         ${escapeHTML(
-                            invoice.customer.phone ||
-                            ""
+                            invoice.customer.phone || ""
                         )}
                     </p>
 
                 </div>
-
 
 
                 <table>
@@ -2818,7 +2734,6 @@ function printInvoice(
                 </table>
 
 
-
                 <div class="total">
 
                     Total:
@@ -2829,29 +2744,26 @@ function printInvoice(
                 </div>
 
 
-
                 <div class="footer">
 
                     Thank you for your business.
 
-                    <br>
+                    <br><br>
 
-                    Powered by BusinessOS
+                    Powered by BusinessOS.
 
                 </div>
-
 
             </div>
 
 
             <script>
 
-                window.onload =
-                    function () {
+                window.onload = function () {
 
-                        window.print();
+                    window.print();
 
-                    };
+                };
 
             <\/script>
 
@@ -2867,22 +2779,17 @@ function printInvoice(
 }
 
 
-// =========================
+// ==========================================
 // DELETE INVOICE
-// =========================
+// ==========================================
 
-function deleteInvoice(
-    index
-) {
+function deleteInvoice(index) {
 
     if (
         !confirm(
             "Delete this invoice?"
         )
-    ) {
-
-        return;
-    }
+    ) return;
 
 
     const invoice =
@@ -2893,9 +2800,7 @@ function deleteInvoice(
 
         const product =
             products.find(
-                function (
-                    item
-                ) {
+                function (item) {
 
                     return item.name ===
                         invoice.product.name;
@@ -2907,30 +2812,20 @@ function deleteInvoice(
         if (product) {
 
             product.stock +=
-                Number(
-                    invoice.quantity
-                );
+                Number(invoice.quantity);
 
         }
 
 
-        // Remove corresponding sale
-
         const saleIndex =
             sales.findIndex(
-                function (
-                    sale
-                ) {
+                function (sale) {
 
                     return (
                         sale.product ===
                             invoice.product.name &&
-                        Number(
-                            sale.quantity
-                        ) ===
-                            Number(
-                                invoice.quantity
-                            )
+                        Number(sale.quantity) ===
+                            Number(invoice.quantity)
                     );
 
                 }
@@ -2965,31 +2860,26 @@ function deleteInvoice(
 
     renderInvoices();
 
-    updateSaleProductOptions();
-
-    updateInvoiceProductOptions();
-
     updateDashboard();
 
 }
 
 
-// =========================
-// RESET
-// =========================
+// ==========================================
+// RESET BUSINESS
+// ==========================================
 
 resetDataButton.addEventListener(
     "click",
     function () {
 
-        if (
-            !confirm(
-                "Delete ALL BusinessOS data? This cannot be undone."
-            )
-        ) {
+        const confirmed =
+            confirm(
+                "WARNING: This will delete ALL BusinessOS data. Continue?"
+            );
 
-            return;
-        }
+
+        if (!confirmed) return;
 
 
         products = [];
@@ -3023,54 +2913,19 @@ resetDataButton.addEventListener(
         updateDashboard();
 
 
-        productFormElement.reset();
-
-        customerFormElement.reset();
-
-        saleFormElement.reset();
-
-        invoiceFormElement.reset();
-
-
-        saleTotal.value =
-            "$0.00";
-
-        invoiceTotal.value =
-            "$0.00";
-
-
-        hideForm(
-            productForm
-        );
-
-        hideForm(
-            customerForm
-        );
-
-        hideForm(
-            saleForm
-        );
-
-        hideForm(
-            invoiceForm
-        );
-
-
         alert(
-            "BusinessOS has been reset successfully."
+            "BusinessOS has been reset."
         );
 
     }
 );
 
 
-// =========================
+// ==========================================
 // HELPERS
-// =========================
+// ==========================================
 
-function escapeHTML(
-    value
-) {
+function escapeHTML(value) {
 
     return String(value)
 
@@ -3102,30 +2957,27 @@ function escapeHTML(
 }
 
 
-function formatDate(
-    date
-) {
+function formatDate(date) {
 
     if (!date) return "";
 
 
-    return new Date(
-        date
-    ).toLocaleDateString(
-        "en-US",
-        {
-            month: "short",
-            day: "numeric",
-            year: "numeric"
-        }
-    );
+    return new Date(date)
+        .toLocaleDateString(
+            "en-US",
+            {
+                month: "short",
+                day: "numeric",
+                year: "numeric"
+            }
+        );
 
 }
 
 
-// =========================
-// START
-// =========================
+// ==========================================
+// INITIALIZE
+// ==========================================
 
 renderProducts();
 
@@ -3142,3 +2994,11 @@ updateInvoiceProductOptions();
 updateInvoiceCustomerOptions();
 
 updateDashboard();
+
+
+// Redraw chart when window changes size
+
+window.addEventListener(
+    "resize",
+    renderRevenueChart
+);
