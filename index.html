@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BusinessOS | Business Management</title>
+
+    <meta
+        name="description"
+        content="BusinessOS helps small businesses manage products, customers, sales and revenue."
+    >
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="topbar">
+
+        <div class="logo">
+            Business<span>OS</span>
+        </div>
+
+        <button id="menuButton" class="menu-button">
+            ☰
+        </button>
+
+        <nav id="navigation">
+            <a href="#dashboard">Dashboard</a>
+            <a href="#products">Products</a>
+            <a href="#customers">Customers</a>
+            <a href="#sales">Sales</a>
+        </nav>
+
+    </header>
+
+
+    <main>
+
+        <!-- Dashboard -->
+
+        <section id="dashboard" class="dashboard-section">
+
+            <div class="welcome">
+
+                <p class="eyebrow">BUSINESS DASHBOARD</p>
+
+                <h1>Run your business smarter.</h1>
+
+                <p>
+                    Manage your products, customers and sales
+                    from one simple dashboard.
+                </p>
+
+            </div>
+
+
+            <div class="stats">
+
+                <div class="stat-card">
+                    <span>💰</span>
+                    <strong id="revenue">₵0.00</strong>
+                    <small>Total Revenue</small>
+                </div>
+
+                <div class="stat-card">
+                    <span>📦</span>
+                    <strong id="productCount">0</strong>
+                    <small>Products</small>
+                </div>
+
+                <div class="stat-card">
+                    <span>👥</span>
+                    <strong id="customerCount">0</strong>
+                    <small>Customers</small>
+                </div>
+
+                <div class="stat-card">
+                    <span>🧾</span>
+                    <strong id="saleCount">0</strong>
+                    <small>Total Sales</small>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Products -->
+
+        <section id="products" class="content-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <p class="eyebrow">INVENTORY</p>
+                    <h2>Products</h2>
+                </div>
+
+                <button id="addProductButton">
+                    + Add Product
+                </button>
+
+            </div>
+
+
+            <div id="productList" class="empty-state">
+
+                <div>📦</div>
+
+                <h3>No products yet</h3>
+
+                <p>
+                    Add your first product to start managing
+                    your inventory.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- Customers -->
+
+        <section id="customers" class="content-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <p class="eyebrow">CUSTOMERS</p>
+                    <h2>Customers</h2>
+                </div>
+
+                <button id="addCustomerButton">
+                    + Add Customer
+                </button>
+
+            </div>
+
+
+            <div id="customerList" class="empty-state">
+
+                <div>👥</div>
+
+                <h3>No customers yet</h3>
+
+                <p>
+                    Add your first customer to start building
+                    your customer list.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- Sales -->
+
+        <section id="sales" class="content-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <p class="eyebrow">SALES</p>
+                    <h2>Recent Sales</h2>
+
+                </div>
+
+                <button id="addSaleButton">
+                    + Record Sale
+                </button>
+
+            </div>
+
+
+            <div id="salesList" class="empty-state">
+
+                <div>🧾</div>
+
+                <h3>No sales yet</h3>
+
+                <p>
+                    Your recorded sales will appear here.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <p>
+            Built by Russette with HTML, CSS & JavaScript.
+        </p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
