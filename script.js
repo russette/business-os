@@ -1,18 +1,52 @@
-const menuButton = document.getElementById("menuButton");
-const navigation = document.getElementById("navigation");
+// =========================
+// BUSINESSOS V2
+// =========================
 
-const productList = document.getElementById("productList");
-const customerList = document.getElementById("customerList");
-const salesList = document.getElementById("salesList");
 
-const revenueElement = document.getElementById("revenue");
-const productCountElement = document.getElementById("productCount");
-const customerCountElement = document.getElementById("customerCount");
-const saleCountElement = document.getElementById("saleCount");
+// =========================
+// DATA
+// =========================
 
-let products = JSON.parse(localStorage.getItem("businessOSProducts")) || [];
-let customers = JSON.parse(localStorage.getItem("businessOSCustomers")) || [];
-let sales = JSON.parse(localStorage.getItem("businessOSSales")) || [];
+let products =
+    JSON.parse(localStorage.getItem("businessOSProducts")) || [];
+
+let customers =
+    JSON.parse(localStorage.getItem("businessOSCustomers")) || [];
+
+let sales =
+    JSON.parse(localStorage.getItem("businessOSSales")) || [];
+
+
+// =========================
+// ELEMENTS
+// =========================
+
+const menuButton =
+    document.getElementById("menuButton");
+
+const navigation =
+    document.getElementById("navigation");
+
+const productList =
+    document.getElementById("productList");
+
+const customerList =
+    document.getElementById("customerList");
+
+const salesList =
+    document.getElementById("salesList");
+
+const revenueElement =
+    document.getElementById("revenue");
+
+const productCountElement =
+    document.getElementById("productCount");
+
+const customerCountElement =
+    document.getElementById("customerCount");
+
+const saleCountElement =
+    document.getElementById("saleCount");
 
 
 // =========================
@@ -20,7 +54,9 @@ let sales = JSON.parse(localStorage.getItem("businessOSSales")) || [];
 // =========================
 
 menuButton.addEventListener("click", () => {
+
     navigation.classList.toggle("show");
+
 });
 
 
@@ -29,6 +65,7 @@ menuButton.addEventListener("click", () => {
 // =========================
 
 function saveData() {
+
     localStorage.setItem(
         "businessOSProducts",
         JSON.stringify(products)
@@ -43,6 +80,7 @@ function saveData() {
         "businessOSSales",
         JSON.stringify(sales)
     );
+
 }
 
 
@@ -52,29 +90,40 @@ function saveData() {
 
 function updateDashboard() {
 
-    productCountElement.textContent = products.length;
+    productCountElement.textContent =
+        products.length;
 
-    customerCountElement.textContent = customers.length;
+    customerCountElement.textContent =
+        customers.length;
 
-    saleCountElement.textContent = sales.length;
+    saleCountElement.textContent =
+        sales.length;
 
-    const totalRevenue = sales.reduce(
-        (total, sale) => total + sale.amount,
-        0
-    );
+
+    const totalRevenue =
+        sales.reduce(
+            (total, sale) =>
+                total + Number(sale.amount),
+            0
+        );
+
 
     revenueElement.textContent =
         `₵${totalRevenue.toFixed(2)}`;
+
 }
 
 
 // =========================
-// PRODUCTS
+// PRODUCT SECTION
 // =========================
 
 function renderProducts() {
 
     if (products.length === 0) {
+
+        productList.className =
+            "empty-state";
 
         productList.innerHTML = `
             <div>📦</div>
@@ -82,8 +131,8 @@ function renderProducts() {
             <h3>No products yet</h3>
 
             <p>
-                Add your first product to start managing
-                your inventory.
+                Add your first product to start
+                managing your inventory.
             </p>
         `;
 
@@ -91,72 +140,118 @@ function renderProducts() {
     }
 
 
-    productList.className = "data-grid";
+    productList.className =
+        "data-grid";
 
-    productList.innerHTML = products.map((product, index) => {
 
-        return `
-            <article class="data-card">
+    productList.innerHTML =
+        products.map((product, index) => {
 
-                <div class="data-icon">
-                    📦
-                </div>
+            return `
+                <article class="data-card">
 
-                <h3>${product.name}</h3>
+                    <div class="data-icon">
+                        📦
+                    </div>
 
-                <p>
-                    Price: ₵${product.price.toFixed(2)}
-                </p>
+                    <h3>
+                        ${product.name}
+                    </h3>
 
-                <p>
-                    Stock: ${product.stock}
-                </p>
+                    <p>
+                        Price:
+                        ₵${Number(product.price).toFixed(2)}
+                    </p>
 
-                <button onclick="deleteProduct(${index})">
-                    Delete
-                </button>
+                    <p>
+                        Stock:
+                        ${product.stock}
+                    </p>
 
-            </article>
-        `;
+                    <div class="card-actions">
 
-    }).join("");
+                        <button
+                            class="edit-button"
+                            onclick="editProduct(${index})"
+                        >
+                            Edit
+                        </button>
+
+                        <button
+                            class="delete-button"
+                            onclick="deleteProduct(${index})"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                </article>
+            `;
+
+        }).join("");
+
 }
 
 
+// =========================
+// ADD PRODUCT
+// =========================
+
 function addProduct() {
 
-    const name = prompt("Enter product name:");
+    const name =
+        prompt("Enter product name:");
 
     if (!name) return;
 
-    const price = Number(
-        prompt("Enter product price:")
-    );
 
-    if (isNaN(price) || price < 0) {
+    const price =
+        Number(prompt("Enter product price:"));
 
-        alert("Please enter a valid price.");
+
+    if (
+        isNaN(price) ||
+        price < 0
+    ) {
+
+        alert(
+            "Please enter a valid price."
+        );
 
         return;
     }
 
 
-    const stock = Number(
-        prompt("Enter stock quantity:")
-    );
+    const stock =
+        Number(
+            prompt(
+                "Enter stock quantity:"
+            )
+        );
 
-    if (isNaN(stock) || stock < 0) {
 
-        alert("Please enter a valid stock quantity.");
+    if (
+        isNaN(stock) ||
+        stock < 0
+    ) {
+
+        alert(
+            "Please enter a valid stock quantity."
+        );
 
         return;
     }
 
 
     products.push({
-        name,
-        price,
-        stock
+
+        name: name.trim(),
+
+        price: price,
+
+        stock: stock
+
     });
 
 
@@ -165,24 +260,118 @@ function addProduct() {
     renderProducts();
 
     updateDashboard();
+
 }
 
 
-function deleteProduct(index) {
+// =========================
+// EDIT PRODUCT
+// =========================
 
-    const confirmed = confirm(
-        "Delete this product?"
-    );
+function editProduct(index) {
 
-    if (!confirmed) return;
+    const product =
+        products[index];
 
-    products.splice(index, 1);
+
+    const name =
+        prompt(
+            "Product name:",
+            product.name
+        );
+
+
+    if (!name) return;
+
+
+    const price =
+        Number(
+            prompt(
+                "Product price:",
+                product.price
+            )
+        );
+
+
+    if (
+        isNaN(price) ||
+        price < 0
+    ) {
+
+        alert(
+            "Please enter a valid price."
+        );
+
+        return;
+    }
+
+
+    const stock =
+        Number(
+            prompt(
+                "Stock quantity:",
+                product.stock
+            )
+        );
+
+
+    if (
+        isNaN(stock) ||
+        stock < 0
+    ) {
+
+        alert(
+            "Please enter a valid stock quantity."
+        );
+
+        return;
+    }
+
+
+    products[index] = {
+
+        name: name.trim(),
+
+        price: price,
+
+        stock: stock
+
+    };
+
 
     saveData();
 
     renderProducts();
 
     updateDashboard();
+
+}
+
+
+// =========================
+// DELETE PRODUCT
+// =========================
+
+function deleteProduct(index) {
+
+    const confirmed =
+        confirm(
+            "Are you sure you want to delete this product?"
+        );
+
+
+    if (!confirmed) return;
+
+
+    products.splice(index, 1);
+
+
+    saveData();
+
+    renderProducts();
+
+    updateDashboard();
+
 }
 
 
@@ -194,7 +383,8 @@ function renderCustomers() {
 
     if (customers.length === 0) {
 
-        customerList.className = "empty-state";
+        customerList.className =
+            "empty-state";
 
         customerList.innerHTML = `
             <div>👥</div>
@@ -202,8 +392,8 @@ function renderCustomers() {
             <h3>No customers yet</h3>
 
             <p>
-                Add your first customer to start building
-                your customer list.
+                Add your first customer to start
+                building your customer list.
             </p>
         `;
 
@@ -211,51 +401,70 @@ function renderCustomers() {
     }
 
 
-    customerList.className = "data-grid";
+    customerList.className =
+        "data-grid";
 
-    customerList.innerHTML = customers.map((customer, index) => {
 
-        return `
-            <article class="data-card">
+    customerList.innerHTML =
+        customers.map((customer, index) => {
 
-                <div class="data-icon">
-                    👤
-                </div>
+            return `
+                <article class="data-card">
 
-                <h3>${customer.name}</h3>
+                    <div class="data-icon">
+                        👤
+                    </div>
 
-                <p>
-                    ${customer.phone}
-                </p>
+                    <h3>
+                        ${customer.name}
+                    </h3>
 
-                <button onclick="deleteCustomer(${index})">
-                    Delete
-                </button>
+                    <p>
+                        ${customer.phone}
+                    </p>
 
-            </article>
-        `;
+                    <button
+                        class="delete-button"
+                        onclick="deleteCustomer(${index})"
+                    >
+                        Delete
+                    </button>
 
-    }).join("");
+                </article>
+            `;
+
+        }).join("");
+
 }
 
 
+// =========================
+// ADD CUSTOMER
+// =========================
+
 function addCustomer() {
 
-    const name = prompt("Enter customer name:");
+    const name =
+        prompt("Customer name:");
 
     if (!name) return;
 
 
-    const phone = prompt(
-        "Enter customer phone number:"
-    );
+    const phone =
+        prompt(
+            "Customer phone number:"
+        );
+
 
     if (!phone) return;
 
 
     customers.push({
-        name,
-        phone
+
+        name: name.trim(),
+
+        phone: phone.trim()
+
     });
 
 
@@ -264,24 +473,34 @@ function addCustomer() {
     renderCustomers();
 
     updateDashboard();
+
 }
 
 
+// =========================
+// DELETE CUSTOMER
+// =========================
+
 function deleteCustomer(index) {
 
-    const confirmed = confirm(
-        "Delete this customer?"
-    );
+    const confirmed =
+        confirm(
+            "Delete this customer?"
+        );
+
 
     if (!confirmed) return;
 
+
     customers.splice(index, 1);
+
 
     saveData();
 
     renderCustomers();
 
     updateDashboard();
+
 }
 
 
@@ -293,7 +512,8 @@ function renderSales() {
 
     if (sales.length === 0) {
 
-        salesList.className = "empty-state";
+        salesList.className =
+            "empty-state";
 
         salesList.innerHTML = `
             <div>🧾</div>
@@ -301,7 +521,8 @@ function renderSales() {
             <h3>No sales yet</h3>
 
             <p>
-                Your recorded sales will appear here.
+                Your recorded sales will
+                appear here.
             </p>
         `;
 
@@ -309,58 +530,87 @@ function renderSales() {
     }
 
 
-    salesList.className = "data-grid";
+    salesList.className =
+        "data-grid";
 
-    salesList.innerHTML = sales.map((sale, index) => {
 
-        return `
-            <article class="data-card">
+    salesList.innerHTML =
+        sales.map((sale, index) => {
 
-                <div class="data-icon">
-                    🧾
-                </div>
+            return `
+                <article class="data-card">
 
-                <h3>${sale.description}</h3>
+                    <div class="data-icon">
+                        🧾
+                    </div>
 
-                <p>
-                    Amount: ₵${sale.amount.toFixed(2)}
-                </p>
+                    <h3>
+                        ${sale.description}
+                    </h3>
 
-                <button onclick="deleteSale(${index})">
-                    Delete
-                </button>
+                    <p>
+                        Amount:
+                        ₵${Number(sale.amount).toFixed(2)}
+                    </p>
 
-            </article>
-        `;
+                    <button
+                        class="delete-button"
+                        onclick="deleteSale(${index})"
+                    >
+                        Delete
+                    </button>
 
-    }).join("");
+                </article>
+            `;
+
+        }).join("");
+
 }
 
 
+// =========================
+// RECORD SALE
+// =========================
+
 function addSale() {
 
-    const description = prompt(
-        "What was sold?"
-    );
+    const description =
+        prompt(
+            "What was sold?"
+        );
+
 
     if (!description) return;
 
 
-    const amount = Number(
-        prompt("Enter sale amount:")
-    );
+    const amount =
+        Number(
+            prompt(
+                "Enter sale amount:"
+            )
+        );
 
-    if (isNaN(amount) || amount <= 0) {
 
-        alert("Please enter a valid amount.");
+    if (
+        isNaN(amount) ||
+        amount <= 0
+    ) {
+
+        alert(
+            "Please enter a valid sale amount."
+        );
 
         return;
     }
 
 
     sales.push({
-        description,
-        amount
+
+        description:
+            description.trim(),
+
+        amount: amount
+
     });
 
 
@@ -369,44 +619,63 @@ function addSale() {
     renderSales();
 
     updateDashboard();
+
 }
 
 
+// =========================
+// DELETE SALE
+// =========================
+
 function deleteSale(index) {
 
-    const confirmed = confirm(
-        "Delete this sale?"
-    );
+    const confirmed =
+        confirm(
+            "Delete this sale?"
+        );
+
 
     if (!confirmed) return;
 
+
     sales.splice(index, 1);
+
 
     saveData();
 
     renderSales();
 
     updateDashboard();
+
 }
 
 
 // =========================
-// BUTTONS
+// BUTTON EVENTS
 // =========================
 
 document
     .getElementById("addProductButton")
-    .addEventListener("click", addProduct);
+    .addEventListener(
+        "click",
+        addProduct
+    );
 
 
 document
     .getElementById("addCustomerButton")
-    .addEventListener("click", addCustomer);
+    .addEventListener(
+        "click",
+        addCustomer
+    );
 
 
 document
     .getElementById("addSaleButton")
-    .addEventListener("click", addSale);
+    .addEventListener(
+        "click",
+        addSale
+    );
 
 
 // =========================
