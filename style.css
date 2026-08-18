@@ -244,6 +244,59 @@ button:hover {
 
 
 /* =========================
+   DATA CARDS
+========================= */
+
+.data-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 18px;
+}
+
+.data-card {
+    background: #ffffff;
+
+    border: 1px solid #e6e9ef;
+
+    border-radius: 18px;
+
+    padding: 25px;
+
+    box-shadow: 0 10px 30px rgba(25, 35, 55, 0.05);
+}
+
+.data-icon {
+    font-size: 2rem;
+
+    margin-bottom: 12px;
+}
+
+.data-card h3 {
+    color: #172033;
+
+    margin-bottom: 8px;
+}
+
+.data-card p {
+    color: #697386;
+
+    margin-bottom: 6px;
+}
+
+.data-card button {
+    margin-top: 15px;
+
+    background: #ef4444;
+}
+
+.data-card button:hover {
+    opacity: 0.85;
+}
+
+
+/* =========================
    FOOTER
 ========================= */
 
@@ -306,6 +359,10 @@ footer {
         grid-template-columns: repeat(2, 1fr);
     }
 
+    .data-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
     .dashboard-section {
         padding-top: 55px;
     }
@@ -316,15 +373,19 @@ footer {
 
     .section-heading {
         align-items: flex-start;
+
         gap: 15px;
     }
-
 }
 
 
 @media (max-width: 520px) {
 
     .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .data-grid {
         grid-template-columns: 1fr;
     }
 
