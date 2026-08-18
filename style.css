@@ -36,8 +36,12 @@ body {
 }
 
 .logo {
+    color: #172033;
+    text-decoration: none;
+
     font-size: 1.5rem;
     font-weight: 800;
+
     letter-spacing: -1px;
 }
 
@@ -52,8 +56,11 @@ body {
 
 .topbar nav a {
     color: #596579;
+
     text-decoration: none;
+
     font-weight: 600;
+
     transition: 0.2s ease;
 }
 
@@ -67,7 +74,10 @@ body {
     border: none;
     background: transparent;
 
+    color: #172033;
+
     font-size: 1.5rem;
+
     cursor: pointer;
 }
 
@@ -78,6 +88,7 @@ body {
 
 main {
     width: min(1180px, 90%);
+
     margin: auto;
 }
 
@@ -92,17 +103,27 @@ main {
 
 .eyebrow {
     color: #2563eb;
+
     font-size: 0.78rem;
+
     font-weight: 800;
+
     letter-spacing: 2px;
+
     margin-bottom: 10px;
 }
 
 .welcome h1 {
     max-width: 700px;
 
-    font-size: clamp(2.3rem, 6vw, 4.5rem);
+    font-size: clamp(
+        2.3rem,
+        6vw,
+        4.5rem
+    );
+
     line-height: 1.05;
+
     letter-spacing: -3px;
 
     margin-bottom: 20px;
@@ -110,19 +131,22 @@ main {
 
 .welcome > p:last-child {
     max-width: 650px;
+
     color: #657084;
+
     font-size: 1.08rem;
 }
 
 
 /* =========================
-   STAT CARDS
+   STATS
 ========================= */
 
 .stats {
     display: grid;
 
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns:
+        repeat(4, 1fr);
 
     gap: 18px;
 
@@ -133,13 +157,17 @@ main {
     background: #ffffff;
 
     border: 1px solid #e6e9ef;
+
     border-radius: 18px;
 
     padding: 25px;
 
-    box-shadow: 0 10px 30px rgba(25, 35, 55, 0.05);
+    box-shadow:
+        0 10px 30px
+        rgba(25, 35, 55, 0.05);
 
-    transition: transform 0.2s ease;
+    transition:
+        transform 0.2s ease;
 }
 
 .stat-card:hover {
@@ -168,7 +196,44 @@ main {
 
 
 /* =========================
-   CONTENT SECTIONS
+   DASHBOARD ACTIONS
+========================= */
+
+.dashboard-actions {
+    display: flex;
+
+    justify-content: flex-end;
+
+    margin-top: 20px;
+}
+
+.reset-button {
+    background: transparent;
+
+    color: #ef4444;
+
+    border: 1px solid #fecaca;
+
+    border-radius: 10px;
+
+    padding: 10px 15px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.reset-button:hover {
+    background: #fef2f2;
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================
+   CONTENT
 ========================= */
 
 .content-section {
@@ -177,7 +242,9 @@ main {
 
 .section-heading {
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
 
     margin-bottom: 25px;
@@ -185,14 +252,22 @@ main {
 
 .section-heading h2 {
     font-size: 2rem;
+
     letter-spacing: -1px;
 }
 
+
+/* =========================
+   BUTTONS
+========================= */
+
 button {
     border: none;
+
     border-radius: 10px;
 
     background: #2563eb;
+
     color: #ffffff;
 
     padding: 12px 18px;
@@ -206,54 +281,28 @@ button {
 
 button:hover {
     transform: translateY(-2px);
+
     opacity: 0.9;
 }
 
 
 /* =========================
-   EMPTY STATES
-========================= */
-
-.empty-state {
-    text-align: center;
-
-    background: #ffffff;
-
-    border: 1px solid #e6e9ef;
-
-    border-radius: 18px;
-
-    padding: 65px 25px;
-
-    color: #697386;
-}
-
-.empty-state > div {
-    font-size: 2.4rem;
-
-    margin-bottom: 10px;
-}
-
-.empty-state h3 {
-    color: #172033;
-
-    font-size: 1.2rem;
-
-    margin-bottom: 6px;
-}
-
-
-/* =========================
-   DATA CARDS
+   DATA GRID
 ========================= */
 
 .data-grid {
     display: grid;
 
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns:
+        repeat(3, 1fr);
 
     gap: 18px;
 }
+
+
+/* =========================
+   DATA CARD
+========================= */
 
 .data-card {
     background: #ffffff;
@@ -264,7 +313,21 @@ button:hover {
 
     padding: 25px;
 
-    box-shadow: 0 10px 30px rgba(25, 35, 55, 0.05);
+    box-shadow:
+        0 10px 30px
+        rgba(25, 35, 55, 0.05);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.data-card:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 15px 35px
+        rgba(25, 35, 55, 0.08);
 }
 
 .data-icon {
@@ -285,14 +348,68 @@ button:hover {
     margin-bottom: 6px;
 }
 
-.data-card button {
-    margin-top: 15px;
 
+/* =========================
+   CARD ACTIONS
+========================= */
+
+.card-actions {
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 15px;
+}
+
+.card-actions button {
+    padding: 9px 14px;
+
+    font-size: 0.9rem;
+}
+
+.edit-button {
+    background: #2563eb;
+}
+
+.delete-button {
     background: #ef4444;
 }
 
-.data-card button:hover {
-    opacity: 0.85;
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.empty-state {
+    text-align: center;
+
+    background: #ffffff;
+
+    border: 1px solid #e6e9ef;
+
+    border-radius: 18px;
+
+    padding: 65px 25px;
+
+    color: #697386;
+
+    box-shadow:
+        0 10px 30px
+        rgba(25, 35, 55, 0.03);
+}
+
+.empty-state > div {
+    font-size: 2.4rem;
+
+    margin-bottom: 10px;
+}
+
+.empty-state h3 {
+    color: #172033;
+
+    font-size: 1.2rem;
+
+    margin-bottom: 6px;
 }
 
 
@@ -333,7 +450,9 @@ footer {
         position: absolute;
 
         top: 70px;
+
         left: 0;
+
         right: 0;
 
         flex-direction: column;
@@ -342,7 +461,8 @@ footer {
 
         background: #ffffff;
 
-        border-bottom: 1px solid #e6e9ef;
+        border-bottom:
+            1px solid #e6e9ef;
     }
 
     .topbar nav.show {
@@ -352,15 +472,18 @@ footer {
     .topbar nav a {
         padding: 15px 5%;
 
-        border-top: 1px solid #eef0f4;
+        border-top:
+            1px solid #eef0f4;
     }
 
     .stats {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns:
+            repeat(2, 1fr);
     }
 
     .data-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns:
+            repeat(2, 1fr);
     }
 
     .dashboard-section {
@@ -376,8 +499,13 @@ footer {
 
         gap: 15px;
     }
+
 }
 
+
+/* =========================
+   SMALL PHONES
+========================= */
 
 @media (max-width: 520px) {
 
@@ -394,6 +522,14 @@ footer {
     }
 
     .section-heading button {
+        width: 100%;
+    }
+
+    .dashboard-actions {
+        justify-content: stretch;
+    }
+
+    .reset-button {
         width: 100%;
     }
 
