@@ -2,212 +2,163 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <meta
         name="description"
-        content="BusinessOS — manage products, customers, sales and invoices.">
+        content="BusinessOS - Simple business management for products, customers, sales and invoices."
+    >
 
     <title>BusinessOS | Business Management</title>
 
-    <link
-        rel="stylesheet"
-        href="style.css">
-
+    <link rel="stylesheet" href="style.css">
 </head>
-
 
 <body>
 
-
 <header class="topbar">
 
-    <a
-        href="#dashboard"
-        class="logo">
-
+    <a href="#dashboard" class="logo">
         Business<span>OS</span>
-
     </a>
 
-
-    <button
-        id="menuButton"
-        class="menu-button"
-        type="button">
-
+    <button id="menuButton" class="menu-button">
         ☰
-
     </button>
-
 
     <nav id="navigation">
 
-        <a href="#dashboard">
-            Dashboard
-        </a>
-
-        <a href="#analytics">
-            Analytics
-        </a>
-
-        <a href="#products">
-            Products
-        </a>
-
-        <a href="#customers">
-            Customers
-        </a>
-
-        <a href="#sales">
-            Sales
-        </a>
-
-        <a href="#invoices">
-            Invoices
-        </a>
+        <a href="#dashboard">Dashboard</a>
+        <a href="#analytics">Analytics</a>
+        <a href="#products">Products</a>
+        <a href="#customers">Customers</a>
+        <a href="#sales">Sales</a>
+        <a href="#invoices">Invoices</a>
 
     </nav>
 
 </header>
 
 
-
 <main>
 
-
 <!-- =========================
-     DASHBOARD
+     HERO / DASHBOARD
 ========================= -->
 
-<section
-    id="dashboard"
-    class="dashboard-section">
+<section id="dashboard" class="hero">
 
-
-    <div class="welcome">
+    <div class="hero-content">
 
         <p class="eyebrow">
-            BUSINESS DASHBOARD
+            BUSINESSOS
         </p>
-
 
         <h1>
-            Run your business smarter.
+            Run your business
+            <span>smarter.</span>
         </h1>
 
-
-        <p>
-            Manage products, customers,
-            sales and invoices from one
-            simple dashboard.
+        <p class="hero-text">
+            Manage products, customers, sales and invoices
+            from one simple business dashboard.
         </p>
+
+        <div class="hero-buttons">
+
+            <a href="#products" class="primary-button">
+                Manage Products
+            </a>
+
+            <a href="#analytics" class="secondary-button">
+                View Analytics
+            </a>
+
+        </div>
 
     </div>
 
+</section>
 
 
-    <div class="stats">
+<!-- =========================
+     STATS
+========================= -->
 
+<section class="stats-section">
+
+    <div class="stats-grid">
 
         <article class="stat-card">
 
-            <span>💰</span>
+            <div class="stat-icon">
+                💰
+            </div>
+
+            <span>Total Revenue</span>
 
             <strong id="revenue">
                 $0.00
             </strong>
 
-            <small>
-                Total Revenue
-            </small>
-
         </article>
-
 
 
         <article class="stat-card">
 
-            <span>📦</span>
+            <div class="stat-icon">
+                📦
+            </div>
+
+            <span>Products</span>
 
             <strong id="productCount">
                 0
             </strong>
 
-            <small>
-                Products
-            </small>
-
         </article>
-
 
 
         <article class="stat-card">
 
-            <span>👥</span>
+            <div class="stat-icon">
+                👥
+            </div>
+
+            <span>Customers</span>
 
             <strong id="customerCount">
                 0
             </strong>
 
-            <small>
-                Customers
-            </small>
-
         </article>
-
 
 
         <article class="stat-card">
 
-            <span>🧾</span>
+            <div class="stat-icon">
+                🧾
+            </div>
+
+            <span>Total Sales</span>
 
             <strong id="saleCount">
                 0
             </strong>
 
-            <small>
-                Total Sales
-            </small>
-
         </article>
 
-
     </div>
-
-
-
-    <div class="dashboard-actions">
-
-        <button
-            id="resetDataButton"
-            class="reset-button"
-            type="button">
-
-            Reset Business Data
-
-        </button>
-
-    </div>
-
 
 </section>
-
 
 
 <!-- =========================
      ANALYTICS
 ========================= -->
 
-<section
-    id="analytics"
-    class="content-section">
-
+<section id="analytics" class="section">
 
     <div class="section-heading">
 
@@ -221,20 +172,20 @@
                 Analytics
             </h2>
 
+            <p>
+                Understand how your business is performing.
+            </p>
+
         </div>
 
     </div>
 
 
-
     <div class="analytics-grid">
-
 
         <article class="analytics-card">
 
-            <span>
-                💵
-            </span>
+            <span>💵</span>
 
             <small>
                 Average Sale
@@ -247,12 +198,9 @@
         </article>
 
 
-
         <article class="analytics-card">
 
-            <span>
-                📦
-            </span>
+            <span>📦</span>
 
             <small>
                 Units In Stock
@@ -265,12 +213,9 @@
         </article>
 
 
-
         <article class="analytics-card">
 
-            <span>
-                💼
-            </span>
+            <span>💼</span>
 
             <small>
                 Inventory Value
@@ -283,12 +228,9 @@
         </article>
 
 
-
         <article class="analytics-card">
 
-            <span>
-                🏆
-            </span>
+            <span>🏆</span>
 
             <small>
                 Best Seller
@@ -300,20 +242,35 @@
 
         </article>
 
-
     </div>
 
 
+    <div class="analytics-layout">
 
-    <div class="analytics-panels">
+        <div class="panel">
+
+            <h3>
+                📈 Revenue Trend
+            </h3>
+
+            <p class="panel-description">
+                Your revenue over time.
+            </p>
+
+            <div class="chart-container">
+
+                <canvas id="revenueChart"></canvas>
+
+            </div>
+
+        </div>
 
 
-        <div class="analytics-panel">
+        <div class="panel">
 
             <h3>
                 🏆 Top Products
             </h3>
-
 
             <div id="topProducts">
 
@@ -325,14 +282,16 @@
 
         </div>
 
+    </div>
 
 
-        <div class="analytics-panel">
+    <div class="analytics-layout">
+
+        <div class="panel">
 
             <h3>
                 ⚠️ Inventory Alerts
             </h3>
-
 
             <div id="inventoryAlerts">
 
@@ -345,45 +304,34 @@
         </div>
 
 
-    </div>
+        <div class="panel">
 
+            <h3>
+                📊 Sales Overview
+            </h3>
 
+            <div id="salesOverview">
 
-    <div class="analytics-panel">
+                <p class="muted">
+                    No sales data yet.
+                </p>
 
-        <h3>
-            📊 Sales Overview
-        </h3>
-
-
-        <div
-            id="salesOverview"
-            class="sales-overview">
-
-            <p class="muted">
-                No sales data yet.
-            </p>
+            </div>
 
         </div>
 
     </div>
 
-
 </section>
-
 
 
 <!-- =========================
      PRODUCTS
 ========================= -->
 
-<section
-    id="products"
-    class="content-section">
-
+<section id="products" class="section">
 
     <div class="section-heading">
-
 
         <div>
 
@@ -395,38 +343,33 @@
                 Products
             </h2>
 
-        </div>
+            <p>
+                Manage what your business sells.
+            </p>
 
+        </div>
 
         <button
             id="addProductButton"
-            type="button">
-
+            class="primary-button"
+        >
             + Add Product
-
         </button>
-
 
     </div>
 
 
-
-    <div
-        id="productForm"
-        class="form-panel hidden">
-
+    <div id="productForm" class="form-panel hidden">
 
         <h3>
             Add Product
         </h3>
 
-
         <form id="productFormElement">
-
 
             <div class="form-group">
 
-                <label for="productName">
+                <label>
                     Product name
                 </label>
 
@@ -434,18 +377,17 @@
                     id="productName"
                     type="text"
                     placeholder="e.g. MacBook Pro"
-                    required>
+                    required
+                >
 
             </div>
 
 
-
             <div class="form-row">
-
 
                 <div class="form-group">
 
-                    <label for="productPrice">
+                    <label>
                         Selling price (USD)
                     </label>
 
@@ -454,16 +396,16 @@
                         type="number"
                         min="0"
                         step="0.01"
-                        placeholder="1999.00"
-                        required>
+                        placeholder="1956.00"
+                        required
+                    >
 
                 </div>
 
 
-
                 <div class="form-group">
 
-                    <label for="productStock">
+                    <label>
                         Stock quantity
                     </label>
 
@@ -473,72 +415,61 @@
                         min="0"
                         step="1"
                         placeholder="10"
-                        required>
+                        required
+                    >
 
                 </div>
-
 
             </div>
 
 
-
             <div class="form-actions">
 
-                <button type="submit">
+                <button type="submit" class="primary-button">
                     Add Product
                 </button>
 
                 <button
                     type="button"
                     id="cancelProductButton"
-                    class="secondary-button">
-
+                    class="secondary-button"
+                >
                     Cancel
-
                 </button>
 
             </div>
-
 
         </form>
 
     </div>
 
 
+    <div id="productList" class="empty-state">
 
-    <div
-        id="productList"
-        class="empty-state">
-
-        <div>📦</div>
+        <div class="empty-icon">
+            📦
+        </div>
 
         <h3>
             No products yet
         </h3>
 
         <p>
-            Add your first product to start
-            managing your inventory.
+            Add your first product to start managing inventory.
         </p>
 
     </div>
 
-
 </section>
-
 
 
 <!-- =========================
      CUSTOMERS
 ========================= -->
 
-<section
-    id="customers"
-    class="content-section">
-
+<section id="customers" class="section">
 
     <div class="section-heading">
-
 
         <div>
 
@@ -550,38 +481,33 @@
                 Customers
             </h2>
 
-        </div>
+            <p>
+                Keep track of the people you serve.
+            </p>
 
+        </div>
 
         <button
             id="addCustomerButton"
-            type="button">
-
+            class="primary-button"
+        >
             + Add Customer
-
         </button>
-
 
     </div>
 
 
-
-    <div
-        id="customerForm"
-        class="form-panel hidden">
-
+    <div id="customerForm" class="form-panel hidden">
 
         <h3>
             Add Customer
         </h3>
 
-
         <form id="customerFormElement">
-
 
             <div class="form-group">
 
-                <label for="customerName">
+                <label>
                     Customer name
                 </label>
 
@@ -589,100 +515,94 @@
                     id="customerName"
                     type="text"
                     placeholder="e.g. John Smith"
-                    required>
+                    required
+                >
 
             </div>
 
 
+            <div class="form-row">
 
-            <div class="form-group">
+                <div class="form-group">
 
-                <label for="customerEmail">
-                    Email
-                </label>
+                    <label>
+                        Email
+                    </label>
 
-                <input
-                    id="customerEmail"
-                    type="email"
-                    placeholder="john@example.com"
-                    required>
+                    <input
+                        id="customerEmail"
+                        type="email"
+                        placeholder="john@example.com"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Phone
+                    </label>
+
+                    <input
+                        id="customerPhone"
+                        type="tel"
+                        placeholder="+1 555 123 4567"
+                    >
+
+                </div>
 
             </div>
-
-
-
-            <div class="form-group">
-
-                <label for="customerPhone">
-                    Phone
-                </label>
-
-                <input
-                    id="customerPhone"
-                    type="tel"
-                    placeholder="+1 555 123 4567">
-
-            </div>
-
 
 
             <div class="form-actions">
 
-                <button type="submit">
+                <button type="submit" class="primary-button">
                     Add Customer
                 </button>
 
                 <button
                     type="button"
                     id="cancelCustomerButton"
-                    class="secondary-button">
-
+                    class="secondary-button"
+                >
                     Cancel
-
                 </button>
 
             </div>
-
 
         </form>
 
     </div>
 
 
+    <div id="customerList" class="empty-state">
 
-    <div
-        id="customerList"
-        class="empty-state">
-
-        <div>👥</div>
+        <div class="empty-icon">
+            👥
+        </div>
 
         <h3>
             No customers yet
         </h3>
 
         <p>
-            Add your first customer to start
-            building your customer list.
+            Add your first customer to start building your customer list.
         </p>
 
     </div>
 
-
 </section>
-
 
 
 <!-- =========================
      SALES
 ========================= -->
 
-<section
-    id="sales"
-    class="content-section">
-
+<section id="sales" class="section">
 
     <div class="section-heading">
-
 
         <div>
 
@@ -694,44 +614,37 @@
                 Recent Sales
             </h2>
 
-        </div>
+            <p>
+                Track your completed transactions.
+            </p>
 
+        </div>
 
         <button
             id="addSaleButton"
-            type="button">
-
+            class="primary-button"
+        >
             + Record Sale
-
         </button>
-
 
     </div>
 
 
-
-    <div
-        id="saleForm"
-        class="form-panel hidden">
-
+    <div id="saleForm" class="form-panel hidden">
 
         <h3>
             Record Sale
         </h3>
 
-
         <form id="saleFormElement">
-
 
             <div class="form-group">
 
-                <label for="saleProduct">
+                <label>
                     Product
                 </label>
 
-                <select
-                    id="saleProduct"
-                    required>
+                <select id="saleProduct" required>
 
                     <option value="">
                         Select a product
@@ -742,13 +655,11 @@
             </div>
 
 
-
             <div class="form-row">
-
 
                 <div class="form-group">
 
-                    <label for="saleQuantity">
+                    <label>
                         Quantity
                     </label>
 
@@ -756,17 +667,16 @@
                         id="saleQuantity"
                         type="number"
                         min="1"
-                        step="1"
                         value="1"
-                        required>
+                        required
+                    >
 
                 </div>
 
 
-
                 <div class="form-group">
 
-                    <label for="saleTotal">
+                    <label>
                         Total (USD)
                     </label>
 
@@ -774,72 +684,61 @@
                         id="saleTotal"
                         type="text"
                         value="$0.00"
-                        readonly>
+                        readonly
+                    >
 
                 </div>
-
 
             </div>
 
 
-
             <div class="form-actions">
 
-                <button type="submit">
+                <button type="submit" class="primary-button">
                     Record Sale
                 </button>
 
                 <button
                     type="button"
                     id="cancelSaleButton"
-                    class="secondary-button">
-
+                    class="secondary-button"
+                >
                     Cancel
-
                 </button>
 
             </div>
-
 
         </form>
 
     </div>
 
 
+    <div id="salesList" class="empty-state">
 
-    <div
-        id="salesList"
-        class="empty-state">
-
-        <div>🧾</div>
+        <div class="empty-icon">
+            🧾
+        </div>
 
         <h3>
             No sales yet
         </h3>
 
         <p>
-            Your recorded sales will
-            appear here.
+            Your recorded sales will appear here.
         </p>
 
     </div>
 
-
 </section>
-
 
 
 <!-- =========================
      INVOICES
 ========================= -->
 
-<section
-    id="invoices"
-    class="content-section">
-
+<section id="invoices" class="section">
 
     <div class="section-heading">
-
 
         <div>
 
@@ -851,45 +750,37 @@
                 Invoices
             </h2>
 
-        </div>
+            <p>
+                Create professional invoices for your customers.
+            </p>
 
+        </div>
 
         <button
             id="createInvoiceButton"
-            type="button">
-
+            class="primary-button"
+        >
             + Create Invoice
-
         </button>
-
 
     </div>
 
 
-
-    <div
-        id="invoiceForm"
-        class="form-panel hidden">
-
+    <div id="invoiceForm" class="form-panel hidden">
 
         <h3>
             Create Invoice
         </h3>
 
-
-        <form
-            id="invoiceFormElement">
-
+        <form id="invoiceFormElement">
 
             <div class="form-group">
 
-                <label for="invoiceCustomer">
+                <label>
                     Customer
                 </label>
 
-                <select
-                    id="invoiceCustomer"
-                    required>
+                <select id="invoiceCustomer" required>
 
                     <option value="">
                         Select a customer
@@ -900,16 +791,13 @@
             </div>
 
 
-
             <div class="form-group">
 
-                <label for="invoiceProduct">
+                <label>
                     Product
                 </label>
 
-                <select
-                    id="invoiceProduct"
-                    required>
+                <select id="invoiceProduct" required>
 
                     <option value="">
                         Select a product
@@ -920,13 +808,11 @@
             </div>
 
 
-
             <div class="form-row">
-
 
                 <div class="form-group">
 
-                    <label for="invoiceQuantity">
+                    <label>
                         Quantity
                     </label>
 
@@ -934,17 +820,16 @@
                         id="invoiceQuantity"
                         type="number"
                         min="1"
-                        step="1"
                         value="1"
-                        required>
+                        required
+                    >
 
                 </div>
 
 
-
                 <div class="form-group">
 
-                    <label for="invoiceTotal">
+                    <label>
                         Total (USD)
                     </label>
 
@@ -952,45 +837,38 @@
                         id="invoiceTotal"
                         type="text"
                         value="$0.00"
-                        readonly>
+                        readonly
+                    >
 
                 </div>
 
-
             </div>
-
 
 
             <div class="form-actions">
 
-                <button type="submit">
+                <button type="submit" class="primary-button">
                     Create Invoice
                 </button>
-
 
                 <button
                     type="button"
                     id="cancelInvoiceButton"
-                    class="secondary-button">
-
+                    class="secondary-button"
+                >
                     Cancel
-
                 </button>
 
             </div>
-
 
         </form>
 
     </div>
 
 
+    <div id="invoiceList" class="empty-state">
 
-    <div
-        id="invoiceList"
-        class="empty-state">
-
-        <div>
+        <div class="empty-icon">
             🧾
         </div>
 
@@ -999,29 +877,56 @@
         </h3>
 
         <p>
-            Create your first invoice
-            for a customer.
+            Create your first invoice for a customer.
         </p>
 
     </div>
 
-
 </section>
 
+
+<!-- =========================
+     RESET
+========================= -->
+
+<section class="danger-zone">
+
+    <h3>
+        Business Data
+    </h3>
+
+    <p>
+        Permanently delete all products, customers,
+        sales and invoices stored in this browser.
+    </p>
+
+    <button
+        id="resetDataButton"
+        class="danger-button"
+    >
+        Reset Business Data
+    </button>
+
+</section>
 
 </main>
 
 
-
 <footer>
 
+    <div class="footer-logo">
+        BusinessOS
+    </div>
+
     <p>
-        Built by Russette with
-        HTML, CSS & JavaScript.
+        Built by Russette with HTML, CSS & JavaScript.
+    </p>
+
+    <p>
+        © 2026 BusinessOS
     </p>
 
 </footer>
-
 
 
 <script src="script.js"></script>
