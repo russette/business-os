@@ -463,6 +463,15 @@ button:hover {
     align-items: center;
     justify-content: space-between;
     gap: 20px;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.invoice-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 35px rgba(15, 23, 42, 0.08);
 }
 
 .invoice-main {
@@ -475,8 +484,10 @@ button:hover {
     display: grid;
     place-items: center;
 
-    width: 50px;
-    height: 50px;
+    width: 52px;
+    height: 52px;
+
+    flex-shrink: 0;
 
     border-radius: 14px;
     background: #eff6ff;
@@ -490,14 +501,14 @@ button:hover {
 
 .invoice-meta strong {
     display: block;
-    font-size: 1.15rem;
+    font-size: 1.2rem;
 }
 
 .invoice-status {
     display: inline-block;
 
     margin-top: 5px;
-    padding: 4px 9px;
+    padding: 4px 10px;
 
     border-radius: 999px;
 
@@ -585,9 +596,9 @@ button:hover {
 
     padding: 20px;
 
-    background: rgba(15, 23, 42, 0.6);
+    background: rgba(15, 23, 42, 0.65);
 
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(7px);
 }
 
 .modal.active {
@@ -605,13 +616,45 @@ button:hover {
     padding: 32px;
 
     background: white;
-    border-radius: 20px;
+    border-radius: 22px;
 
-    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 30px 100px rgba(0, 0, 0, 0.25);
+
+    animation: modalIn 0.2s ease;
 }
 
+@keyframes modalIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ================= INVOICE MODAL ================= */
+
 .invoice-modal {
-    width: min(600px, 100%);
+    width: min(650px, 100%);
+}
+
+.invoice-modal-header {
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.invoice-modal-header h2 {
+    margin-bottom: 6px;
+}
+
+.invoice-modal-header p:last-child {
+    color: #6b7280;
+    font-size: 0.9rem;
 }
 
 .close-btn {
@@ -641,7 +684,6 @@ button:hover {
 }
 
 .modal-content h2 {
-    margin-bottom: 25px;
     font-size: 1.7rem;
     letter-spacing: -0.03em;
 }
@@ -678,6 +720,11 @@ select {
     transition: 0.2s ease;
 }
 
+input:hover,
+select:hover {
+    border-color: #9ca3af;
+}
+
 input:focus,
 select:focus {
     border-color: #2563eb;
@@ -688,7 +735,7 @@ select:focus {
 .form-buttons {
     display: flex;
     gap: 10px;
-    margin-top: 12px;
+    margin-top: 15px;
 }
 
 .form-buttons button {
@@ -719,16 +766,12 @@ select:focus {
 
 /* ================= INVOICE PREVIEW ================= */
 
-.invoice-modal-header {
-    margin-bottom: 18px;
-}
-
 .invoice-preview {
-    margin-top: 15px;
-    padding: 20px;
+    margin-top: 20px;
+    padding: 22px;
 
     border: 1px solid #e5e7eb;
-    border-radius: 14px;
+    border-radius: 16px;
 
     background: #f8fafc;
 }
@@ -739,7 +782,7 @@ select:focus {
     align-items: center;
     justify-content: space-between;
 
-    padding: 8px 0;
+    padding: 9px 0;
 }
 
 .invoice-preview-row span {
@@ -752,16 +795,20 @@ select:focus {
 }
 
 .invoice-total-row {
-    margin-top: 8px;
-    padding-top: 15px;
+    margin-top: 10px;
+    padding-top: 16px;
 
     border-top: 1px solid #d1d5db;
 }
 
 .invoice-total-row span,
 .invoice-total-row strong {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: 800;
+}
+
+.invoice-total-row strong {
+    color: #2563eb;
 }
 
 /* ================= FOOTER ================= */
@@ -863,7 +910,12 @@ footer p:first-child {
         flex-direction: column;
     }
 
+    .invoice-main {
+        width: 100%;
+    }
+
     .invoice-meta {
+        width: 100%;
         text-align: left;
     }
 
@@ -877,5 +929,9 @@ footer p:first-child {
 
     .form-buttons {
         flex-direction: column;
+    }
+
+    .invoice-preview {
+        padding: 18px;
     }
 }
