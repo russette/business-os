@@ -5,373 +5,546 @@
     <meta charset="UTF-8">
 
     <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+        content="width=device-width, initial-scale=1.0">
 
     <meta name="description"
-          content="BusinessOS — simple business management for products, customers and sales.">
+        content="BusinessOS — simple business management for products, customers and sales.">
 
     <title>BusinessOS | Business Management</title>
 
-    <link rel="stylesheet"
-          href="style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
-
 
 <body>
 
+<header class="topbar">
 
-    <!-- =========================
-         HEADER
-    ========================== -->
+    <a href="#dashboard" class="logo">
+        Business<span>OS</span>
+    </a>
 
-    <header class="topbar">
+    <button
+        id="menuButton"
+        class="menu-button"
+        aria-label="Open menu">
+        ☰
+    </button>
 
-        <a href="#dashboard"
-           class="logo">
-            Business<span>OS</span>
-        </a>
+    <nav id="navigation">
 
+        <a href="#dashboard">Dashboard</a>
+        <a href="#products">Products</a>
+        <a href="#customers">Customers</a>
+        <a href="#sales">Sales</a>
 
-        <button
-            id="menuButton"
-            class="menu-button"
-            aria-label="Open menu">
-            ☰
-        </button>
+    </nav>
 
-
-        <nav id="navigation">
-
-            <a href="#dashboard">
-                Dashboard
-            </a>
-
-            <a href="#products">
-                Products
-            </a>
-
-            <a href="#customers">
-                Customers
-            </a>
-
-            <a href="#sales">
-                Sales
-            </a>
-
-        </nav>
-
-    </header>
+</header>
 
 
+<main>
 
-    <!-- =========================
-         MAIN
-    ========================== -->
+    <!-- DASHBOARD -->
 
-    <main>
+    <section id="dashboard" class="dashboard-section">
+
+        <div class="welcome">
+
+            <p class="eyebrow">
+                BUSINESS DASHBOARD
+            </p>
+
+            <h1>
+                Run your business smarter.
+            </h1>
+
+            <p>
+                Manage your products, customers
+                and sales from one simple dashboard.
+            </p>
+
+        </div>
 
 
-        <!-- =========================
-             DASHBOARD
-        ========================== -->
+        <div class="stats">
 
-        <section
-            id="dashboard"
-            class="dashboard-section">
+            <article class="stat-card">
 
-            <div class="welcome">
+                <span>💰</span>
+
+                <strong id="revenue">
+                    $0.00
+                </strong>
+
+                <small>
+                    Total Revenue
+                </small>
+
+            </article>
+
+
+            <article class="stat-card">
+
+                <span>📦</span>
+
+                <strong id="productCount">
+                    0
+                </strong>
+
+                <small>
+                    Products
+                </small>
+
+            </article>
+
+
+            <article class="stat-card">
+
+                <span>👥</span>
+
+                <strong id="customerCount">
+                    0
+                </strong>
+
+                <small>
+                    Customers
+                </small>
+
+            </article>
+
+
+            <article class="stat-card">
+
+                <span>🧾</span>
+
+                <strong id="saleCount">
+                    0
+                </strong>
+
+                <small>
+                    Total Sales
+                </small>
+
+            </article>
+
+        </div>
+
+
+        <div class="dashboard-actions">
+
+            <button
+                id="resetDataButton"
+                class="reset-button">
+
+                Reset Business Data
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- PRODUCTS -->
+
+    <section id="products" class="content-section">
+
+        <div class="section-heading">
+
+            <div>
 
                 <p class="eyebrow">
-                    BUSINESS DASHBOARD
+                    INVENTORY
                 </p>
 
-                <h1>
-                    Run your business smarter.
-                </h1>
+                <h2>
+                    Products
+                </h2>
 
-                <p>
-                    Manage your products, customers
-                    and sales from one simple dashboard.
+            </div>
+
+
+            <button
+                id="addProductButton">
+
+                + Add Product
+
+            </button>
+
+        </div>
+
+
+        <!-- PRODUCT FORM -->
+
+        <div
+            id="productForm"
+            class="form-panel hidden">
+
+            <h3>
+                Add Product
+            </h3>
+
+            <form id="productFormElement">
+
+                <div class="form-group">
+
+                    <label for="productName">
+                        Product name
+                    </label>
+
+                    <input
+                        id="productName"
+                        type="text"
+                        placeholder="e.g. MacBook Pro"
+                        required>
+
+                </div>
+
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="productPrice">
+                            Price (USD)
+                        </label>
+
+                        <input
+                            id="productPrice"
+                            type="number"
+                            min="0"
+                            step="0.01"
+                            placeholder="1999.00"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="productStock">
+                            Stock quantity
+                        </label>
+
+                        <input
+                            id="productStock"
+                            type="number"
+                            min="0"
+                            step="1"
+                            placeholder="10"
+                            required>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-actions">
+
+                    <button
+                        type="submit">
+
+                        Add Product
+
+                    </button>
+
+                    <button
+                        type="button"
+                        id="cancelProductButton"
+                        class="secondary-button">
+
+                        Cancel
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+
+        <div
+            id="productList"
+            class="empty-state">
+
+            <div>📦</div>
+
+            <h3>
+                No products yet
+            </h3>
+
+            <p>
+                Add your first product to start
+                managing your inventory.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- CUSTOMERS -->
+
+    <section id="customers" class="content-section">
+
+        <div class="section-heading">
+
+            <div>
+
+                <p class="eyebrow">
+                    CUSTOMERS
                 </p>
 
-            </div>
-
-
-
-            <!-- STATS -->
-
-            <div class="stats">
-
-                <article class="stat-card">
-
-                    <span>💰</span>
-
-                    <strong id="revenue">
-                        $0.00
-                    </strong>
-
-                    <small>
-                        Total Revenue
-                    </small>
-
-                </article>
-
-
-                <article class="stat-card">
-
-                    <span>📦</span>
-
-                    <strong id="productCount">
-                        0
-                    </strong>
-
-                    <small>
-                        Products
-                    </small>
-
-                </article>
-
-
-                <article class="stat-card">
-
-                    <span>👥</span>
-
-                    <strong id="customerCount">
-                        0
-                    </strong>
-
-                    <small>
-                        Customers
-                    </small>
-
-                </article>
-
-
-                <article class="stat-card">
-
-                    <span>🧾</span>
-
-                    <strong id="saleCount">
-                        0
-                    </strong>
-
-                    <small>
-                        Total Sales
-                    </small>
-
-                </article>
+                <h2>
+                    Customers
+                </h2>
 
             </div>
 
 
+            <button
+                id="addCustomerButton">
 
-            <!-- RESET -->
+                + Add Customer
 
-            <div class="dashboard-actions">
+            </button>
 
-                <button
-                    id="resetDataButton"
-                    class="reset-button">
-
-                    Reset Business Data
-
-                </button>
-
-            </div>
-
-        </section>
+        </div>
 
 
+        <!-- CUSTOMER FORM -->
 
-        <!-- =========================
-             PRODUCTS
-        ========================== -->
+        <div
+            id="customerForm"
+            class="form-panel hidden">
 
-        <section
-            id="products"
-            class="content-section">
+            <h3>
+                Add Customer
+            </h3>
 
-            <div class="section-heading">
+            <form id="customerFormElement">
 
-                <div>
+                <div class="form-group">
 
-                    <p class="eyebrow">
-                        INVENTORY
-                    </p>
+                    <label for="customerName">
+                        Customer name
+                    </label>
 
-                    <h2>
-                        Products
-                    </h2>
+                    <input
+                        id="customerName"
+                        type="text"
+                        placeholder="e.g. John Smith"
+                        required>
 
                 </div>
 
 
-                <button
-                    id="addProductButton">
+                <div class="form-group">
 
-                    + Add Product
+                    <label for="customerEmail">
+                        Email
+                    </label>
 
-                </button>
+                    <input
+                        id="customerEmail"
+                        type="email"
+                        placeholder="john@example.com"
+                        required>
 
-            </div>
-
-
-            <div
-                id="productList"
-                class="empty-state">
-
-                <div>
-                    📦
                 </div>
 
-                <h3>
-                    No products yet
-                </h3>
 
-                <p>
-                    Add your first product to start
-                    managing your inventory.
+                <div class="form-group">
+
+                    <label for="customerPhone">
+                        Phone
+                    </label>
+
+                    <input
+                        id="customerPhone"
+                        type="tel"
+                        placeholder="+1 555 123 4567">
+
+                </div>
+
+
+                <div class="form-actions">
+
+                    <button
+                        type="submit">
+
+                        Add Customer
+
+                    </button>
+
+                    <button
+                        type="button"
+                        id="cancelCustomerButton"
+                        class="secondary-button">
+
+                        Cancel
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+
+        <div
+            id="customerList"
+            class="empty-state">
+
+            <div>👥</div>
+
+            <h3>
+                No customers yet
+            </h3>
+
+            <p>
+                Add your first customer to start
+                building your customer list.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- SALES -->
+
+    <section id="sales" class="content-section">
+
+        <div class="section-heading">
+
+            <div>
+
+                <p class="eyebrow">
+                    SALES
                 </p>
 
+                <h2>
+                    Recent Sales
+                </h2>
+
             </div>
 
-        </section>
+
+            <button
+                id="addSaleButton">
+
+                + Record Sale
+
+            </button>
+
+        </div>
 
 
+        <!-- SALE FORM -->
 
-        <!-- =========================
-             CUSTOMERS
-        ========================== -->
+        <div
+            id="saleForm"
+            class="form-panel hidden">
 
-        <section
-            id="customers"
-            class="content-section">
+            <h3>
+                Record Sale
+            </h3>
 
-            <div class="section-heading">
+            <form id="saleFormElement">
 
-                <div>
+                <div class="form-group">
 
-                    <p class="eyebrow">
-                        CUSTOMERS
-                    </p>
+                    <label for="saleDescription">
+                        Sale description
+                    </label>
 
-                    <h2>
-                        Customers
-                    </h2>
+                    <input
+                        id="saleDescription"
+                        type="text"
+                        placeholder="e.g. Website project"
+                        required>
 
                 </div>
 
 
-                <button
-                    id="addCustomerButton">
+                <div class="form-group">
 
-                    + Add Customer
+                    <label for="saleAmount">
+                        Amount (USD)
+                    </label>
 
-                </button>
-
-            </div>
-
-
-            <div
-                id="customerList"
-                class="empty-state">
-
-                <div>
-                    👥
-                </div>
-
-                <h3>
-                    No customers yet
-                </h3>
-
-                <p>
-                    Add your first customer to start
-                    building your customer list.
-                </p>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =========================
-             SALES
-        ========================== -->
-
-        <section
-            id="sales"
-            class="content-section">
-
-            <div class="section-heading">
-
-                <div>
-
-                    <p class="eyebrow">
-                        SALES
-                    </p>
-
-                    <h2>
-                        Recent Sales
-                    </h2>
+                    <input
+                        id="saleAmount"
+                        type="number"
+                        min="0.01"
+                        step="0.01"
+                        placeholder="1500.00"
+                        required>
 
                 </div>
 
 
-                <button
-                    id="addSaleButton">
+                <div class="form-actions">
 
-                    + Record Sale
+                    <button
+                        type="submit">
 
-                </button>
+                        Record Sale
 
-            </div>
+                    </button>
 
+                    <button
+                        type="button"
+                        id="cancelSaleButton"
+                        class="secondary-button">
 
-            <div
-                id="salesList"
-                class="empty-state">
+                        Cancel
 
-                <div>
-                    🧾
+                    </button>
+
                 </div>
 
-                <h3>
-                    No sales yet
-                </h3>
+            </form>
 
-                <p>
-                    Your recorded sales will
-                    appear here.
-                </p>
-
-            </div>
-
-        </section>
+        </div>
 
 
-    </main>
+        <div
+            id="salesList"
+            class="empty-state">
+
+            <div>🧾</div>
+
+            <h3>
+                No sales yet
+            </h3>
+
+            <p>
+                Your recorded sales will
+                appear here.
+            </p>
+
+        </div>
+
+    </section>
+
+</main>
 
 
+<footer>
 
-    <!-- =========================
-         FOOTER
-    ========================== -->
+    <p>
+        Built by Russette with
+        HTML, CSS & JavaScript.
+    </p>
 
-    <footer>
-
-        <p>
-            Built by Russette with
-            HTML, CSS & JavaScript.
-        </p>
-
-    </footer>
+</footer>
 
 
-
-    <!-- JAVASCRIPT -->
-
-    <script src="script.js"></script>
+<script src="script.js"></script>
 
 </body>
 
