@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    /* ===============================
+    /* =====================================================
        DATA
-    =============================== */
+    ===================================================== */
 
     let products =
         JSON.parse(localStorage.getItem("businessOSProducts")) || [];
@@ -17,11 +17,12 @@ document.addEventListener("DOMContentLoaded", () => {
         JSON.parse(localStorage.getItem("businessOSInvoices")) || [];
 
 
-    /* ===============================
+    /* =====================================================
        STORAGE
-    =============================== */
+    ===================================================== */
 
     function saveData() {
+
         localStorage.setItem(
             "businessOSProducts",
             JSON.stringify(products)
@@ -44,11 +45,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /* ===============================
+    /* =====================================================
        HELPERS
-    =============================== */
+    ===================================================== */
 
     function money(value) {
+
         return new Intl.NumberFormat("en-US", {
             style: "currency",
             currency: "USD"
@@ -57,12 +59,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     function id() {
+
         return Date.now().toString() +
             Math.random().toString(36).slice(2);
     }
 
 
     function safe(value) {
+
         return String(value ?? "")
             .replace(/&/g, "&amp;")
             .replace(/</g, "&lt;")
@@ -73,6 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     function setText(elementId, value) {
+
         const element =
             document.getElementById(elementId);
 
@@ -100,9 +105,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /* ===============================
-       FIX OLD SALES DATA
-    =============================== */
+    /* =====================================================
+       REPAIR OLD SALES DATA
+    ===================================================== */
 
     function repairSales() {
 
@@ -110,22 +115,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
             let product = null;
 
-            /*
-             * Try every possible way
-             * the old system may have
-             * stored the product.
-             */
-
             if (sale.productId) {
+
                 product = products.find(
-                    p => String(p.id) === String(sale.productId)
+                    p =>
+                        String(p.id) ===
+                        String(sale.productId)
                 );
             }
 
             if (!product && sale.productName) {
+
                 product = products.find(
                     p =>
-                        p.name.toLowerCase() ===
+                        String(p.name).toLowerCase() ===
                         String(sale.productName).toLowerCase()
                 );
             }
@@ -136,11 +139,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     product = products.find(
                         p =>
-                            p.name.toLowerCase() ===
+                            String(p.name).toLowerCase() ===
                             sale.product.toLowerCase()
                     );
 
-                } else if (typeof sale.product === "object") {
+                } else if (
+                    typeof sale.product === "object"
+                ) {
 
                     product = products.find(
                         p =>
@@ -150,19 +155,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
 
-
             const quantity =
                 Number(
                     sale.quantity ??
                     sale.qty ??
                     1
                 );
-
-
-            /*
-             * Support all possible old
-             * price/total fields.
-             */
 
             let total =
                 Number(
@@ -171,11 +169,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     sale.saleTotal
                 );
 
-
             if (!Number.isFinite(total)) {
                 total = 0;
             }
-
 
             if (total === 0 && product) {
 
@@ -183,7 +179,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     Number(product.price) *
                     quantity;
             }
-
 
             return {
 
@@ -205,29 +200,25 @@ document.addEventListener("DOMContentLoaded", () => {
                             "Unknown Product"
                         ),
 
-                quantity:
-                    quantity,
+                quantity,
 
-                total:
-                    total,
+                total,
 
                 date:
                     sale.date ||
                     sale.createdAt ||
                     new Date().toISOString()
-
             };
 
         });
-
 
         saveData();
     }
 
 
-    /* ===============================
+    /* =====================================================
        PRODUCTS
-    =============================== */
+    ===================================================== */
 
     function renderProducts() {
 
@@ -236,23 +227,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!list) return;
 
-
-        if (products.length === 0) {
+        if (!products.length) {
 
             list.innerHTML = `
                 <div class="empty-state">
+
                     <div class="empty-icon">📦</div>
+
                     <h3>No products yet</h3>
+
                     <p>
                         Add your first product to start
                         managing your inventory.
                     </p>
+
                 </div>
             `;
 
             return;
         }
-
 
         list.innerHTML =
             products.map(product => {
@@ -278,8 +271,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         <span class="status">
                             ${
                                 stock > 0
-                                ? "IN STOCK"
-                                : "OUT OF STOCK"
+                                    ? "IN STOCK"
+                                    : "OUT OF STOCK"
                             }
                         </span>
 
@@ -306,10 +299,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /* ===============================
-       ADD / EDIT PRODUCT
-    =============================== */
-
     window.openProductModal =
         function(productId = null) {
 
@@ -318,14 +307,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (!modal) return;
 
-
-            const form =
-                document.getElementById("productForm");
-
-            if (form) {
-                form.reset();
-            }
-
+            document
+                .getElementById("productForm")
+                ?.reset();
 
             if (productId) {
 
@@ -336,26 +320,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (!product) return;
 
-
                 document.getElementById(
                     "productModalTitle"
                 ).textContent = "Edit Product";
-
 
                 document.getElementById(
                     "productId"
                 ).value = product.id;
 
-
                 document.getElementById(
                     "productName"
                 ).value = product.name;
 
-
                 document.getElementById(
                     "productPrice"
                 ).value = product.price;
-
 
                 document.getElementById(
                     "productStock"
@@ -366,9 +345,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById(
                     "productModalTitle"
                 ).textContent = "Add Product";
-
             }
-
 
             modal.classList.add("active");
         };
@@ -385,6 +362,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     window.editProduct =
         function(productId) {
+
             openProductModal(productId);
         };
 
@@ -395,18 +373,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
             event.preventDefault();
 
-
             const productId =
                 document.getElementById(
                     "productId"
                 ).value;
 
-
             const name =
                 document.getElementById(
                     "productName"
                 ).value.trim();
-
 
             const price =
                 Number(
@@ -415,7 +390,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     ).value
                 );
 
-
             const stock =
                 Number(
                     document.getElementById(
@@ -423,12 +397,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     ).value
                 );
 
-
             if (!name) {
+
                 alert("Enter a product name.");
+
                 return;
             }
-
 
             if (productId) {
 
@@ -442,7 +416,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     product.name = name;
                     product.price = price;
                     product.stock = stock;
-
                 }
 
             } else {
@@ -450,24 +423,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 products.push({
 
                     id: id(),
-
-                    name: name,
-
-                    price: price,
-
-                    stock: stock
+                    name,
+                    price,
+                    stock
 
                 });
-
             }
-
 
             saveData();
 
             renderAll();
 
             closeProductModal();
-
         });
 
 
@@ -478,12 +445,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-
             products =
                 products.filter(
                     p => p.id !== productId
                 );
-
 
             saveData();
 
@@ -491,9 +456,9 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
 
-    /* ===============================
+    /* =====================================================
        CUSTOMERS
-    =============================== */
+    ===================================================== */
 
     function renderCustomers() {
 
@@ -502,23 +467,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!list) return;
 
-
-        if (customers.length === 0) {
+        if (!customers.length) {
 
             list.innerHTML = `
                 <div class="empty-state">
+
                     <div class="empty-icon">👥</div>
+
                     <h3>No customers yet</h3>
+
                     <p>
                         Add your first customer to start
                         building your customer list.
                     </p>
+
                 </div>
             `;
 
             return;
         }
-
 
         list.innerHTML =
             customers.map(customer => {
@@ -532,14 +499,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
                         ${
                             customer.email
-                            ? `<p>📧 ${safe(customer.email)}</p>`
-                            : ""
+                                ? `<p>📧 ${safe(customer.email)}</p>`
+                                : ""
                         }
 
                         ${
                             customer.phone
-                            ? `<p>📱 ${safe(customer.phone)}</p>`
-                            : ""
+                                ? `<p>📱 ${safe(customer.phone)}</p>`
+                                : ""
                         }
 
                         <button
@@ -583,50 +550,42 @@ document.addEventListener("DOMContentLoaded", () => {
 
             event.preventDefault();
 
-
             const name =
                 document.getElementById(
                     "customerName"
                 ).value.trim();
-
 
             const email =
                 document.getElementById(
                     "customerEmail"
                 ).value.trim();
 
-
             const phone =
                 document.getElementById(
                     "customerPhone"
                 ).value.trim();
 
-
             if (!name) {
+
                 alert("Enter customer name.");
+
                 return;
             }
-
 
             customers.push({
 
                 id: id(),
-
-                name: name,
-
-                email: email,
-
-                phone: phone
+                name,
+                email,
+                phone
 
             });
-
 
             saveData();
 
             renderAll();
 
             closeCustomerModal();
-
         });
 
 
@@ -637,12 +596,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-
             customers =
                 customers.filter(
                     c => c.id !== customerId
                 );
-
 
             saveData();
 
@@ -650,9 +607,9 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
 
-    /* ===============================
+    /* =====================================================
        SALES
-    =============================== */
+    ===================================================== */
 
     window.openSaleModal =
         function() {
@@ -662,16 +619,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     "saleProduct"
                 );
 
-
             if (!select) return;
-
 
             select.innerHTML = `
                 <option value="">
                     Select a product
                 </option>
             `;
-
 
             products.forEach(product => {
 
@@ -684,14 +638,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
             });
 
-
             document.getElementById(
                 "saleQuantity"
             ).value = 1;
 
-
             updateSaleTotal();
-
 
             document
                 .getElementById("saleModal")
@@ -715,7 +666,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 "saleProduct"
             )?.value;
 
-
         const quantity =
             Number(
                 document.getElementById(
@@ -723,18 +673,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 )?.value
             ) || 0;
 
-
         const product =
             products.find(
                 p => p.id === productId
             );
 
-
         const total =
             product
-            ? Number(product.price) * quantity
-            : 0;
-
+                ? Number(product.price) * quantity
+                : 0;
 
         setText(
             "saleTotal",
@@ -765,12 +712,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
             event.preventDefault();
 
-
             const productId =
                 document.getElementById(
                     "saleProduct"
                 ).value;
-
 
             const quantity =
                 Number(
@@ -779,12 +724,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     ).value
                 );
 
-
             const product =
                 products.find(
                     p => p.id === productId
                 );
-
 
             if (!product) {
 
@@ -792,7 +735,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 return;
             }
-
 
             if (
                 quantity <= 0 ||
@@ -806,11 +748,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-
             const total =
                 Number(product.price) *
                 quantity;
-
 
             sales.push({
 
@@ -822,27 +762,21 @@ document.addEventListener("DOMContentLoaded", () => {
                 productName:
                     product.name,
 
-                quantity:
-                    quantity,
+                quantity,
 
-                total:
-                    total,
+                total,
 
                 date:
                     new Date().toISOString()
-
             });
 
-
             product.stock -= quantity;
-
 
             saveData();
 
             renderAll();
 
             closeSaleModal();
-
         });
 
 
@@ -853,22 +787,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!list) return;
 
-
-        if (sales.length === 0) {
+        if (!sales.length) {
 
             list.innerHTML = `
                 <div class="empty-state">
+
                     <div class="empty-icon">🧾</div>
+
                     <h3>No sales yet</h3>
+
                     <p>
                         Your recorded sales will appear here.
                     </p>
+
                 </div>
             `;
 
             return;
         }
-
 
         list.innerHTML =
             [...sales]
@@ -939,38 +875,30 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-
             const sale =
                 sales.find(
                     s => s.id === saleId
                 );
-
 
             if (sale) {
 
                 const product =
                     products.find(
                         p =>
-                            p.id ===
-                            sale.productId
+                            p.id === sale.productId
                     );
-
 
                 if (product) {
 
                     product.stock +=
                         Number(sale.quantity);
-
                 }
-
             }
-
 
             sales =
                 sales.filter(
                     s => s.id !== saleId
                 );
-
 
             saveData();
 
@@ -978,17 +906,11 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
 
-    /* ===============================
+    /* =====================================================
        ANALYTICS
-    =============================== */
+    ===================================================== */
 
     function updateAnalytics() {
-
-        /*
-         * IMPORTANT:
-         * Revenue comes directly from
-         * repaired sales totals.
-         */
 
         const totalRevenue =
             sales.reduce(
@@ -997,7 +919,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 0
             );
 
-
         const unitsSold =
             sales.reduce(
                 (sum, sale) =>
@@ -1005,31 +926,30 @@ document.addEventListener("DOMContentLoaded", () => {
                 0
             );
 
-
         const averageSale =
             sales.length
-            ? totalRevenue / sales.length
-            : 0;
-
+                ? totalRevenue / sales.length
+                : 0;
 
         const largestSale =
             sales.length
-            ? Math.max(
-                ...sales.map(
-                    sale =>
-                        Number(sale.total || 0)
+                ? Math.max(
+                    ...sales.map(
+                        sale =>
+                            Number(
+                                sale.total || 0
+                            )
+                    )
                 )
-            )
-            : 0;
-
+                : 0;
 
         const unitsInStock =
             products.reduce(
                 (sum, product) =>
-                    sum + Number(product.stock || 0),
+                    sum +
+                    Number(product.stock || 0),
                 0
             );
-
 
         const inventoryValue =
             products.reduce(
@@ -1040,13 +960,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 0
             );
 
-
-        /* =========================
-           PRODUCT RANKINGS
-        ========================= */
-
         const productSales = {};
-
 
         sales.forEach(sale => {
 
@@ -1054,17 +968,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 sale.productName ||
                 "Unknown Product";
 
-
             if (!productSales[name]) {
                 productSales[name] = 0;
             }
 
-
             productSales[name] +=
                 Number(sale.quantity || 0);
-
         });
-
 
         const ranked =
             Object.entries(productSales)
@@ -1073,96 +983,70 @@ document.addEventListener("DOMContentLoaded", () => {
                         b[1] - a[1]
                 );
 
-
         const bestSeller =
             ranked.length
-            ? ranked[0][0]
-            : "—";
-
-
-        /* =========================
-           MAIN DASHBOARD
-        ========================= */
+                ? ranked[0][0]
+                : "—";
 
         setText(
             "totalRevenue",
             money(totalRevenue)
         );
 
-
         setText(
             "totalProducts",
             products.length
         );
-
 
         setText(
             "totalCustomers",
             customers.length
         );
 
-
         setText(
             "totalSales",
             sales.length
         );
-
-
-        /* =========================
-           ANALYTICS CARDS
-        ========================= */
 
         setText(
             "averageSale",
             money(averageSale)
         );
 
-
         setText(
             "unitsInStock",
             unitsInStock
         );
-
 
         setText(
             "inventoryValue",
             money(inventoryValue)
         );
 
-
         setText(
             "bestSeller",
             bestSeller
         );
-
-
-        /* =========================
-           SALES OVERVIEW
-        ========================= */
 
         setText(
             "overviewRevenue",
             money(totalRevenue)
         );
 
-
         setText(
             "unitsSold",
             unitsSold
         );
-
 
         setText(
             "overviewAverage",
             money(averageSale)
         );
 
-
         setText(
             "largestSale",
             money(largestSale)
         );
-
 
         renderTopProducts(ranked);
 
@@ -1172,10 +1056,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /* ===============================
-       TOP PRODUCTS
-    =============================== */
-
     function renderTopProducts(ranked) {
 
         const container =
@@ -1183,9 +1063,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 "topProducts"
             );
 
-
         if (!container) return;
-
 
         if (!ranked.length) {
 
@@ -1197,7 +1075,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             return;
         }
-
 
         container.innerHTML =
             ranked
@@ -1222,10 +1099,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /* ===============================
-       INVENTORY ALERTS
-    =============================== */
-
     function renderInventoryAlerts() {
 
         const container =
@@ -1233,16 +1106,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 "inventoryAlerts"
             );
 
-
         if (!container) return;
-
 
         const lowStock =
             products.filter(
                 product =>
                     Number(product.stock) <= 3
             );
-
 
         if (!lowStock.length) {
 
@@ -1254,7 +1124,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             return;
         }
-
 
         container.innerHTML =
             lowStock.map(
@@ -1271,10 +1140,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /* ===============================
-       REVENUE CHART
-    =============================== */
-
     function renderRevenueChart() {
 
         const container =
@@ -1282,9 +1147,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 "revenueChart"
             );
 
-
         if (!container) return;
-
 
         if (!sales.length) {
 
@@ -1298,7 +1161,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         const recent =
             [...sales]
                 .sort(
@@ -1308,7 +1170,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 )
                 .slice(-10);
 
-
         const max =
             Math.max(
                 ...recent.map(
@@ -1316,7 +1177,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         Number(sale.total || 0)
                 )
             );
-
 
         container.innerHTML = `
             <div style="
@@ -1332,17 +1192,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 ${recent.map(sale => {
 
                     const amount =
-                        Number(sale.total || 0);
-
+                        Number(
+                            sale.total || 0
+                        );
 
                     const height =
                         max > 0
-                        ? Math.max(
-                            10,
-                            (amount / max) * 130
-                        )
-                        : 10;
-
+                            ? Math.max(
+                                10,
+                                (amount / max) * 130
+                            )
+                            : 10;
 
                     return `
                         <div
@@ -1363,28 +1223,31 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /* ===============================
+    /* =====================================================
        INVOICES
-    =============================== */
+    ===================================================== */
 
     window.openInvoiceModal =
         function() {
 
-            populateInvoiceCustomers();
-
-            populateInvoiceProducts();
+            /*
+             * Reset FIRST.
+             * Then populate dropdowns.
+             */
 
             document
                 .getElementById("invoiceForm")
                 ?.reset();
 
-
             generateInvoiceNumber();
 
             setDueDate();
 
-            updateInvoiceTotal();
+            populateInvoiceCustomers();
 
+            populateInvoiceProducts();
+
+            updateInvoiceTotal();
 
             document
                 .getElementById("invoiceModal")
@@ -1408,16 +1271,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 "invoiceCustomer"
             );
 
-
         if (!select) return;
-
 
         select.innerHTML = `
             <option value="">
                 Select a customer
             </option>
         `;
-
 
         customers.forEach(customer => {
 
@@ -1438,16 +1298,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 "invoiceProduct"
             );
 
-
         if (!select) return;
-
 
         select.innerHTML = `
             <option value="">
                 Select a product
             </option>
         `;
-
 
         products.forEach(product => {
 
@@ -1469,9 +1326,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 "invoiceNumber"
             );
 
-
         if (!input) return;
-
 
         input.value =
             "INV-" +
@@ -1489,19 +1344,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 "invoiceDueDate"
             );
 
-
         if (!input) return;
 
-
-        const date = new Date();
+        const date =
+            new Date();
 
         date.setDate(
             date.getDate() + 14
         );
 
-
         input.value =
-            date.toISOString().split("T")[0];
+            date.toISOString()
+                .split("T")[0];
     }
 
 
@@ -1512,14 +1366,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 "invoiceProduct"
             )?.value;
 
-
         const quantity =
             Number(
                 document.getElementById(
                     "invoiceQuantity"
                 )?.value
             ) || 0;
-
 
         const discount =
             Number(
@@ -1528,7 +1380,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 )?.value
             ) || 0;
 
-
         const taxRate =
             Number(
                 document.getElementById(
@@ -1536,18 +1387,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 )?.value
             ) || 0;
 
-
         const product =
             products.find(
                 p => p.id === productId
             );
 
-
         const subtotal =
             product
-            ? Number(product.price) * quantity
-            : 0;
-
+                ? Number(product.price) * quantity
+                : 0;
 
         const actualDiscount =
             Math.min(
@@ -1555,36 +1403,30 @@ document.addEventListener("DOMContentLoaded", () => {
                 subtotal
             );
 
-
         const taxable =
             subtotal - actualDiscount;
 
-
         const tax =
-            taxable * (taxRate / 100);
-
+            taxable *
+            (taxRate / 100);
 
         const total =
             taxable + tax;
-
 
         setText(
             "invoiceSubtotal",
             money(subtotal)
         );
 
-
         setText(
             "invoiceDiscountDisplay",
             "-" + money(actualDiscount)
         );
 
-
         setText(
             "invoiceTaxDisplay",
             money(tax)
         );
-
 
         setText(
             "invoiceTotal",
@@ -1625,24 +1467,25 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
 
+    /* =====================================================
+       CREATE INVOICE
+    ===================================================== */
+
     document
         .getElementById("invoiceForm")
         ?.addEventListener("submit", event => {
 
             event.preventDefault();
 
-
             const customerId =
                 document.getElementById(
                     "invoiceCustomer"
                 ).value;
 
-
             const productId =
                 document.getElementById(
                     "invoiceProduct"
                 ).value;
-
 
             const quantity =
                 Number(
@@ -1651,18 +1494,15 @@ document.addEventListener("DOMContentLoaded", () => {
                     ).value
                 );
 
-
             const customer =
                 customers.find(
                     c => c.id === customerId
                 );
 
-
             const product =
                 products.find(
                     p => p.id === productId
                 );
-
 
             if (!customer) {
 
@@ -1671,7 +1511,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-
             if (!product) {
 
                 alert("Select a product.");
@@ -1679,11 +1518,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
+            if (quantity <= 0) {
+
+                alert("Quantity must be at least 1.");
+
+                return;
+            }
 
             const subtotal =
                 Number(product.price) *
                 quantity;
-
 
             const discount =
                 Number(
@@ -1692,7 +1536,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     ).value
                 ) || 0;
 
-
             const taxRate =
                 Number(
                     document.getElementById(
@@ -1700,28 +1543,24 @@ document.addEventListener("DOMContentLoaded", () => {
                     ).value
                 ) || 0;
 
-
             const actualDiscount =
                 Math.min(
                     Math.max(discount, 0),
                     subtotal
                 );
 
-
             const taxable =
-                subtotal - actualDiscount;
-
+                subtotal -
+                actualDiscount;
 
             const tax =
                 taxable *
                 (taxRate / 100);
 
-
             const total =
                 taxable + tax;
 
-
-            invoices.push({
+            const invoice = {
 
                 id: id(),
 
@@ -1736,29 +1575,33 @@ document.addEventListener("DOMContentLoaded", () => {
                 customerName:
                     customer.name,
 
+                customerEmail:
+                    customer.email || "",
+
+                customerPhone:
+                    customer.phone || "",
+
                 productId:
                     product.id,
 
                 productName:
                     product.name,
 
-                quantity:
-                    quantity,
+                productPrice:
+                    Number(product.price),
 
-                subtotal:
-                    subtotal,
+                quantity,
+
+                subtotal,
 
                 discount:
                     actualDiscount,
 
-                taxRate:
-                    taxRate,
+                taxRate,
 
-                tax:
-                    tax,
+                tax,
 
-                total:
-                    total,
+                total,
 
                 dueDate:
                     document.getElementById(
@@ -1770,9 +1613,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 createdAt:
                     new Date().toISOString()
+            };
 
-            });
-
+            invoices.push(invoice);
 
             saveData();
 
@@ -1780,11 +1623,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
             closeInvoiceModal();
 
-
-            alert("Invoice created successfully.");
-
+            alert(
+                `${invoice.invoiceNumber} created successfully.`
+            );
         });
 
+
+    /* =====================================================
+       RENDER INVOICES
+    ===================================================== */
 
     function renderInvoices() {
 
@@ -1793,31 +1640,40 @@ document.addEventListener("DOMContentLoaded", () => {
                 "invoicesList"
             );
 
-
         if (!list) return;
-
 
         if (!invoices.length) {
 
             list.innerHTML = `
                 <div class="empty-state">
+
                     <div class="empty-icon">🧾</div>
+
                     <h3>No invoices yet</h3>
+
                     <p>
                         Create your first invoice
                         for a customer.
                     </p>
+
                 </div>
             `;
 
             return;
         }
 
-
         list.innerHTML =
             [...invoices]
                 .reverse()
                 .map(invoice => {
+
+                    const productName =
+                        invoice.productName ||
+                        "Unknown Product";
+
+                    const customerName =
+                        invoice.customerName ||
+                        "Unknown Customer";
 
                     return `
                         <div class="invoice-card">
@@ -1838,13 +1694,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
                                     <p>
                                         ${safe(
-                                            invoice.customerName
+                                            customerName
                                         )}
                                     </p>
 
                                     <p>
                                         ${safe(
-                                            invoice.productName
+                                            productName
                                         )}
                                         ×
                                         ${invoice.quantity}
@@ -1871,11 +1727,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
                                 <span class="invoice-status">
                                     ${safe(
-                                        invoice.status
+                                        invoice.status ||
+                                        "Unpaid"
                                     )}
                                 </span>
 
                                 <br>
+
+                                <button
+                                    onclick="printInvoice('${invoice.id}')">
+                                    🖨 Print
+                                </button>
 
                                 <button
                                     class="delete-btn"
@@ -1893,6 +1755,549 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+    /* =====================================================
+       PRINT PROFESSIONAL INVOICE
+    ===================================================== */
+
+    window.printInvoice =
+        function(invoiceId) {
+
+            const invoice =
+                invoices.find(
+                    item =>
+                        item.id === invoiceId
+                );
+
+            if (!invoice) {
+
+                alert("Invoice not found.");
+
+                return;
+            }
+
+            const printWindow =
+                window.open(
+                    "",
+                    "_blank",
+                    "width=900,height=800"
+                );
+
+            if (!printWindow) {
+
+                alert(
+                    "Your browser blocked the invoice window. Please allow pop-ups for this site."
+                );
+
+                return;
+            }
+
+            const customerName =
+                invoice.customerName ||
+                "Customer";
+
+            const customerEmail =
+                invoice.customerEmail ||
+                "";
+
+            const customerPhone =
+                invoice.customerPhone ||
+                "";
+
+            const productName =
+                invoice.productName ||
+                "Product";
+
+            const subtotal =
+                Number(invoice.subtotal || 0);
+
+            const discount =
+                Number(invoice.discount || 0);
+
+            const tax =
+                Number(invoice.tax || 0);
+
+            const total =
+                Number(invoice.total || 0);
+
+            printWindow.document.write(`
+
+                <!DOCTYPE html>
+
+                <html>
+
+                <head>
+
+                    <title>
+                        ${safe(invoice.invoiceNumber)}
+                    </title>
+
+                    <meta
+                        name="viewport"
+                        content="width=device-width, initial-scale=1.0"
+                    >
+
+                    <style>
+
+                        * {
+                            box-sizing: border-box;
+                        }
+
+                        body {
+                            margin: 0;
+                            padding: 40px;
+                            font-family:
+                                Arial,
+                                Helvetica,
+                                sans-serif;
+                            color: #111827;
+                            background: #ffffff;
+                        }
+
+                        .invoice {
+                            max-width: 800px;
+                            margin: auto;
+                        }
+
+                        .header {
+                            display: flex;
+                            justify-content: space-between;
+                            gap: 30px;
+                            padding-bottom: 30px;
+                            border-bottom: 2px solid #111827;
+                        }
+
+                        .brand {
+                            font-size: 28px;
+                            font-weight: 800;
+                        }
+
+                        .brand span {
+                            color: #2563eb;
+                        }
+
+                        .invoice-title {
+                            text-align: right;
+                        }
+
+                        .invoice-title h1 {
+                            margin: 0;
+                            font-size: 34px;
+                        }
+
+                        .invoice-title p {
+                            margin: 6px 0;
+                            color: #6b7280;
+                        }
+
+                        .details {
+                            display: grid;
+                            grid-template-columns:
+                                1fr 1fr;
+                            gap: 30px;
+                            margin: 35px 0;
+                        }
+
+                        .details h3 {
+                            margin-bottom: 8px;
+                            font-size: 12px;
+                            color: #6b7280;
+                            text-transform: uppercase;
+                            letter-spacing: 1px;
+                        }
+
+                        .details p {
+                            margin: 5px 0;
+                        }
+
+                        table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            margin-top: 25px;
+                        }
+
+                        th {
+                            padding: 13px;
+                            background: #f3f4f6;
+                            text-align: left;
+                            font-size: 13px;
+                        }
+
+                        td {
+                            padding: 16px 13px;
+                            border-bottom: 1px solid #e5e7eb;
+                        }
+
+                        .right {
+                            text-align: right;
+                        }
+
+                        .totals {
+                            width: 330px;
+                            margin-left: auto;
+                            margin-top: 25px;
+                        }
+
+                        .total-row {
+                            display: flex;
+                            justify-content: space-between;
+                            padding: 8px 0;
+                        }
+
+                        .grand-total {
+                            margin-top: 10px;
+                            padding-top: 15px;
+                            border-top: 2px solid #111827;
+                            font-size: 20px;
+                            font-weight: 800;
+                        }
+
+                        .status {
+                            display: inline-block;
+                            margin-top: 25px;
+                            padding: 7px 12px;
+                            border-radius: 999px;
+                            background: #ecfdf5;
+                            color: #047857;
+                            font-weight: 700;
+                            font-size: 12px;
+                        }
+
+                        .footer {
+                            margin-top: 70px;
+                            padding-top: 20px;
+                            border-top: 1px solid #e5e7eb;
+                            text-align: center;
+                            color: #6b7280;
+                            font-size: 12px;
+                        }
+
+                        .print-button {
+                            margin-bottom: 30px;
+                            padding: 12px 18px;
+                            border: 0;
+                            border-radius: 8px;
+                            background: #2563eb;
+                            color: white;
+                            font-weight: 700;
+                            cursor: pointer;
+                        }
+
+                        @media print {
+
+                            body {
+                                padding: 0;
+                            }
+
+                            .print-button {
+                                display: none;
+                            }
+
+                        }
+
+                        @media (max-width: 600px) {
+
+                            body {
+                                padding: 20px;
+                            }
+
+                            .header {
+                                flex-direction: column;
+                            }
+
+                            .invoice-title {
+                                text-align: left;
+                            }
+
+                            .details {
+                                grid-template-columns: 1fr;
+                            }
+
+                            .totals {
+                                width: 100%;
+                            }
+
+                        }
+
+                    </style>
+
+                </head>
+
+                <body>
+
+                    <div class="invoice">
+
+                        <button
+                            class="print-button"
+                            onclick="window.print()">
+
+                            🖨 Print Invoice
+
+                        </button>
+
+
+                        <div class="header">
+
+                            <div>
+
+                                <div class="brand">
+                                    Business<span>OS</span>
+                                </div>
+
+                                <p>
+                                    Business Management Platform
+                                </p>
+
+                            </div>
+
+
+                            <div class="invoice-title">
+
+                                <h1>
+                                    INVOICE
+                                </h1>
+
+                                <p>
+                                    ${safe(
+                                        invoice.invoiceNumber
+                                    )}
+                                </p>
+
+                                <p>
+                                    Issued:
+                                    ${formatDate(
+                                        invoice.createdAt
+                                    )}
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="details">
+
+                            <div>
+
+                                <h3>
+                                    Bill To
+                                </h3>
+
+                                <p>
+                                    <strong>
+                                        ${safe(
+                                            customerName
+                                        )}
+                                    </strong>
+                                </p>
+
+                                ${
+                                    customerEmail
+                                        ? `<p>${safe(customerEmail)}</p>`
+                                        : ""
+                                }
+
+                                ${
+                                    customerPhone
+                                        ? `<p>${safe(customerPhone)}</p>`
+                                        : ""
+                                }
+
+                            </div>
+
+
+                            <div>
+
+                                <h3>
+                                    Payment Details
+                                </h3>
+
+                                <p>
+                                    Status:
+                                    <strong>
+                                        ${safe(
+                                            invoice.status ||
+                                            "Unpaid"
+                                        )}
+                                    </strong>
+                                </p>
+
+                                <p>
+                                    Due:
+                                    ${formatDate(
+                                        invoice.dueDate
+                                    )}
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        Product
+                                    </th>
+
+                                    <th>
+                                        Quantity
+                                    </th>
+
+                                    <th class="right">
+                                        Price
+                                    </th>
+
+                                    <th class="right">
+                                        Total
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                <tr>
+
+                                    <td>
+                                        ${safe(
+                                            productName
+                                        )}
+                                    </td>
+
+                                    <td>
+                                        ${invoice.quantity}
+                                    </td>
+
+                                    <td class="right">
+                                        ${money(
+                                            invoice.productPrice
+                                        )}
+                                    </td>
+
+                                    <td class="right">
+                                        ${money(
+                                            subtotal
+                                        )}
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+
+                        <div class="totals">
+
+                            <div class="total-row">
+
+                                <span>
+                                    Subtotal
+                                </span>
+
+                                <strong>
+                                    ${money(
+                                        subtotal
+                                    )}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="total-row">
+
+                                <span>
+                                    Discount
+                                </span>
+
+                                <strong>
+                                    -${money(
+                                        discount
+                                    )}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="total-row">
+
+                                <span>
+                                    Tax
+                                    (${Number(
+                                        invoice.taxRate || 0
+                                    )}%)
+                                </span>
+
+                                <strong>
+                                    ${money(
+                                        tax
+                                    )}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="total-row grand-total">
+
+                                <span>
+                                    Total
+                                </span>
+
+                                <strong>
+                                    ${money(
+                                        total
+                                    )}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="status">
+
+                            ${safe(
+                                invoice.status ||
+                                "Unpaid"
+                            )}
+
+                        </div>
+
+
+                        <div class="footer">
+
+                            <p>
+                                Thank you for your business.
+                            </p>
+
+                            <p>
+                                BusinessOS — Built by Russette
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </body>
+
+                </html>
+
+            `);
+
+            printWindow.document.close();
+        };
+
+
+    /* =====================================================
+       DELETE INVOICE
+    ===================================================== */
+
     window.deleteInvoice =
         function(invoiceId) {
 
@@ -1900,13 +2305,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-
             invoices =
                 invoices.filter(
                     invoice =>
                         invoice.id !== invoiceId
                 );
-
 
             saveData();
 
@@ -1914,9 +2317,9 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
 
-    /* ===============================
-       RESET
-    =============================== */
+    /* =====================================================
+       RESET BUSINESS DATA
+    ===================================================== */
 
     window.resetBusinessData =
         function() {
@@ -1929,7 +2332,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-
             products = [];
 
             customers = [];
@@ -1938,11 +2340,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
             invoices = [];
 
-
             saveData();
 
             renderAll();
-
 
             alert(
                 "BusinessOS data has been reset."
@@ -1950,9 +2350,9 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
 
-    /* ===============================
-       MODAL CLOSE
-    =============================== */
+    /* =====================================================
+       MODAL CONTROLS
+    ===================================================== */
 
     document
         .querySelectorAll(".modal")
@@ -1969,9 +2369,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         modal.classList.remove(
                             "active"
                         );
-
                     }
-
                 }
             );
 
@@ -1995,16 +2393,29 @@ document.addEventListener("DOMContentLoaded", () => {
                         );
 
                     });
-
             }
-
         }
     );
 
 
-    /* ===============================
-       EVERYTHING
-    =============================== */
+    /* =====================================================
+       SCROLL
+    ===================================================== */
+
+    window.scrollToSection =
+        function(sectionId) {
+
+            document
+                .getElementById(sectionId)
+                ?.scrollIntoView({
+                    behavior: "smooth"
+                });
+        };
+
+
+    /* =====================================================
+       RENDER EVERYTHING
+    ===================================================== */
 
     function renderAll() {
 
@@ -2020,9 +2431,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /* ===============================
+    /* =====================================================
        START
-    =============================== */
+    ===================================================== */
 
     repairSales();
 
