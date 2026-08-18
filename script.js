@@ -1,6 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-
-```
 /* =========================================================
    BUSINESSOS
    Complete Business Management System
