@@ -1,5 +1,6 @@
 // =========================
-// BUSINESSOS V2
+// BUSINESSOS V3
+// USD VERSION
 // =========================
 
 
@@ -109,13 +110,13 @@ function updateDashboard() {
 
 
     revenueElement.textContent =
-        `₵${totalRevenue.toFixed(2)}`;
+        `$${totalRevenue.toFixed(2)}`;
 
 }
 
 
 // =========================
-// PRODUCT SECTION
+// PRODUCTS
 // =========================
 
 function renderProducts() {
@@ -160,7 +161,7 @@ function renderProducts() {
 
                     <p>
                         Price:
-                        ₵${Number(product.price).toFixed(2)}
+                        $${Number(product.price).toFixed(2)}
                     </p>
 
                     <p>
@@ -207,7 +208,9 @@ function addProduct() {
 
 
     const price =
-        Number(prompt("Enter product price:"));
+        Number(
+            prompt("Enter product price in USD:")
+        );
 
 
     if (
@@ -216,7 +219,7 @@ function addProduct() {
     ) {
 
         alert(
-            "Please enter a valid price."
+            "Please enter a valid USD price."
         );
 
         return;
@@ -287,7 +290,7 @@ function editProduct(index) {
     const price =
         Number(
             prompt(
-                "Product price:",
+                "Product price in USD:",
                 product.price
             )
         );
@@ -299,7 +302,7 @@ function editProduct(index) {
     ) {
 
         alert(
-            "Please enter a valid price."
+            "Please enter a valid USD price."
         );
 
         return;
@@ -550,7 +553,7 @@ function renderSales() {
 
                     <p>
                         Amount:
-                        ₵${Number(sale.amount).toFixed(2)}
+                        $${Number(sale.amount).toFixed(2)}
                     </p>
 
                     <button
@@ -586,7 +589,7 @@ function addSale() {
     const amount =
         Number(
             prompt(
-                "Enter sale amount:"
+                "Enter sale amount in USD:"
             )
         );
 
@@ -597,7 +600,7 @@ function addSale() {
     ) {
 
         alert(
-            "Please enter a valid sale amount."
+            "Please enter a valid USD sale amount."
         );
 
         return;
