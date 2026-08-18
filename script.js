@@ -2252,7 +2252,437 @@ window.toggleInvoicePaid = function(invoiceId) {
     saveData();
     renderAll();
 };
+window.viewInvoice = function(invoiceId) {
 
+    const invoice = invoices.find(
+        invoice => invoice.id === invoiceId
+    );
+
+    if (!invoice) return;
+
+    const customer = customers.find(
+        customer => customer.id === invoice.customerId
+    );
+
+    const printWindow = window.open(
+        "",
+        "_blank",
+        "width=900,height=800"
+    );
+
+    if (!printWindow) {
+        alert("Please allow pop-ups for BusinessOS.");
+        return;
+    }
+
+    printWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+
+            <title>${safe(invoice.invoiceNumber)} | BusinessOS</title>
+
+            <style>
+
+                * {
+                    box-sizing: border-box;
+                }
+
+                body {
+                    margin: 0;
+                    padding: 40px;
+                    font-family:
+                        Inter,
+                        -apple-system,
+                        BlinkMacSystemFont,
+                        "Segoe UI",
+                        sans-serif;
+                    background: #f3f4f6;
+                    color: #111827;
+                }
+
+                .invoice {
+                    max-width: 800px;
+                    margin: auto;
+                    padding: 50px;
+                    background: white;
+                    box-shadow: 0 10px 40px rgba(0,0,0,.08);
+                }
+
+                .header {
+                    display: flex;
+                    justify-content: space-between;
+                    gap: 30px;
+                    margin-bottom: 50px;
+                }
+
+                .brand {
+                    font-size: 28px;
+                    font-weight: 800;
+                }
+
+                .brand span {
+                    color: #2563eb;
+                }
+
+                .invoice-title {
+                    text-align: right;
+                }
+
+                .invoice-title h1 {
+                    margin: 0 0 5px;
+                    font-size: 30px;
+                }
+
+                .invoice-title p {
+                    margin: 4px 0;
+                    color: #6b7280;
+                }
+
+                .details {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 30px;
+                    margin-bottom: 40px;
+                }
+
+                .details h3 {
+                    margin-bottom: 8px;
+                    font-size: 12px;
+                    text-transform: uppercase;
+                    letter-spacing: .08em;
+                    color: #6b7280;
+                }
+
+                .details p {
+                    margin: 4px 0;
+                }
+
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-bottom: 30px;
+                }
+
+                th {
+                    padding: 12px;
+                    text-align: left;
+                    background: #f8fafc;
+                    border-bottom: 1px solid #e5e7eb;
+                }
+
+                td {
+                    padding: 15px 12px;
+                    border-bottom: 1px solid #e5e7eb;
+                }
+
+                .right {
+                    text-align: right;
+                }
+
+                .totals {
+                    width: 320px;
+                    margin-left: auto;
+                }
+
+                .total-row {
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 8px 0;
+                }
+
+                .grand-total {
+                    margin-top: 10px;
+                    padding-top: 15px;
+                    border-top: 2px solid #111827;
+                    font-size: 20px;
+                    font-weight: 800;
+                }
+
+                .status {
+                    display: inline-block;
+                    margin-top: 10px;
+                    padding: 6px 12px;
+                    border-radius: 999px;
+                    background: ${
+                        invoice.status === "Paid"
+                            ? "#dcfce7"
+                            : "#fef3c7"
+                    };
+                    color: ${
+                        invoice.status === "Paid"
+                            ? "#166534"
+                            : "#92400e"
+                    };
+                    font-weight: 700;
+                    font-size: 13px;
+                }
+
+                .footer {
+                    margin-top: 50px;
+                    padding-top: 20px;
+                    border-top: 1px solid #e5e7eb;
+                    text-align: center;
+                    color: #6b7280;
+                    font-size: 13px;
+                }
+
+                .print-button {
+                    display: block;
+                    margin: 25px auto 0;
+                    padding: 12px 20px;
+                    border: 0;
+                    border-radius: 8px;
+                    background: #2563eb;
+                    color: white;
+                    font-weight: 700;
+                    cursor: pointer;
+                }
+
+                @media print {
+
+                    body {
+                        padding: 0;
+                        background: white;
+                    }
+
+                    .invoice {
+                        box-shadow: none;
+                        max-width: none;
+                    }
+
+                    .print-button {
+                        display: none;
+                    }
+
+                }
+
+            </style>
+
+        </head>
+
+        <body>
+
+            <div class="invoice">
+
+                <div class="header">
+
+                    <div>
+
+                        <div class="brand">
+                            Business<span>OS</span>
+                        </div>
+
+                        <p>
+                            Business Management System
+                        </p>
+
+                    </div>
+
+                    <div class="invoice-title">
+
+                        <h1>INVOICE</h1>
+
+                        <p>
+                            ${safe(invoice.invoiceNumber)}
+                        </p>
+
+                        <div class="status">
+                            ${safe(invoice.status)}
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="details">
+
+                    <div>
+
+                        <h3>Bill To</h3>
+
+                        <p>
+                            <strong>
+                                ${safe(
+                                    invoice.customerName
+                                )}
+                            </strong>
+                        </p>
+
+                        ${
+                            customer?.email
+                                ? `<p>${safe(customer.email)}</p>`
+                                : ""
+                        }
+
+                        ${
+                            customer?.phone
+                                ? `<p>${safe(customer.phone)}</p>`
+                                : ""
+                        }
+
+                    </div>
+
+
+                    <div>
+
+                        <h3>Invoice Details</h3>
+
+                        <p>
+                            <strong>Due Date:</strong>
+                            ${formatDate(invoice.dueDate)}
+                        </p>
+
+                        <p>
+                            <strong>Created:</strong>
+                            ${formatDate(invoice.createdAt)}
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Product
+                            </th>
+
+                            <th class="right">
+                                Quantity
+                            </th>
+
+                            <th class="right">
+                                Price
+                            </th>
+
+                            <th class="right">
+                                Total
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+
+                            <td>
+                                ${safe(invoice.productName)}
+                            </td>
+
+                            <td class="right">
+                                ${invoice.quantity}
+                            </td>
+
+                            <td class="right">
+                                ${money(
+                                    invoice.subtotal /
+                                    invoice.quantity
+                                )}
+                            </td>
+
+                            <td class="right">
+                                ${money(invoice.subtotal)}
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+
+                <div class="totals">
+
+                    <div class="total-row">
+
+                        <span>
+                            Subtotal
+                        </span>
+
+                        <strong>
+                            ${money(invoice.subtotal)}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="total-row">
+
+                        <span>
+                            Discount
+                        </span>
+
+                        <strong>
+                            -${money(invoice.discount)}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="total-row">
+
+                        <span>
+                            Tax (${invoice.taxRate}%)
+                        </span>
+
+                        <strong>
+                            ${money(invoice.tax)}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="total-row grand-total">
+
+                        <span>
+                            Total
+                        </span>
+
+                        <strong>
+                            ${money(invoice.total)}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="footer">
+
+                    Thank you for doing business with us.
+
+                    <br>
+
+                    BusinessOS — Built by Russette
+
+                </div>
+
+
+                <button
+                    class="print-button"
+                    onclick="window.print()">
+
+                    🖨️ Print / Save as PDF
+
+                </button>
+
+            </div>
+
+        </body>
+        </html>
+    `);
+
+    printWindow.document.close();
+};
     window.deleteInvoice =
         function(invoiceId) {
 
