@@ -1,6 +1,6 @@
 // =========================
-// BUSINESSOS V3
-// USD VERSION
+// BUSINESSOS
+// COMPLETE USD VERSION
 // =========================
 
 
@@ -9,13 +9,19 @@
 // =========================
 
 let products =
-    JSON.parse(localStorage.getItem("businessOSProducts")) || [];
+    JSON.parse(
+        localStorage.getItem("businessOSProducts")
+    ) || [];
 
 let customers =
-    JSON.parse(localStorage.getItem("businessOSCustomers")) || [];
+    JSON.parse(
+        localStorage.getItem("businessOSCustomers")
+    ) || [];
 
 let sales =
-    JSON.parse(localStorage.getItem("businessOSSales")) || [];
+    JSON.parse(
+        localStorage.getItem("businessOSSales")
+    ) || [];
 
 
 // =========================
@@ -49,16 +55,28 @@ const customerCountElement =
 const saleCountElement =
     document.getElementById("saleCount");
 
+const resetDataButton =
+    document.getElementById("resetDataButton");
+
 
 // =========================
 // MOBILE MENU
 // =========================
 
-menuButton.addEventListener("click", () => {
+if (menuButton) {
 
-    navigation.classList.toggle("show");
+    menuButton.addEventListener(
+        "click",
+        () => {
 
-});
+            navigation.classList.toggle(
+                "show"
+            );
+
+        }
+    );
+
+}
 
 
 // =========================
@@ -86,7 +104,7 @@ function saveData() {
 
 
 // =========================
-// DASHBOARD
+// UPDATE DASHBOARD
 // =========================
 
 function updateDashboard() {
@@ -103,8 +121,12 @@ function updateDashboard() {
 
     const totalRevenue =
         sales.reduce(
-            (total, sale) =>
-                total + Number(sale.amount),
+            (total, sale) => {
+
+                return total +
+                    Number(sale.amount);
+
+            },
             0
         );
 
@@ -127,14 +149,20 @@ function renderProducts() {
             "empty-state";
 
         productList.innerHTML = `
-            <div>📦</div>
 
-            <h3>No products yet</h3>
+            <div>
+                📦
+            </div>
+
+            <h3>
+                No products yet
+            </h3>
 
             <p>
                 Add your first product to start
                 managing your inventory.
             </p>
+
         `;
 
         return;
@@ -146,51 +174,62 @@ function renderProducts() {
 
 
     productList.innerHTML =
-        products.map((product, index) => {
+        products.map(
+            (product, index) => {
 
-            return `
-                <article class="data-card">
+                return `
 
-                    <div class="data-icon">
-                        📦
-                    </div>
+                    <article
+                        class="data-card">
 
-                    <h3>
-                        ${product.name}
-                    </h3>
+                        <div
+                            class="data-icon">
+                            📦
+                        </div>
 
-                    <p>
-                        Price:
-                        $${Number(product.price).toFixed(2)}
-                    </p>
+                        <h3>
+                            ${product.name}
+                        </h3>
 
-                    <p>
-                        Stock:
-                        ${product.stock}
-                    </p>
+                        <p>
+                            Price:
+                            $${Number(
+                                product.price
+                            ).toFixed(2)}
+                        </p>
 
-                    <div class="card-actions">
+                        <p>
+                            Stock:
+                            ${product.stock}
+                        </p>
 
-                        <button
-                            class="edit-button"
-                            onclick="editProduct(${index})"
-                        >
-                            Edit
-                        </button>
+                        <div
+                            class="card-actions">
 
-                        <button
-                            class="delete-button"
-                            onclick="deleteProduct(${index})"
-                        >
-                            Delete
-                        </button>
+                            <button
+                                class="edit-button"
+                                onclick="editProduct(${index})">
 
-                    </div>
+                                Edit
 
-                </article>
-            `;
+                            </button>
 
-        }).join("");
+                            <button
+                                class="delete-button"
+                                onclick="deleteProduct(${index})">
+
+                                Delete
+
+                            </button>
+
+                        </div>
+
+                    </article>
+
+                `;
+
+            }
+        ).join("");
 
 }
 
@@ -202,14 +241,21 @@ function renderProducts() {
 function addProduct() {
 
     const name =
-        prompt("Enter product name:");
+        prompt(
+            "Enter product name:"
+        );
 
-    if (!name) return;
+
+    if (!name) {
+        return;
+    }
 
 
     const price =
         Number(
-            prompt("Enter product price in USD:")
+            prompt(
+                "Enter product price in USD:"
+            )
         );
 
 
@@ -249,11 +295,14 @@ function addProduct() {
 
     products.push({
 
-        name: name.trim(),
+        name:
+            name.trim(),
 
-        price: price,
+        price:
+            price,
 
-        stock: stock
+        stock:
+            stock
 
     });
 
@@ -277,6 +326,11 @@ function editProduct(index) {
         products[index];
 
 
+    if (!product) {
+        return;
+    }
+
+
     const name =
         prompt(
             "Product name:",
@@ -284,7 +338,9 @@ function editProduct(index) {
         );
 
 
-    if (!name) return;
+    if (!name) {
+        return;
+    }
 
 
     const price =
@@ -333,11 +389,14 @@ function editProduct(index) {
 
     products[index] = {
 
-        name: name.trim(),
+        name:
+            name.trim(),
 
-        price: price,
+        price:
+            price,
 
-        stock: stock
+        stock:
+            stock
 
     };
 
@@ -363,10 +422,15 @@ function deleteProduct(index) {
         );
 
 
-    if (!confirmed) return;
+    if (!confirmed) {
+        return;
+    }
 
 
-    products.splice(index, 1);
+    products.splice(
+        index,
+        1
+    );
 
 
     saveData();
@@ -390,14 +454,20 @@ function renderCustomers() {
             "empty-state";
 
         customerList.innerHTML = `
-            <div>👥</div>
 
-            <h3>No customers yet</h3>
+            <div>
+                👥
+            </div>
+
+            <h3>
+                No customers yet
+            </h3>
 
             <p>
                 Add your first customer to start
                 building your customer list.
             </p>
+
         `;
 
         return;
@@ -409,34 +479,41 @@ function renderCustomers() {
 
 
     customerList.innerHTML =
-        customers.map((customer, index) => {
+        customers.map(
+            (customer, index) => {
 
-            return `
-                <article class="data-card">
+                return `
 
-                    <div class="data-icon">
-                        👤
-                    </div>
+                    <article
+                        class="data-card">
 
-                    <h3>
-                        ${customer.name}
-                    </h3>
+                        <div
+                            class="data-icon">
+                            👤
+                        </div>
 
-                    <p>
-                        ${customer.phone}
-                    </p>
+                        <h3>
+                            ${customer.name}
+                        </h3>
 
-                    <button
-                        class="delete-button"
-                        onclick="deleteCustomer(${index})"
-                    >
-                        Delete
-                    </button>
+                        <p>
+                            ${customer.phone}
+                        </p>
 
-                </article>
-            `;
+                        <button
+                            class="delete-button"
+                            onclick="deleteCustomer(${index})">
 
-        }).join("");
+                            Delete
+
+                        </button>
+
+                    </article>
+
+                `;
+
+            }
+        ).join("");
 
 }
 
@@ -448,9 +525,14 @@ function renderCustomers() {
 function addCustomer() {
 
     const name =
-        prompt("Customer name:");
+        prompt(
+            "Customer name:"
+        );
 
-    if (!name) return;
+
+    if (!name) {
+        return;
+    }
 
 
     const phone =
@@ -459,14 +541,18 @@ function addCustomer() {
         );
 
 
-    if (!phone) return;
+    if (!phone) {
+        return;
+    }
 
 
     customers.push({
 
-        name: name.trim(),
+        name:
+            name.trim(),
 
-        phone: phone.trim()
+        phone:
+            phone.trim()
 
     });
 
@@ -492,10 +578,15 @@ function deleteCustomer(index) {
         );
 
 
-    if (!confirmed) return;
+    if (!confirmed) {
+        return;
+    }
 
 
-    customers.splice(index, 1);
+    customers.splice(
+        index,
+        1
+    );
 
 
     saveData();
@@ -519,14 +610,20 @@ function renderSales() {
             "empty-state";
 
         salesList.innerHTML = `
-            <div>🧾</div>
 
-            <h3>No sales yet</h3>
+            <div>
+                🧾
+            </div>
+
+            <h3>
+                No sales yet
+            </h3>
 
             <p>
                 Your recorded sales will
                 appear here.
             </p>
+
         `;
 
         return;
@@ -538,35 +635,44 @@ function renderSales() {
 
 
     salesList.innerHTML =
-        sales.map((sale, index) => {
+        sales.map(
+            (sale, index) => {
 
-            return `
-                <article class="data-card">
+                return `
 
-                    <div class="data-icon">
-                        🧾
-                    </div>
+                    <article
+                        class="data-card">
 
-                    <h3>
-                        ${sale.description}
-                    </h3>
+                        <div
+                            class="data-icon">
+                            🧾
+                        </div>
 
-                    <p>
-                        Amount:
-                        $${Number(sale.amount).toFixed(2)}
-                    </p>
+                        <h3>
+                            ${sale.description}
+                        </h3>
 
-                    <button
-                        class="delete-button"
-                        onclick="deleteSale(${index})"
-                    >
-                        Delete
-                    </button>
+                        <p>
+                            Amount:
+                            $${Number(
+                                sale.amount
+                            ).toFixed(2)}
+                        </p>
 
-                </article>
-            `;
+                        <button
+                            class="delete-button"
+                            onclick="deleteSale(${index})">
 
-        }).join("");
+                            Delete
+
+                        </button>
+
+                    </article>
+
+                `;
+
+            }
+        ).join("");
 
 }
 
@@ -583,7 +689,9 @@ function addSale() {
         );
 
 
-    if (!description) return;
+    if (!description) {
+        return;
+    }
 
 
     const amount =
@@ -612,7 +720,8 @@ function addSale() {
         description:
             description.trim(),
 
-        amount: amount
+        amount:
+            amount
 
     });
 
@@ -638,10 +747,15 @@ function deleteSale(index) {
         );
 
 
-    if (!confirmed) return;
+    if (!confirmed) {
+        return;
+    }
 
 
-    sales.splice(index, 1);
+    sales.splice(
+        index,
+        1
+    );
 
 
     saveData();
@@ -654,31 +768,105 @@ function deleteSale(index) {
 
 
 // =========================
+// RESET BUSINESS DATA
+// =========================
+
+function resetBusinessData() {
+
+    const confirmed =
+        confirm(
+            "This will permanently remove all BusinessOS products, customers and sales from this browser. Continue?"
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    products = [];
+
+    customers = [];
+
+    sales = [];
+
+
+    saveData();
+
+    renderProducts();
+
+    renderCustomers();
+
+    renderSales();
+
+    updateDashboard();
+
+
+    alert(
+        "BusinessOS data has been reset."
+    );
+
+}
+
+
+// =========================
 // BUTTON EVENTS
 // =========================
 
-document
-    .getElementById("addProductButton")
-    .addEventListener(
+const addProductButton =
+    document.getElementById(
+        "addProductButton"
+    );
+
+const addCustomerButton =
+    document.getElementById(
+        "addCustomerButton"
+    );
+
+const addSaleButton =
+    document.getElementById(
+        "addSaleButton"
+    );
+
+
+if (addProductButton) {
+
+    addProductButton.addEventListener(
         "click",
         addProduct
     );
 
+}
 
-document
-    .getElementById("addCustomerButton")
-    .addEventListener(
+
+if (addCustomerButton) {
+
+    addCustomerButton.addEventListener(
         "click",
         addCustomer
     );
 
+}
 
-document
-    .getElementById("addSaleButton")
-    .addEventListener(
+
+if (addSaleButton) {
+
+    addSaleButton.addEventListener(
         "click",
         addSale
     );
+
+}
+
+
+if (resetDataButton) {
+
+    resetDataButton.addEventListener(
+        "click",
+        resetBusinessData
+    );
+
+}
 
 
 // =========================
