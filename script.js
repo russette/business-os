@@ -1,0 +1,422 @@
+const menuButton = document.getElementById("menuButton");
+const navigation = document.getElementById("navigation");
+
+const productList = document.getElementById("productList");
+const customerList = document.getElementById("customerList");
+const salesList = document.getElementById("salesList");
+
+const revenueElement = document.getElementById("revenue");
+const productCountElement = document.getElementById("productCount");
+const customerCountElement = document.getElementById("customerCount");
+const saleCountElement = document.getElementById("saleCount");
+
+let products = JSON.parse(localStorage.getItem("businessOSProducts")) || [];
+let customers = JSON.parse(localStorage.getItem("businessOSCustomers")) || [];
+let sales = JSON.parse(localStorage.getItem("businessOSSales")) || [];
+
+
+// =========================
+// MOBILE MENU
+// =========================
+
+menuButton.addEventListener("click", () => {
+    navigation.classList.toggle("show");
+});
+
+
+// =========================
+// SAVE DATA
+// =========================
+
+function saveData() {
+    localStorage.setItem(
+        "businessOSProducts",
+        JSON.stringify(products)
+    );
+
+    localStorage.setItem(
+        "businessOSCustomers",
+        JSON.stringify(customers)
+    );
+
+    localStorage.setItem(
+        "businessOSSales",
+        JSON.stringify(sales)
+    );
+}
+
+
+// =========================
+// DASHBOARD
+// =========================
+
+function updateDashboard() {
+
+    productCountElement.textContent = products.length;
+
+    customerCountElement.textContent = customers.length;
+
+    saleCountElement.textContent = sales.length;
+
+    const totalRevenue = sales.reduce(
+        (total, sale) => total + sale.amount,
+        0
+    );
+
+    revenueElement.textContent =
+        `₵${totalRevenue.toFixed(2)}`;
+}
+
+
+// =========================
+// PRODUCTS
+// =========================
+
+function renderProducts() {
+
+    if (products.length === 0) {
+
+        productList.innerHTML = `
+            <div>📦</div>
+
+            <h3>No products yet</h3>
+
+            <p>
+                Add your first product to start managing
+                your inventory.
+            </p>
+        `;
+
+        return;
+    }
+
+
+    productList.className = "data-grid";
+
+    productList.innerHTML = products.map((product, index) => {
+
+        return `
+            <article class="data-card">
+
+                <div class="data-icon">
+                    📦
+                </div>
+
+                <h3>${product.name}</h3>
+
+                <p>
+                    Price: ₵${product.price.toFixed(2)}
+                </p>
+
+                <p>
+                    Stock: ${product.stock}
+                </p>
+
+                <button onclick="deleteProduct(${index})">
+                    Delete
+                </button>
+
+            </article>
+        `;
+
+    }).join("");
+}
+
+
+function addProduct() {
+
+    const name = prompt("Enter product name:");
+
+    if (!name) return;
+
+    const price = Number(
+        prompt("Enter product price:")
+    );
+
+    if (isNaN(price) || price < 0) {
+
+        alert("Please enter a valid price.");
+
+        return;
+    }
+
+
+    const stock = Number(
+        prompt("Enter stock quantity:")
+    );
+
+    if (isNaN(stock) || stock < 0) {
+
+        alert("Please enter a valid stock quantity.");
+
+        return;
+    }
+
+
+    products.push({
+        name,
+        price,
+        stock
+    });
+
+
+    saveData();
+
+    renderProducts();
+
+    updateDashboard();
+}
+
+
+function deleteProduct(index) {
+
+    const confirmed = confirm(
+        "Delete this product?"
+    );
+
+    if (!confirmed) return;
+
+    products.splice(index, 1);
+
+    saveData();
+
+    renderProducts();
+
+    updateDashboard();
+}
+
+
+// =========================
+// CUSTOMERS
+// =========================
+
+function renderCustomers() {
+
+    if (customers.length === 0) {
+
+        customerList.className = "empty-state";
+
+        customerList.innerHTML = `
+            <div>👥</div>
+
+            <h3>No customers yet</h3>
+
+            <p>
+                Add your first customer to start building
+                your customer list.
+            </p>
+        `;
+
+        return;
+    }
+
+
+    customerList.className = "data-grid";
+
+    customerList.innerHTML = customers.map((customer, index) => {
+
+        return `
+            <article class="data-card">
+
+                <div class="data-icon">
+                    👤
+                </div>
+
+                <h3>${customer.name}</h3>
+
+                <p>
+                    ${customer.phone}
+                </p>
+
+                <button onclick="deleteCustomer(${index})">
+                    Delete
+                </button>
+
+            </article>
+        `;
+
+    }).join("");
+}
+
+
+function addCustomer() {
+
+    const name = prompt("Enter customer name:");
+
+    if (!name) return;
+
+
+    const phone = prompt(
+        "Enter customer phone number:"
+    );
+
+    if (!phone) return;
+
+
+    customers.push({
+        name,
+        phone
+    });
+
+
+    saveData();
+
+    renderCustomers();
+
+    updateDashboard();
+}
+
+
+function deleteCustomer(index) {
+
+    const confirmed = confirm(
+        "Delete this customer?"
+    );
+
+    if (!confirmed) return;
+
+    customers.splice(index, 1);
+
+    saveData();
+
+    renderCustomers();
+
+    updateDashboard();
+}
+
+
+// =========================
+// SALES
+// =========================
+
+function renderSales() {
+
+    if (sales.length === 0) {
+
+        salesList.className = "empty-state";
+
+        salesList.innerHTML = `
+            <div>🧾</div>
+
+            <h3>No sales yet</h3>
+
+            <p>
+                Your recorded sales will appear here.
+            </p>
+        `;
+
+        return;
+    }
+
+
+    salesList.className = "data-grid";
+
+    salesList.innerHTML = sales.map((sale, index) => {
+
+        return `
+            <article class="data-card">
+
+                <div class="data-icon">
+                    🧾
+                </div>
+
+                <h3>${sale.description}</h3>
+
+                <p>
+                    Amount: ₵${sale.amount.toFixed(2)}
+                </p>
+
+                <button onclick="deleteSale(${index})">
+                    Delete
+                </button>
+
+            </article>
+        `;
+
+    }).join("");
+}
+
+
+function addSale() {
+
+    const description = prompt(
+        "What was sold?"
+    );
+
+    if (!description) return;
+
+
+    const amount = Number(
+        prompt("Enter sale amount:")
+    );
+
+    if (isNaN(amount) || amount <= 0) {
+
+        alert("Please enter a valid amount.");
+
+        return;
+    }
+
+
+    sales.push({
+        description,
+        amount
+    });
+
+
+    saveData();
+
+    renderSales();
+
+    updateDashboard();
+}
+
+
+function deleteSale(index) {
+
+    const confirmed = confirm(
+        "Delete this sale?"
+    );
+
+    if (!confirmed) return;
+
+    sales.splice(index, 1);
+
+    saveData();
+
+    renderSales();
+
+    updateDashboard();
+}
+
+
+// =========================
+// BUTTONS
+// =========================
+
+document
+    .getElementById("addProductButton")
+    .addEventListener("click", addProduct);
+
+
+document
+    .getElementById("addCustomerButton")
+    .addEventListener("click", addCustomer);
+
+
+document
+    .getElementById("addSaleButton")
+    .addEventListener("click", addSale);
+
+
+// =========================
+// START APP
+// =========================
+
+renderProducts();
+
+renderCustomers();
+
+renderSales();
+
+updateDashboard();
