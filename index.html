@@ -1,119 +1,236 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="BusinessOS — simple business management for products, customers and sales.">
 
     <title>BusinessOS | Business Management</title>
 
-    <meta
-        name="description"
-        content="BusinessOS helps small businesses manage products, customers, sales and revenue."
-    >
-
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet"
+          href="style.css">
 </head>
+
 
 <body>
 
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
     <header class="topbar">
 
-        <div class="logo">
+        <a href="#dashboard"
+           class="logo">
             Business<span>OS</span>
-        </div>
+        </a>
 
-        <button id="menuButton" class="menu-button">
+
+        <button
+            id="menuButton"
+            class="menu-button"
+            aria-label="Open menu">
             ☰
         </button>
 
+
         <nav id="navigation">
-            <a href="#dashboard">Dashboard</a>
-            <a href="#products">Products</a>
-            <a href="#customers">Customers</a>
-            <a href="#sales">Sales</a>
+
+            <a href="#dashboard">
+                Dashboard
+            </a>
+
+            <a href="#products">
+                Products
+            </a>
+
+            <a href="#customers">
+                Customers
+            </a>
+
+            <a href="#sales">
+                Sales
+            </a>
+
         </nav>
 
     </header>
 
 
+
+    <!-- =========================
+         MAIN
+    ========================== -->
+
     <main>
 
-        <!-- Dashboard -->
 
-        <section id="dashboard" class="dashboard-section">
+        <!-- =========================
+             DASHBOARD
+        ========================== -->
+
+        <section
+            id="dashboard"
+            class="dashboard-section">
 
             <div class="welcome">
 
-                <p class="eyebrow">BUSINESS DASHBOARD</p>
+                <p class="eyebrow">
+                    BUSINESS DASHBOARD
+                </p>
 
-                <h1>Run your business smarter.</h1>
+                <h1>
+                    Run your business smarter.
+                </h1>
 
                 <p>
-                    Manage your products, customers and sales
-                    from one simple dashboard.
+                    Manage your products, customers
+                    and sales from one simple dashboard.
                 </p>
 
             </div>
 
+
+
+            <!-- STATS -->
 
             <div class="stats">
 
-                <div class="stat-card">
+                <article class="stat-card">
+
                     <span>💰</span>
-                    <strong id="revenue">₵0.00</strong>
-                    <small>Total Revenue</small>
-                </div>
 
-                <div class="stat-card">
+                    <strong id="revenue">
+                        $0.00
+                    </strong>
+
+                    <small>
+                        Total Revenue
+                    </small>
+
+                </article>
+
+
+                <article class="stat-card">
+
                     <span>📦</span>
-                    <strong id="productCount">0</strong>
-                    <small>Products</small>
-                </div>
 
-                <div class="stat-card">
+                    <strong id="productCount">
+                        0
+                    </strong>
+
+                    <small>
+                        Products
+                    </small>
+
+                </article>
+
+
+                <article class="stat-card">
+
                     <span>👥</span>
-                    <strong id="customerCount">0</strong>
-                    <small>Customers</small>
-                </div>
 
-                <div class="stat-card">
+                    <strong id="customerCount">
+                        0
+                    </strong>
+
+                    <small>
+                        Customers
+                    </small>
+
+                </article>
+
+
+                <article class="stat-card">
+
                     <span>🧾</span>
-                    <strong id="saleCount">0</strong>
-                    <small>Total Sales</small>
-                </div>
+
+                    <strong id="saleCount">
+                        0
+                    </strong>
+
+                    <small>
+                        Total Sales
+                    </small>
+
+                </article>
+
+            </div>
+
+
+
+            <!-- RESET -->
+
+            <div class="dashboard-actions">
+
+                <button
+                    id="resetDataButton"
+                    class="reset-button">
+
+                    Reset Business Data
+
+                </button>
 
             </div>
 
         </section>
 
 
-        <!-- Products -->
 
-        <section id="products" class="content-section">
+        <!-- =========================
+             PRODUCTS
+        ========================== -->
+
+        <section
+            id="products"
+            class="content-section">
 
             <div class="section-heading">
 
                 <div>
-                    <p class="eyebrow">INVENTORY</p>
-                    <h2>Products</h2>
+
+                    <p class="eyebrow">
+                        INVENTORY
+                    </p>
+
+                    <h2>
+                        Products
+                    </h2>
+
                 </div>
 
-                <button id="addProductButton">
+
+                <button
+                    id="addProductButton">
+
                     + Add Product
+
                 </button>
 
             </div>
 
 
-            <div id="productList" class="empty-state">
+            <div
+                id="productList"
+                class="empty-state">
 
-                <div>📦</div>
+                <div>
+                    📦
+                </div>
 
-                <h3>No products yet</h3>
+                <h3>
+                    No products yet
+                </h3>
 
                 <p>
-                    Add your first product to start managing
-                    your inventory.
+                    Add your first product to start
+                    managing your inventory.
                 </p>
 
             </div>
@@ -121,33 +238,55 @@
         </section>
 
 
-        <!-- Customers -->
 
-        <section id="customers" class="content-section">
+        <!-- =========================
+             CUSTOMERS
+        ========================== -->
+
+        <section
+            id="customers"
+            class="content-section">
 
             <div class="section-heading">
 
                 <div>
-                    <p class="eyebrow">CUSTOMERS</p>
-                    <h2>Customers</h2>
+
+                    <p class="eyebrow">
+                        CUSTOMERS
+                    </p>
+
+                    <h2>
+                        Customers
+                    </h2>
+
                 </div>
 
-                <button id="addCustomerButton">
+
+                <button
+                    id="addCustomerButton">
+
                     + Add Customer
+
                 </button>
 
             </div>
 
 
-            <div id="customerList" class="empty-state">
+            <div
+                id="customerList"
+                class="empty-state">
 
-                <div>👥</div>
+                <div>
+                    👥
+                </div>
 
-                <h3>No customers yet</h3>
+                <h3>
+                    No customers yet
+                </h3>
 
                 <p>
-                    Add your first customer to start building
-                    your customer list.
+                    Add your first customer to start
+                    building your customer list.
                 </p>
 
             </div>
@@ -155,52 +294,85 @@
         </section>
 
 
-        <!-- Sales -->
 
-        <section id="sales" class="content-section">
+        <!-- =========================
+             SALES
+        ========================== -->
+
+        <section
+            id="sales"
+            class="content-section">
 
             <div class="section-heading">
 
                 <div>
-                    <p class="eyebrow">SALES</p>
-                    <h2>Recent Sales</h2>
+
+                    <p class="eyebrow">
+                        SALES
+                    </p>
+
+                    <h2>
+                        Recent Sales
+                    </h2>
 
                 </div>
 
-                <button id="addSaleButton">
+
+                <button
+                    id="addSaleButton">
+
                     + Record Sale
+
                 </button>
 
             </div>
 
 
-            <div id="salesList" class="empty-state">
+            <div
+                id="salesList"
+                class="empty-state">
 
-                <div>🧾</div>
+                <div>
+                    🧾
+                </div>
 
-                <h3>No sales yet</h3>
+                <h3>
+                    No sales yet
+                </h3>
 
                 <p>
-                    Your recorded sales will appear here.
+                    Your recorded sales will
+                    appear here.
                 </p>
 
             </div>
 
         </section>
+
 
     </main>
 
 
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
     <footer>
 
         <p>
-            Built by Russette with HTML, CSS & JavaScript.
+            Built by Russette with
+            HTML, CSS & JavaScript.
         </p>
 
     </footer>
 
 
+
+    <!-- JAVASCRIPT -->
+
     <script src="script.js"></script>
 
 </body>
+
 </html>
