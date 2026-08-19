@@ -823,23 +823,88 @@ document.addEventListener("DOMContentLoaded", () => {
         renderInventoryAlerts();
         renderRevenueChart();
     }
+function renderTopProducts(ranked) {
+    const container =
+        document.getElementById("topProducts");
 
-    function renderTopProducts(ranked) {
-        const container =
-            document.getElementById("topProducts");
+    if (!container) return;
 
-        if (!container) return;
+    if (!ranked.length) {
+        container.innerHTML = `
+            <div class="empty-state">
+                No sales yet.
+            </div>
+        `;
 
-        if (!ranked.length) {
-            container.innerHTML = `
-                <div class="empty-state">
-                    No sales yet.
-                </div>
-            `;
+        return;
+    }
 
-            return;
-        }
+    const maxSold =
+        Math.max(
+            ...ranked.map(
+                item => Number(item[1]) || 0
+            )
+        );
 
+    container.innerHTML =
+        ranked
+            .slice(0, 5)
+            .map(([name, quantity], index) => {
+
+                const sold =
+                    Number(quantity) || 0;
+
+                const percentage =
+                    maxSold > 0
+                        ? (sold / maxSold) * 100
+                        : 0;
+
+                let medal = `#${index + 1}`;
+
+                if (index === 0) medal = "🥇";
+                if (index === 1) medal = "🥈";
+                if (index === 2) medal = "🥉";
+
+                return `
+                    <div class="top-product">
+
+                        <div class="top-product-rank">
+                            ${medal}
+                        </div>
+
+                        <div class="top-product-info">
+
+                            <div class="top-product-header">
+
+                                <strong>
+                                    ${safe(name)}
+                                </strong>
+
+                                <span>
+                                    ${sold}
+                                    ${sold === 1 ? "sale" : "sales"}
+                                </span>
+
+                            </div>
+
+                            <div class="top-product-progress">
+
+                                <div
+                                    class="top-product-progress-bar"
+                                    style="
+                                        width:${percentage}%;
+                                    ">
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                `;
+            })
+            .join("");
+}
         container.innerHTML =
             ranked
                 .slice(0, 5)
