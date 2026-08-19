@@ -1494,7 +1494,228 @@ select:focus-visible {
         grid-template-columns: 1fr;
     }
 }
+/* =========================================================
+   PROFESSIONAL REVENUE CHART
+   ========================================================= */
 
+.revenue-chart {
+    display: flex;
+
+    width: 100%;
+    min-height: 280px;
+
+    margin-top: 20px;
+
+    padding: 20px 10px 10px;
+}
+
+.chart-y-axis {
+    display: flex;
+
+    width: 85px;
+
+    flex-direction: column;
+    justify-content: space-between;
+
+    padding: 0 12px 32px 0;
+
+    color: #94a3b8;
+
+    font-size: 0.7rem;
+
+    text-align: right;
+}
+
+.chart-area {
+    position: relative;
+
+    flex: 1;
+
+    min-width: 0;
+}
+
+.chart-grid-lines {
+    position: absolute;
+
+    inset: 0 0 35px 0;
+
+    display: flex;
+
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.chart-grid-lines span {
+    display: block;
+
+    width: 100%;
+
+    border-top: 1px dashed #e2e8f0;
+}
+
+.revenue-bars {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: space-around;
+
+    gap: 12px;
+
+    height: 100%;
+
+    padding: 0 8px 35px;
+}
+
+.revenue-column {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    flex: 1;
+
+    height: 100%;
+
+    max-width: 70px;
+
+    flex-direction: column;
+}
+
+.revenue-bar {
+    width: min(42px, 70%);
+
+    min-height: 8px;
+
+    border-radius: 8px 8px 3px 3px;
+
+    background:
+        linear-gradient(
+            to top,
+            var(--primary-dark),
+            var(--primary)
+        );
+
+    box-shadow:
+        0 8px 18px
+        rgba(37, 99, 235, 0.18);
+
+    transition:
+        height 0.5s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+
+    animation: chartBarIn 0.6s ease both;
+}
+
+.revenue-bar:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 14px 28px
+        rgba(37, 99, 235, 0.28);
+}
+
+.revenue-value {
+    position: absolute;
+
+    top: -25px;
+
+    width: max-content;
+
+    opacity: 0;
+
+    color: var(--text);
+
+    font-size: 0.68rem;
+    font-weight: 800;
+
+    transform: translateY(5px);
+
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
+}
+
+.revenue-column:hover .revenue-value {
+    opacity: 1;
+
+    transform: translateY(0);
+}
+
+.revenue-date {
+    position: absolute;
+
+    bottom: 5px;
+
+    width: max-content;
+
+    color: #94a3b8;
+
+    font-size: 0.68rem;
+
+    white-space: nowrap;
+}
+
+@keyframes chartBarIn {
+    from {
+        opacity: 0;
+
+        transform:
+            scaleY(0.2);
+        transform-origin: bottom;
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            scaleY(1);
+        transform-origin: bottom;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .revenue-chart {
+        padding-left: 0;
+    }
+
+    .chart-y-axis {
+        width: 65px;
+
+        font-size: 0.62rem;
+    }
+
+    .revenue-bars {
+        gap: 5px;
+
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+
+    .revenue-bar {
+        width: 24px;
+    }
+
+    .revenue-date {
+        font-size: 0.58rem;
+
+        transform: rotate(-35deg);
+
+        transform-origin: top center;
+    }
+
+    .revenue-value {
+        display: none;
+    }
+}
 /* =========================================================
    MOBILE
    ========================================================= */
