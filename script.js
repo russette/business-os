@@ -4,7 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
        BUSINESSOS
        Complete Business Management System
        ========================================================= */
-  /* =========================================================
+
+    /* =========================================================
        DATA
        ========================================================= */
 
@@ -71,6 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function saveData() {
+
         localStorage.setItem(
             "businessOSProducts",
             JSON.stringify(products)
@@ -92,167 +94,150 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     }
 
-/* =========================================================
-   DEMO DATA
-   ========================================================= */
 
-function createDemoData() {
+    /* =========================================================
+       DEMO DATA
+       ========================================================= */
 
-    /*
-     * Only create demo data when the BusinessOS
-     * database is completely empty.
-     *
-     * This prevents demo data from overwriting
-     * real business information.
-     */
+    function createDemoData() {
 
-    const hasData =
-        products.length > 0 ||
-        customers.length > 0 ||
-        sales.length > 0 ||
-        invoices.length > 0;
+        const hasData =
+            products.length > 0 ||
+            customers.length > 0 ||
+            sales.length > 0 ||
+            invoices.length > 0;
 
-    if (hasData) {
-        return false;
-    }
-
-    const productOneId = createId();
-    const productTwoId = createId();
-    const customerId = createId();
-
-    const today = new Date();
-
-    products = [
-        {
-            id: productOneId,
-            name: "MacBook Pro",
-            price: 1956,
-            stock: 9
-        },
-        {
-            id: productTwoId,
-            name: "MacBook Pro M4",
-            price: 1999,
-            stock: 9
+        if (hasData) {
+            return false;
         }
-    ];
 
-    customers = [
-        {
-            id: customerId,
-            name: "Jonathan Thomas",
-            email: "cynwayne@gmail.com",
-            phone: "+1................"
-        }
-    ];
+        const productOneId = createId();
+        const productTwoId = createId();
+        const customerId = createId();
 
-    sales = [
-        {
-            id: createId(),
+        const today = new Date();
 
-            productId: productOneId,
+        products = [
 
-            productName: "MacBook Pro",
+            {
+                id: productOneId,
+                name: "MacBook Pro",
+                price: 1956,
+                stock: 9
+            },
 
-            quantity: 1,
+            {
+                id: productTwoId,
+                name: "MacBook Pro M4",
+                price: 1999,
+                stock: 9
+            }
 
-            total: 1956,
+        ];
 
-            date: today.toISOString()
-        },
+        customers = [
 
-        {
-            id: createId(),
+            {
+                id: customerId,
+                name: "Jonathan Thomas",
+                email: "cynwayne@gmail.com",
+                phone: "+1................"
+            }
 
-            productId: productTwoId,
+        ];
 
-            productName: "MacBook Pro M4",
+        sales = [
 
-            quantity: 1,
+            {
+                id: createId(),
+                productId: productOneId,
+                productName: "MacBook Pro",
+                quantity: 1,
+                total: 1956,
+                date: today.toISOString()
+            },
 
-            total: 1999,
+            {
+                id: createId(),
+                productId: productTwoId,
+                productName: "MacBook Pro M4",
+                quantity: 1,
+                total: 1999,
+                date: today.toISOString()
+            }
 
-            date: today.toISOString()
-        }
-    ];
+        ];
 
-    const dueDate = new Date();
+        const dueDate = new Date();
 
-    dueDate.setDate(
-        dueDate.getDate() + 14
-    );
-
-    invoices = [
-        {
-            id: createId(),
-
-            invoiceNumber:
-                "INV-" +
-                Math.floor(
-                    100000 +
-                    Math.random() * 900000
-                ),
-
-            customerId:
-                customerId,
-
-            customerName:
-                "Jonathan Thomas",
-
-            productId:
-                productTwoId,
-
-            productName:
-                "MacBook Pro M4",
-
-            quantity: 3,
-
-            subtotal: 5997,
-
-            discount: 300,
-
-            taxRate: 10.83,
-
-            tax: 617.42,
-
-            total: 6314.42,
-
-            dueDate:
-                dueDate
-                    .toISOString()
-                    .split("T")[0],
-
-            status:
-                "Paid",
-
-            createdAt:
-                today.toISOString()
-        }
-    ];
-
-    saveData();
-
-    return true;
-}
-
-
-/* =========================================================
-   STARTUP DATA
-   ========================================================= */
-
-const USE_DEMO_DATA = true;
-
-if (USE_DEMO_DATA) {
-
-    const demoCreated =
-        createDemoData();
-
-    if (demoCreated) {
-        console.log(
-            "BusinessOS demo data created."
+        dueDate.setDate(
+            dueDate.getDate() + 14
         );
+
+        invoices = [
+
+            {
+                id: createId(),
+
+                invoiceNumber:
+                    "INV-" +
+                    Math.floor(
+                        100000 +
+                        Math.random() * 900000
+                    ),
+
+                customerId,
+                customerName: "Jonathan Thomas",
+
+                productId: productTwoId,
+                productName: "MacBook Pro M4",
+
+                quantity: 3,
+
+                subtotal: 5997,
+
+                discount: 300,
+
+                taxRate: 10.83,
+
+                tax: 617.42,
+
+                total: 6314.42,
+
+                dueDate:
+                    dueDate.toISOString().split("T")[0],
+
+                status: "Paid",
+
+                createdAt:
+                    today.toISOString()
+            }
+
+        ];
+
+        saveData();
+
+        return true;
     }
-}
+
+
+    /* =========================================================
+       STARTUP
+       ========================================================= */
+
+    const USE_DEMO_DATA = true;
+
+    if (USE_DEMO_DATA) {
+
+        const demoCreated =
+            createDemoData();
+
+        if (demoCreated) {
+            console.log(
+                "BusinessOS demo data created."
+            );
+        }
+    }
 
 
     /* =========================================================
@@ -271,7 +256,9 @@ if (USE_DEMO_DATA) {
             list.innerHTML = `
                 <div class="empty-state">
                     <div class="empty-icon">📦</div>
+
                     <h3>No products yet</h3>
+
                     <p>
                         Add your first product to start
                         managing your inventory.
@@ -329,8 +316,7 @@ if (USE_DEMO_DATA) {
 
                     </div>
                 `;
-            })
-            .join("");
+            }).join("");
     }
 
 
@@ -374,17 +360,18 @@ if (USE_DEMO_DATA) {
                     hidden.value = product.id;
                 }
 
-                document.getElementById(
-                    "productName"
-                ).value = product.name;
+                const name =
+                    document.getElementById("productName");
 
-                document.getElementById(
-                    "productPrice"
-                ).value = product.price;
+                const price =
+                    document.getElementById("productPrice");
 
-                document.getElementById(
-                    "productStock"
-                ).value = product.stock;
+                const stock =
+                    document.getElementById("productStock");
+
+                if (name) name.value = product.name;
+                if (price) price.value = product.price;
+                if (stock) stock.value = product.stock;
 
             } else {
 
@@ -428,31 +415,33 @@ if (USE_DEMO_DATA) {
                 const productId =
                     document.getElementById(
                         "productId"
-                    ).value;
+                    )?.value;
 
                 const name =
                     document.getElementById(
                         "productName"
-                    ).value.trim();
+                    )?.value.trim();
 
                 const price =
                     Number(
                         document.getElementById(
                             "productPrice"
-                        ).value
+                        )?.value
                     );
 
                 const stock =
                     Number(
                         document.getElementById(
                             "productStock"
-                        ).value
+                        )?.value
                     );
 
                 if (!name) {
+
                     alert(
                         "Enter a product name."
                     );
+
                     return;
                 }
 
@@ -462,9 +451,11 @@ if (USE_DEMO_DATA) {
                     price < 0 ||
                     stock < 0
                 ) {
+
                     alert(
                         "Price and stock cannot be negative."
                     );
+
                     return;
                 }
 
@@ -478,6 +469,7 @@ if (USE_DEMO_DATA) {
                         );
 
                     if (product) {
+
                         product.name = name;
                         product.price = price;
                         product.stock = stock;
@@ -486,15 +478,21 @@ if (USE_DEMO_DATA) {
                 } else {
 
                     products.push({
+
                         id: createId(),
+
                         name,
+
                         price,
+
                         stock
                     });
                 }
 
                 saveData();
+
                 renderAll();
+
                 closeProductModal();
             }
         );
@@ -503,12 +501,41 @@ if (USE_DEMO_DATA) {
     window.deleteProduct =
         function(productId) {
 
+            const usedInSales =
+                sales.some(
+                    sale =>
+                        String(sale.productId) ===
+                        String(productId)
+                );
+
+            const usedInInvoices =
+                invoices.some(
+                    invoice =>
+                        String(invoice.productId) ===
+                        String(productId)
+                );
+
             if (
-                !confirm(
-                    "Delete this product?"
-                )
+                usedInSales ||
+                usedInInvoices
             ) {
-                return;
+
+                const proceed =
+                    confirm(
+                        "This product is connected to existing sales or invoices. Delete it anyway?"
+                    );
+
+                if (!proceed) return;
+
+            } else {
+
+                if (
+                    !confirm(
+                        "Delete this product?"
+                    )
+                ) {
+                    return;
+                }
             }
 
             products =
@@ -519,6 +546,7 @@ if (USE_DEMO_DATA) {
                 );
 
             saveData();
+
             renderAll();
         };
 
@@ -645,34 +673,42 @@ if (USE_DEMO_DATA) {
                 const name =
                     document.getElementById(
                         "customerName"
-                    ).value.trim();
+                    )?.value.trim();
 
                 const email =
                     document.getElementById(
                         "customerEmail"
-                    ).value.trim();
+                    )?.value.trim();
 
                 const phone =
                     document.getElementById(
                         "customerPhone"
-                    ).value.trim();
+                    )?.value.trim();
 
                 if (!name) {
+
                     alert(
                         "Enter customer name."
                     );
+
                     return;
                 }
 
                 customers.push({
+
                     id: createId(),
+
                     name,
+
                     email,
+
                     phone
                 });
 
                 saveData();
+
                 renderAll();
+
                 closeCustomerModal();
             }
         );
@@ -681,12 +717,31 @@ if (USE_DEMO_DATA) {
     window.deleteCustomer =
         function(customerId) {
 
-            if (
-                !confirm(
-                    "Delete this customer?"
-                )
-            ) {
-                return;
+            const hasInvoices =
+                invoices.some(
+                    invoice =>
+                        String(invoice.customerId) ===
+                        String(customerId)
+                );
+
+            if (hasInvoices) {
+
+                const proceed =
+                    confirm(
+                        "This customer has invoices. Delete the customer anyway?"
+                    );
+
+                if (!proceed) return;
+
+            } else {
+
+                if (
+                    !confirm(
+                        "Delete this customer?"
+                    )
+                ) {
+                    return;
+                }
             }
 
             customers =
@@ -697,6 +752,7 @@ if (USE_DEMO_DATA) {
                 );
 
             saveData();
+
             renderAll();
         };
 
@@ -724,9 +780,10 @@ if (USE_DEMO_DATA) {
             products.forEach(product => {
 
                 select.innerHTML += `
-                    <option value="${product.id}">
+                    <option value="${safe(product.id)}">
                         ${safe(product.name)}
                         — ${money(product.price)}
+                        — Stock: ${Number(product.stock) || 0}
                     </option>
                 `;
             });
@@ -822,13 +879,13 @@ if (USE_DEMO_DATA) {
                 const productId =
                     document.getElementById(
                         "saleProduct"
-                    ).value;
+                    )?.value;
 
                 const quantity =
                     Number(
                         document.getElementById(
                             "saleQuantity"
-                        ).value
+                        )?.value
                     );
 
                 const product =
@@ -839,9 +896,11 @@ if (USE_DEMO_DATA) {
                     );
 
                 if (!product) {
+
                     alert(
                         "Select a product."
                     );
+
                     return;
                 }
 
@@ -849,19 +908,23 @@ if (USE_DEMO_DATA) {
                     !Number.isFinite(quantity) ||
                     quantity <= 0
                 ) {
+
                     alert(
                         "Quantity must be at least 1."
                     );
+
                     return;
                 }
 
-                if (
-                    quantity >
-                    Number(product.stock)
-                ) {
+                const stock =
+                    Number(product.stock) || 0;
+
+                if (quantity > stock) {
+
                     alert(
-                        `Only ${product.stock} units available.`
+                        `Only ${stock} units of ${product.name} are available.`
                     );
+
                     return;
                 }
 
@@ -870,20 +933,34 @@ if (USE_DEMO_DATA) {
                     quantity;
 
                 sales.push({
+
                     id: createId(),
+
                     productId: product.id,
-                    productName: product.name,
+
+                    productName:
+                        product.name,
+
                     quantity,
+
                     total,
+
                     date:
                         new Date().toISOString()
                 });
 
-                product.stock -= quantity;
+                product.stock =
+                    stock - quantity;
 
                 saveData();
+
                 renderAll();
+
                 closeSaleModal();
+
+                alert(
+                    "Sale recorded successfully."
+                );
             }
         );
 
@@ -938,17 +1015,15 @@ if (USE_DEMO_DATA) {
                                 <div>
 
                                     <strong>
-                                        ${
-                                            safe(
-                                                sale.productName ||
-                                                "Unknown Product"
-                                            )
-                                        }
+                                        ${safe(
+                                            sale.productName ||
+                                            "Unknown Product"
+                                        )}
                                     </strong>
 
                                     <p>
                                         Quantity:
-                                        ${sale.quantity}
+                                        ${Number(sale.quantity) || 0}
                                     </p>
 
                                     <p>
@@ -991,7 +1066,7 @@ if (USE_DEMO_DATA) {
 
             if (
                 !confirm(
-                    "Delete this sale?"
+                    "Delete this sale and restore the inventory?"
                 )
             ) {
                 return;
@@ -1004,22 +1079,27 @@ if (USE_DEMO_DATA) {
                         String(saleId)
                 );
 
-            if (sale) {
+            if (!sale) {
 
-                const product =
-                    products.find(
-                        p =>
-                            String(p.id) ===
-                            String(sale.productId)
-                    );
+                alert(
+                    "Sale not found."
+                );
 
-                if (product) {
+                return;
+            }
 
-                    product.stock +=
-                        Number(
-                            sale.quantity
-                        ) || 0;
-                }
+            const product =
+                products.find(
+                    p =>
+                        String(p.id) ===
+                        String(sale.productId)
+                );
+
+            if (product) {
+
+                product.stock =
+                    Number(product.stock || 0) +
+                    Number(sale.quantity || 0);
             }
 
             sales =
@@ -1030,7 +1110,12 @@ if (USE_DEMO_DATA) {
                 );
 
             saveData();
+
             renderAll();
+
+            alert(
+                "Sale deleted and inventory restored."
+            );
         };
 
 
@@ -1044,9 +1129,7 @@ if (USE_DEMO_DATA) {
             sales.reduce(
                 (sum, sale) =>
                     sum +
-                    Number(
-                        sale.total || 0
-                    ),
+                    Number(sale.total || 0),
                 0
             );
 
@@ -1054,16 +1137,13 @@ if (USE_DEMO_DATA) {
             sales.reduce(
                 (sum, sale) =>
                     sum +
-                    Number(
-                        sale.quantity || 0
-                    ),
+                    Number(sale.quantity || 0),
                 0
             );
 
         const averageSale =
             sales.length
-                ? totalRevenue /
-                  sales.length
+                ? totalRevenue / sales.length
                 : 0;
 
         const largestSale =
@@ -1082,9 +1162,7 @@ if (USE_DEMO_DATA) {
             products.reduce(
                 (sum, product) =>
                     sum +
-                    Number(
-                        product.stock || 0
-                    ),
+                    Number(product.stock || 0),
                 0
             );
 
@@ -1092,12 +1170,8 @@ if (USE_DEMO_DATA) {
             products.reduce(
                 (sum, product) =>
                     sum +
-                    Number(
-                        product.price || 0
-                    ) *
-                    Number(
-                        product.stock || 0
-                    ),
+                    Number(product.price || 0) *
+                    Number(product.stock || 0),
                 0
             );
 
@@ -1111,9 +1185,7 @@ if (USE_DEMO_DATA) {
 
             productSales[name] =
                 (productSales[name] || 0) +
-                Number(
-                    sale.quantity || 0
-                );
+                Number(sale.quantity || 0);
         });
 
         const ranked =
@@ -1189,7 +1261,9 @@ if (USE_DEMO_DATA) {
         );
 
         renderTopProducts(ranked);
+
         renderInventoryAlerts();
+
         renderRevenueChart();
     }
 
@@ -1336,13 +1410,21 @@ if (USE_DEMO_DATA) {
             lowStock
                 .map(
                     product => `
+
                         <div class="success-message">
+
                             ⚠️
+
                             ${safe(product.name)}
+
                             has only
-                            ${product.stock}
+
+                            ${Number(product.stock) || 0}
+
                             left in stock.
+
                         </div>
+
                     `
                 )
                 .join("");
@@ -1450,6 +1532,7 @@ if (USE_DEMO_DATA) {
         function() {
 
             populateInvoiceCustomers();
+
             populateInvoiceProducts();
 
             document
@@ -1459,7 +1542,9 @@ if (USE_DEMO_DATA) {
                 ?.reset();
 
             generateInvoiceNumber();
+
             setDueDate();
+
             updateInvoiceTotal();
 
             document
@@ -1499,7 +1584,7 @@ if (USE_DEMO_DATA) {
         customers.forEach(customer => {
 
             select.innerHTML += `
-                <option value="${customer.id}">
+                <option value="${safe(customer.id)}">
                     ${safe(customer.name)}
                 </option>
             `;
@@ -1525,9 +1610,10 @@ if (USE_DEMO_DATA) {
         products.forEach(product => {
 
             select.innerHTML += `
-                <option value="${product.id}">
+                <option value="${safe(product.id)}">
                     ${safe(product.name)}
                     — ${money(product.price)}
+                    — Stock: ${Number(product.stock) || 0}
                 </option>
             `;
         });
@@ -1543,12 +1629,26 @@ if (USE_DEMO_DATA) {
 
         if (!input) return;
 
-        input.value =
-            "INV-" +
-            Math.floor(
-                100000 +
-                Math.random() * 900000
-            );
+        let number;
+
+        do {
+
+            number =
+                "INV-" +
+                Math.floor(
+                    100000 +
+                    Math.random() * 900000
+                );
+
+        } while (
+            invoices.some(
+                invoice =>
+                    invoice.invoiceNumber ===
+                    number
+            )
+        );
+
+        input.value = number;
     }
 
 
@@ -1629,16 +1729,23 @@ if (USE_DEMO_DATA) {
 
         const tax =
             taxable *
-            (taxRate / 100);
+            (Math.max(taxRate, 0) / 100);
 
         const total =
             taxable + tax;
 
         return {
+
             subtotal,
-            discount: actualDiscount,
-            taxRate,
+
+            discount:
+                actualDiscount,
+
+            taxRate:
+                Math.max(taxRate, 0),
+
             tax,
+
             total
         };
     }
@@ -1725,18 +1832,18 @@ if (USE_DEMO_DATA) {
                 const customerId =
                     document.getElementById(
                         "invoiceCustomer"
-                    ).value;
+                    )?.value;
 
                 const productId =
                     document.getElementById(
                         "invoiceProduct"
-                    ).value;
+                    )?.value;
 
                 const quantity =
                     Number(
                         document.getElementById(
                             "invoiceQuantity"
-                        ).value
+                        )?.value
                     );
 
                 const customer =
@@ -1754,42 +1861,62 @@ if (USE_DEMO_DATA) {
                     );
 
                 if (!customer) {
+
                     alert(
                         "Select a customer."
                     );
+
                     return;
                 }
 
                 if (!product) {
+
                     alert(
                         "Select a product."
                     );
+
                     return;
                 }
 
                 if (
-                    !Number.isFinite(
-                        quantity
-                    ) ||
+                    !Number.isFinite(quantity) ||
                     quantity <= 0
                 ) {
+
                     alert(
                         "Quantity must be at least 1."
                     );
+
+                    return;
+                }
+
+                const stock =
+                    Number(product.stock) || 0;
+
+                if (quantity > stock) {
+
+                    alert(
+                        `Only ${stock} units of ${product.name} are available.`
+                    );
+
                     return;
                 }
 
                 const result =
                     calculateInvoice();
 
+                const invoiceNumber =
+                    document.getElementById(
+                        "invoiceNumber"
+                    )?.value ||
+                    "INV-" +
+                    Date.now();
+
                 invoices.push({
 
                     id: createId(),
 
-                    invoiceNumber:
-                        document.getElementById(
-                            "invoiceNumber"
-                        ).value,
+                    invoiceNumber,
 
                     customerId:
                         customer.id,
@@ -1823,16 +1950,28 @@ if (USE_DEMO_DATA) {
                     dueDate:
                         document.getElementById(
                             "invoiceDueDate"
-                        ).value,
+                        )?.value || "",
 
-                    status: "Unpaid",
+                    status:
+                        "Unpaid",
 
                     createdAt:
                         new Date().toISOString()
                 });
 
+                /*
+                 * IMPORTANT:
+                 * Creating an invoice now reduces
+                 * available inventory.
+                 */
+
+                product.stock =
+                    stock - quantity;
+
                 saveData();
+
                 renderAll();
+
                 closeInvoiceModal();
 
                 alert(
@@ -1885,8 +2024,7 @@ if (USE_DEMO_DATA) {
                 .map(invoice => {
 
                     const paid =
-                        invoice.status ===
-                        "Paid";
+                        invoice.status === "Paid";
 
                     return `
                         <div class="invoice-card">
@@ -1916,7 +2054,9 @@ if (USE_DEMO_DATA) {
                                             invoice.productName
                                         )}
                                         ×
-                                        ${invoice.quantity}
+                                        ${Number(
+                                            invoice.quantity
+                                        ) || 0}
                                     </p>
 
                                     <p>
@@ -1992,7 +2132,7 @@ if (USE_DEMO_DATA) {
 
 
     /* =========================================================
-       TOGGLE INVOICE PAID
+       TOGGLE INVOICE STATUS
        ========================================================= */
 
     window.toggleInvoicePaid =
@@ -2006,9 +2146,11 @@ if (USE_DEMO_DATA) {
                 );
 
             if (!invoice) {
+
                 alert(
                     "Invoice not found."
                 );
+
                 return;
             }
 
@@ -2020,6 +2162,7 @@ if (USE_DEMO_DATA) {
             saveData();
 
             renderInvoices();
+
             updateAnalytics();
         };
 
@@ -2039,9 +2182,11 @@ if (USE_DEMO_DATA) {
                 );
 
             if (!invoice) {
+
                 alert(
                     "Invoice not found."
                 );
+
                 return;
             }
 
@@ -2072,9 +2217,7 @@ if (USE_DEMO_DATA) {
                 customer?.email
                     ? `
                         <p>
-                            ${safe(
-                                customer.email
-                            )}
+                            ${safe(customer.email)}
                         </p>
                     `
                     : "";
@@ -2083,27 +2226,22 @@ if (USE_DEMO_DATA) {
                 customer?.phone
                     ? `
                         <p>
-                            ${safe(
-                                customer.phone
-                            )}
+                            ${safe(customer.phone)}
                         </p>
                     `
                     : "";
 
             const unitPrice =
                 invoice.quantity > 0
-                    ? Number(
-                        invoice.subtotal
-                    ) /
-                    Number(
-                        invoice.quantity
-                    )
+                    ? Number(invoice.subtotal) /
+                      Number(invoice.quantity)
                     : 0;
 
             const paid =
                 invoice.status === "Paid";
 
             printWindow.document.write(`
+
                 <!DOCTYPE html>
 
                 <html>
@@ -2120,65 +2258,65 @@ if (USE_DEMO_DATA) {
                     <style>
 
                         * {
-                            box-sizing: border-box;
+                            box-sizing:border-box;
                         }
 
                         body {
-                            margin: 0;
-                            padding: 40px;
+                            margin:0;
+                            padding:40px;
                             font-family:
                                 Arial,
                                 sans-serif;
-                            background: #f3f4f6;
-                            color: #111827;
+                            background:#f3f4f6;
+                            color:#111827;
                         }
 
                         .invoice {
-                            max-width: 800px;
-                            margin: auto;
-                            padding: 50px;
-                            background: white;
+                            max-width:800px;
+                            margin:auto;
+                            padding:50px;
+                            background:white;
                             box-shadow:
                                 0 10px 40px
                                 rgba(0,0,0,.08);
                         }
 
                         .header {
-                            display: flex;
+                            display:flex;
                             justify-content:
                                 space-between;
-                            gap: 30px;
-                            margin-bottom: 50px;
+                            gap:30px;
+                            margin-bottom:50px;
                         }
 
                         .brand {
-                            font-size: 28px;
-                            font-weight: 800;
+                            font-size:28px;
+                            font-weight:800;
                         }
 
                         .brand span {
-                            color: #2563eb;
+                            color:#2563eb;
                         }
 
                         .invoice-title {
-                            text-align: right;
+                            text-align:right;
                         }
 
                         .invoice-title h1 {
-                            margin: 0 0 5px;
-                            font-size: 30px;
+                            margin:0 0 5px;
+                            font-size:30px;
                         }
 
                         .invoice-title p {
-                            margin: 4px 0;
-                            color: #6b7280;
+                            margin:4px 0;
+                            color:#6b7280;
                         }
 
                         .status {
-                            display: inline-block;
-                            margin-top: 10px;
-                            padding: 6px 12px;
-                            border-radius: 999px;
+                            display:inline-block;
+                            margin-top:10px;
+                            padding:6px 12px;
+                            border-radius:999px;
                             background:
                                 ${
                                     paid
@@ -2191,112 +2329,113 @@ if (USE_DEMO_DATA) {
                                         ? "#166534"
                                         : "#92400e"
                                 };
-                            font-weight: 700;
+                            font-weight:700;
                         }
 
                         .details {
-                            display: grid;
+                            display:grid;
                             grid-template-columns:
                                 1fr 1fr;
-                            gap: 30px;
-                            margin-bottom: 40px;
+                            gap:30px;
+                            margin-bottom:40px;
                         }
 
                         .details h3 {
-                            margin-bottom: 8px;
-                            font-size: 12px;
+                            margin-bottom:8px;
+                            font-size:12px;
                             text-transform:
                                 uppercase;
-                            color: #6b7280;
+                            color:#6b7280;
                         }
 
                         .details p {
-                            margin: 4px 0;
+                            margin:4px 0;
                         }
 
                         table {
-                            width: 100%;
+                            width:100%;
                             border-collapse:
                                 collapse;
-                            margin-bottom: 30px;
+                            margin-bottom:30px;
                         }
 
                         th {
-                            padding: 12px;
-                            text-align: left;
-                            background: #f8fafc;
+                            padding:12px;
+                            text-align:left;
+                            background:#f8fafc;
                             border-bottom:
                                 1px solid #e5e7eb;
                         }
 
                         td {
-                            padding: 15px 12px;
+                            padding:15px 12px;
                             border-bottom:
                                 1px solid #e5e7eb;
                         }
 
                         .right {
-                            text-align: right;
+                            text-align:right;
                         }
 
                         .totals {
-                            width: 320px;
-                            margin-left: auto;
+                            width:320px;
+                            margin-left:auto;
                         }
 
                         .total-row {
-                            display: flex;
+                            display:flex;
                             justify-content:
                                 space-between;
-                            padding: 8px 0;
+                            padding:8px 0;
                         }
 
                         .grand-total {
-                            margin-top: 10px;
-                            padding-top: 15px;
+                            margin-top:10px;
+                            padding-top:15px;
                             border-top:
                                 2px solid #111827;
-                            font-size: 20px;
-                            font-weight: 800;
+                            font-size:20px;
+                            font-weight:800;
                         }
 
                         .footer {
-                            margin-top: 50px;
-                            padding-top: 20px;
+                            margin-top:50px;
+                            padding-top:20px;
                             border-top:
                                 1px solid #e5e7eb;
-                            text-align: center;
-                            color: #6b7280;
-                            font-size: 13px;
+                            text-align:center;
+                            color:#6b7280;
+                            font-size:13px;
                         }
 
                         .print-button {
-                            display: block;
-                            margin: 25px auto 0;
-                            padding: 12px 20px;
-                            border: 0;
-                            border-radius: 8px;
-                            background: #2563eb;
-                            color: white;
-                            font-weight: 700;
-                            cursor: pointer;
+                            display:block;
+                            margin:25px auto 0;
+                            padding:12px 20px;
+                            border:0;
+                            border-radius:8px;
+                            background:#2563eb;
+                            color:white;
+                            font-weight:700;
+                            cursor:pointer;
                         }
 
                         @media print {
 
                             body {
-                                padding: 0;
-                                background: white;
+                                padding:0;
+                                background:white;
                             }
 
                             .invoice {
-                                box-shadow: none;
-                                max-width: none;
+                                box-shadow:none;
+                                max-width:none;
                             }
 
                             .print-button {
-                                display: none;
+                                display:none;
                             }
+
                         }
 
                     </style>
@@ -2334,16 +2473,19 @@ if (USE_DEMO_DATA) {
                                 </p>
 
                                 <div class="status">
+
                                     ${
                                         paid
                                             ? "PAID"
                                             : "UNPAID"
                                     }
+
                                 </div>
 
                             </div>
 
                         </div>
+
 
                         <div class="details">
 
@@ -2362,9 +2504,11 @@ if (USE_DEMO_DATA) {
                                 </p>
 
                                 ${customerEmail}
+
                                 ${customerPhone}
 
                             </div>
+
 
                             <div>
 
@@ -2396,6 +2540,7 @@ if (USE_DEMO_DATA) {
 
                         </div>
 
+
                         <table>
 
                             <thead>
@@ -2422,6 +2567,7 @@ if (USE_DEMO_DATA) {
 
                             </thead>
 
+
                             <tbody>
 
                                 <tr>
@@ -2437,9 +2583,7 @@ if (USE_DEMO_DATA) {
                                     </td>
 
                                     <td class="right">
-                                        ${money(
-                                            unitPrice
-                                        )}
+                                        ${money(unitPrice)}
                                     </td>
 
                                     <td class="right">
@@ -2453,6 +2597,7 @@ if (USE_DEMO_DATA) {
                             </tbody>
 
                         </table>
+
 
                         <div class="totals">
 
@@ -2470,6 +2615,7 @@ if (USE_DEMO_DATA) {
 
                             </div>
 
+
                             <div class="total-row">
 
                                 <span>
@@ -2484,10 +2630,13 @@ if (USE_DEMO_DATA) {
 
                             </div>
 
+
                             <div class="total-row">
 
                                 <span>
-                                    Tax (${invoice.taxRate}%)
+                                    Tax (${Number(
+                                        invoice.taxRate
+                                    ) || 0}%)
                                 </span>
 
                                 <strong>
@@ -2497,6 +2646,7 @@ if (USE_DEMO_DATA) {
                                 </strong>
 
                             </div>
+
 
                             <div
                                 class="total-row grand-total"
@@ -2516,6 +2666,7 @@ if (USE_DEMO_DATA) {
 
                         </div>
 
+
                         <div class="footer">
 
                             Thank you for doing business with us.
@@ -2526,6 +2677,7 @@ if (USE_DEMO_DATA) {
                             Built by Russette
 
                         </div>
+
 
                         <button
                             class="print-button"
@@ -2539,6 +2691,7 @@ if (USE_DEMO_DATA) {
                 </body>
 
                 </html>
+
             `);
 
             printWindow.document.close();
@@ -2554,21 +2707,214 @@ if (USE_DEMO_DATA) {
 
             if (
                 !confirm(
-                    "Delete this invoice?"
+                    "Delete this invoice and restore the inventory?"
                 )
             ) {
                 return;
             }
 
+            const invoice =
+                invoices.find(
+                    item =>
+                        String(item.id) ===
+                        String(invoiceId)
+                );
+
+            if (!invoice) {
+
+                alert(
+                    "Invoice not found."
+                );
+
+                return;
+            }
+
+            /*
+             * Restore the inventory that was
+             * consumed by this invoice.
+             */
+
+            const product =
+                products.find(
+                    product =>
+                        String(product.id) ===
+                        String(invoice.productId)
+                );
+
+            if (product) {
+
+                product.stock =
+                    Number(product.stock || 0) +
+                    Number(invoice.quantity || 0);
+            }
+
             invoices =
                 invoices.filter(
-                    invoice =>
-                        String(invoice.id) !==
+                    item =>
+                        String(item.id) !==
                         String(invoiceId)
                 );
 
             saveData();
+
             renderAll();
+
+            alert(
+                "Invoice deleted and inventory restored."
+            );
+        };
+
+
+    /* =========================================================
+       EXPORT BUSINESS DATA
+       ========================================================= */
+
+    window.exportBusinessData =
+        function() {
+
+            const data = {
+
+                products,
+
+                customers,
+
+                sales,
+
+                invoices,
+
+                exportedAt:
+                    new Date().toISOString(),
+
+                version:
+                    "BusinessOS 2.0"
+
+            };
+
+            const blob =
+                new Blob(
+                    [
+                        JSON.stringify(
+                            data,
+                            null,
+                            2
+                        )
+                    ],
+                    {
+                        type:
+                            "application/json"
+                    }
+                );
+
+            const url =
+                URL.createObjectURL(blob);
+
+            const link =
+                document.createElement("a");
+
+            link.href = url;
+
+            link.download =
+                `businessos-backup-${new Date()
+                    .toISOString()
+                    .split("T")[0]}.json`;
+
+            document.body.appendChild(link);
+
+            link.click();
+
+            link.remove();
+
+            URL.revokeObjectURL(url);
+
+            alert(
+                "BusinessOS backup exported successfully."
+            );
+        };
+
+
+    /* =========================================================
+       IMPORT BUSINESS DATA
+       ========================================================= */
+
+    window.importBusinessData =
+        function(file) {
+
+            if (!file) return;
+
+            const reader =
+                new FileReader();
+
+            reader.onload =
+                function(event) {
+
+                    try {
+
+                        const data =
+                            JSON.parse(
+                                event.target.result
+                            );
+
+                        if (
+                            !data ||
+                            !Array.isArray(
+                                data.products
+                            ) ||
+                            !Array.isArray(
+                                data.customers
+                            ) ||
+                            !Array.isArray(
+                                data.sales
+                            ) ||
+                            !Array.isArray(
+                                data.invoices
+                            )
+                        ) {
+
+                            throw new Error(
+                                "Invalid BusinessOS backup."
+                            );
+                        }
+
+                        const confirmed =
+                            confirm(
+                                "Import this backup? Your current BusinessOS data will be replaced."
+                            );
+
+                        if (!confirmed) {
+                            return;
+                        }
+
+                        products =
+                            data.products;
+
+                        customers =
+                            data.customers;
+
+                        sales =
+                            data.sales;
+
+                        invoices =
+                            data.invoices;
+
+                        saveData();
+
+                        renderAll();
+
+                        alert(
+                            "BusinessOS backup imported successfully."
+                        );
+
+                    } catch (error) {
+
+                        console.error(error);
+
+                        alert(
+                            "Could not import this backup. Make sure it is a valid BusinessOS JSON file."
+                        );
+                    }
+                };
+
+            reader.readAsText(file);
         };
 
 
@@ -2581,22 +2927,26 @@ if (USE_DEMO_DATA) {
 
             if (
                 !confirm(
-                    "Delete ALL BusinessOS data?"
+                    "Delete ALL BusinessOS data? This cannot be undone."
                 )
             ) {
                 return;
             }
 
             products = [];
+
             customers = [];
+
             sales = [];
+
             invoices = [];
 
             saveData();
+
             renderAll();
 
             alert(
-                "BusinessOS data has been reset."
+                "BusinessOS data has been completely reset."
             );
         };
 
@@ -2616,6 +2966,7 @@ if (USE_DEMO_DATA) {
                     if (
                         event.target === modal
                     ) {
+
                         modal.classList.remove(
                             "active"
                         );
@@ -2629,7 +2980,9 @@ if (USE_DEMO_DATA) {
         "keydown",
         event => {
 
-            if (event.key === "Escape") {
+            if (
+                event.key === "Escape"
+            ) {
 
                 document
                     .querySelectorAll(
@@ -2668,9 +3021,13 @@ if (USE_DEMO_DATA) {
     function renderAll() {
 
         renderProducts();
+
         renderCustomers();
+
         renderSales();
+
         renderInvoices();
+
         updateAnalytics();
     }
 
