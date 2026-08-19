@@ -197,12 +197,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         saveData();
     }
-
-    if (USE_DEMO_DATA) {
-        createDemoData();
-    }
-
-    /* =========================================================
+if (USE_DEMO_DATA) {
+    createDemoData();
+}
+/* =========================================================
        PRODUCTS
        ========================================================= */
 
