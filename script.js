@@ -4,10 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
        BUSINESSOS
        Complete Business Management System
        ========================================================= */
-
-    const USE_DEMO_DATA = true;
-
-    /* =========================================================
+  /* =========================================================
        DATA
        ========================================================= */
 
@@ -95,101 +92,167 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     }
 
+/* =========================================================
+   DEMO DATA
+   ========================================================= */
 
-    /* =========================================================
-       DEMO DATA
-       ========================================================= */
+function createDemoData() {
 
-    function createDemoData() {
+    /*
+     * Only create demo data when the BusinessOS
+     * database is completely empty.
+     *
+     * This prevents demo data from overwriting
+     * real business information.
+     */
 
-        if (
-            products.length ||
-            customers.length ||
-            sales.length ||
-            invoices.length
-        ) {
-            return;
+    const hasData =
+        products.length > 0 ||
+        customers.length > 0 ||
+        sales.length > 0 ||
+        invoices.length > 0;
+
+    if (hasData) {
+        return false;
+    }
+
+    const productOneId = createId();
+    const productTwoId = createId();
+    const customerId = createId();
+
+    const today = new Date();
+
+    products = [
+        {
+            id: productOneId,
+            name: "MacBook Pro",
+            price: 1956,
+            stock: 9
+        },
+        {
+            id: productTwoId,
+            name: "MacBook Pro M4",
+            price: 1999,
+            stock: 9
         }
+    ];
 
-        const productOneId = createId();
-        const productTwoId = createId();
+    customers = [
+        {
+            id: customerId,
+            name: "Jonathan Thomas",
+            email: "cynwayne@gmail.com",
+            phone: "+1................"
+        }
+    ];
 
-        const customerId = createId();
+    sales = [
+        {
+            id: createId(),
 
-        products = [
-            {
-                id: productOneId,
-                name: "MacBook Pro",
-                price: 1956,
-                stock: 9
-            },
-            {
-                id: productTwoId,
-                name: "MacBook Pro M4",
-                price: 1999,
-                stock: 9
-            }
-        ];
+            productId: productOneId,
 
-        customers = [
-            {
-                id: customerId,
-                name: "Jonathan Thomas",
-                email: "cynwayne@gmail.com",
-                phone: "+1................"
-            }
-        ];
+            productName: "MacBook Pro",
 
-        const today = new Date();
+            quantity: 1,
 
-        sales = [
-            {
-                id: createId(),
-                productId: productOneId,
-                productName: "MacBook Pro",
-                quantity: 1,
-                total: 1956,
-                date: today.toISOString()
-            },
-            {
-                id: createId(),
-                productId: productTwoId,
-                productName: "MacBook Pro M4",
-                quantity: 1,
-                total: 1999,
-                date: today.toISOString()
-            }
-        ];
+            total: 1956,
 
-        const due = new Date();
-        due.setDate(due.getDate() + 13);
+            date: today.toISOString()
+        },
 
-        invoices = [
-            {
-                id: createId(),
-                invoiceNumber: "INV-552519",
-                customerId: customerId,
-                customerName: "Jonathan Thomas",
-                productId: productTwoId,
-                productName: "MacBook Pro M4",
-                quantity: 3,
-                subtotal: 5997,
-                discount: 300,
-                taxRate: 10.83,
-                tax: 617.42,
-                total: 6314.42,
-                dueDate: due.toISOString().split("T")[0],
-                status: "Paid",
-                createdAt: today.toISOString()
-            }
-        ];
+        {
+            id: createId(),
 
-        saveData();
-    }
+            productId: productTwoId,
 
-    if (USE_DEMO_DATA) {
+            productName: "MacBook Pro M4",
+
+            quantity: 1,
+
+            total: 1999,
+
+            date: today.toISOString()
+        }
+    ];
+
+    const dueDate = new Date();
+
+    dueDate.setDate(
+        dueDate.getDate() + 14
+    );
+
+    invoices = [
+        {
+            id: createId(),
+
+            invoiceNumber:
+                "INV-" +
+                Math.floor(
+                    100000 +
+                    Math.random() * 900000
+                ),
+
+            customerId:
+                customerId,
+
+            customerName:
+                "Jonathan Thomas",
+
+            productId:
+                productTwoId,
+
+            productName:
+                "MacBook Pro M4",
+
+            quantity: 3,
+
+            subtotal: 5997,
+
+            discount: 300,
+
+            taxRate: 10.83,
+
+            tax: 617.42,
+
+            total: 6314.42,
+
+            dueDate:
+                dueDate
+                    .toISOString()
+                    .split("T")[0],
+
+            status:
+                "Paid",
+
+            createdAt:
+                today.toISOString()
+        }
+    ];
+
+    saveData();
+
+    return true;
+}
+
+
+/* =========================================================
+   STARTUP DATA
+   ========================================================= */
+
+const USE_DEMO_DATA = true;
+
+if (USE_DEMO_DATA) {
+
+    const demoCreated =
         createDemoData();
+
+    if (demoCreated) {
+        console.log(
+            "BusinessOS demo data created."
+        );
     }
+}
 
 
     /* =========================================================
