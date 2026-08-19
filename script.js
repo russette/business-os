@@ -899,81 +899,105 @@ document.addEventListener("DOMContentLoaded", () => {
                 )
                 .join("");
     }
+function renderRevenueChart() {
+    const container =
+        document.getElementById("revenueChart");
 
-    function renderRevenueChart() {
-        const container =
-            document.getElementById(
-                "revenueChart"
-            );
+    if (!container) return;
 
-        if (!container) return;
-
-        if (!sales.length) {
-            container.innerHTML = `
-                <div class="empty-chart">
-                    Make your first sale to see
-                    your revenue trend.
-                </div>
-            `;
-
-            return;
-        }
-
-        const recent =
-            [...sales]
-                .sort(
-                    (a, b) =>
-                        new Date(a.date) -
-                        new Date(b.date)
-                )
-                .slice(-10);
-
-        const max =
-            Math.max(
-                ...recent.map(
-                    sale =>
-                        Number(sale.total || 0)
-                )
-            );
-
+    if (!sales.length) {
         container.innerHTML = `
-            <div style="
-                width:100%;
-                height:180px;
-                display:flex;
-                align-items:flex-end;
-                gap:10px;
-                padding:20px;
-                box-sizing:border-box;
-            ">
-                ${recent.map(sale => {
-                    const amount =
-                        Number(sale.total || 0);
-
-                    const height =
-                        max > 0
-                            ? Math.max(
-                                10,
-                                (amount / max) * 130
-                            )
-                            : 10;
-
-                    return `
-                        <div
-                            title="${money(amount)}"
-                            style="
-                                flex:1;
-                                height:${height}px;
-                                background:#2563eb;
-                                border-radius:7px 7px 2px 2px;
-                            ">
-                        </div>
-                    `;
-                }).join("")}
+            <div class="empty-chart">
+                Make your first sale to see
+                your revenue trend.
             </div>
         `;
+
+        return;
     }
 
+    const recent = [...sales]
+        .sort(
+            (a, b) =>
+                new Date(a.date) -
+                new Date(b.date)
+        )
+        .slice(-10);
+
+    const maxRevenue = Math.max(
+        ...recent.map(
+            sale => Number(sale.total || 0)
+        )
+    );
+
+    container.innerHTML = `
+        <div class="revenue-chart">
+
+            <div class="chart-y-axis">
+                <span>${money(maxRevenue)}</span>
+                <span>${money(maxRevenue * 0.75)}</span>
+                <span>${money(maxRevenue * 0.5)}</span>
+                <span>${money(maxRevenue * 0.25)}</span>
+                <span>$0</span>
+            </div>
+
+            <div class="chart-area">
+
+                <div class="chart-grid-lines">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <div class="revenue-bars">
+
+                    ${recent.map(sale => {
+
+                        const amount =
+                            Number(sale.total || 0);
+
+                        const height =
+                            maxRevenue > 0
+                                ? Math.max(
+                                    8,
+                                    (amount / maxRevenue) * 100
+                                )
+                                : 8;
+
+                        return `
+                            <div class="revenue-column">
+
+                                <div class="revenue-value">
+                                    ${money(amount)}
+                                </div>
+
+                                <div
+                                    class="revenue-bar"
+                                    style="
+                                        height:${height}%;
+                                    "
+                                    title="${money(amount)}">
+                                </div>
+
+                                <div class="revenue-date">
+                                    ${formatDate(
+                                        sale.date
+                                    )}
+                                </div>
+
+                            </div>
+                        `;
+                    }).join("")}
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
+}
     /* =========================================================
        INVOICES
        ========================================================= */
